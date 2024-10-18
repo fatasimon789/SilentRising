@@ -4,9 +4,9 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class IdleState : PlayerMovementState
+public class IdleState : PlayerActionState
 {
-    // thua ke tuong tu playermovementState
+    // thua ke tuong tu playerActionState
     public IdleState(PlayerMovementStateMachine PLAYER_MOVEMENT_STATE_MACHINE) : base(PLAYER_MOVEMENT_STATE_MACHINE)
     {
     }

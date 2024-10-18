@@ -13,14 +13,14 @@ public class IcePunch : TypeOfWeapon
         base.ChanceNewWeapon();
     }
 
-    public override void Dashing()
-    {
-        base.Dashing();
-    }
 
     public override void DeleteOldWeapon()
     {
         base.DeleteOldWeapon();
+    }
+    public override void Dashing()
+    {
+        base.Dashing();
     }
 
     public override void FirstSkill()

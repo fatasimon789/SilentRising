@@ -37,7 +37,7 @@ public partial class @PlayerMovementInput: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": true
                 },
                 {
-                    ""name"": ""Attack"",
+                    ""name"": ""AttackSword"",
                     ""type"": ""Value"",
                     ""id"": ""4c2d63f9-331e-4dd0-89c6-50a3b4b141d8"",
                     ""expectedControlType"": ""Button"",
@@ -141,11 +141,11 @@ public partial class @PlayerMovementInput: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""598221ae-3e7a-4c3f-beb0-c411ab7bbd57"",
-                    ""path"": """",
-                    ""interactions"": """",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": ""Tap"",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Attack"",
+                    ""action"": ""AttackSword"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -201,7 +201,7 @@ public partial class @PlayerMovementInput: IInputActionCollection2, IDisposable
         // Player
         m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
         m_Player_Movement = m_Player.FindAction("Movement", throwIfNotFound: true);
-        m_Player_Attack = m_Player.FindAction("Attack", throwIfNotFound: true);
+        m_Player_AttackSword = m_Player.FindAction("AttackSword", throwIfNotFound: true);
         m_Player_Healing = m_Player.FindAction("Healing", throwIfNotFound: true);
         m_Player_Dash = m_Player.FindAction("Dash", throwIfNotFound: true);
         m_Player_Ability = m_Player.FindAction("Ability", throwIfNotFound: true);
@@ -268,7 +268,7 @@ public partial class @PlayerMovementInput: IInputActionCollection2, IDisposable
     private readonly InputActionMap m_Player;
     private List<IPlayerActions> m_PlayerActionsCallbackInterfaces = new List<IPlayerActions>();
     private readonly InputAction m_Player_Movement;
-    private readonly InputAction m_Player_Attack;
+    private readonly InputAction m_Player_AttackSword;
     private readonly InputAction m_Player_Healing;
     private readonly InputAction m_Player_Dash;
     private readonly InputAction m_Player_Ability;
@@ -278,7 +278,7 @@ public partial class @PlayerMovementInput: IInputActionCollection2, IDisposable
         private @PlayerMovementInput m_Wrapper;
         public PlayerActions(@PlayerMovementInput wrapper) { m_Wrapper = wrapper; }
         public InputAction @Movement => m_Wrapper.m_Player_Movement;
-        public InputAction @Attack => m_Wrapper.m_Player_Attack;
+        public InputAction @AttackSword => m_Wrapper.m_Player_AttackSword;
         public InputAction @Healing => m_Wrapper.m_Player_Healing;
         public InputAction @Dash => m_Wrapper.m_Player_Dash;
         public InputAction @Ability => m_Wrapper.m_Player_Ability;
@@ -295,9 +295,9 @@ public partial class @PlayerMovementInput: IInputActionCollection2, IDisposable
             @Movement.started += instance.OnMovement;
             @Movement.performed += instance.OnMovement;
             @Movement.canceled += instance.OnMovement;
-            @Attack.started += instance.OnAttack;
-            @Attack.performed += instance.OnAttack;
-            @Attack.canceled += instance.OnAttack;
+            @AttackSword.started += instance.OnAttackSword;
+            @AttackSword.performed += instance.OnAttackSword;
+            @AttackSword.canceled += instance.OnAttackSword;
             @Healing.started += instance.OnHealing;
             @Healing.performed += instance.OnHealing;
             @Healing.canceled += instance.OnHealing;
@@ -317,9 +317,9 @@ public partial class @PlayerMovementInput: IInputActionCollection2, IDisposable
             @Movement.started -= instance.OnMovement;
             @Movement.performed -= instance.OnMovement;
             @Movement.canceled -= instance.OnMovement;
-            @Attack.started -= instance.OnAttack;
-            @Attack.performed -= instance.OnAttack;
-            @Attack.canceled -= instance.OnAttack;
+            @AttackSword.started -= instance.OnAttackSword;
+            @AttackSword.performed -= instance.OnAttackSword;
+            @AttackSword.canceled -= instance.OnAttackSword;
             @Healing.started -= instance.OnHealing;
             @Healing.performed -= instance.OnHealing;
             @Healing.canceled -= instance.OnHealing;
@@ -352,7 +352,7 @@ public partial class @PlayerMovementInput: IInputActionCollection2, IDisposable
     public interface IPlayerActions
     {
         void OnMovement(InputAction.CallbackContext context);
-        void OnAttack(InputAction.CallbackContext context);
+        void OnAttackSword(InputAction.CallbackContext context);
         void OnHealing(InputAction.CallbackContext context);
         void OnDash(InputAction.CallbackContext context);
         void OnAbility(InputAction.CallbackContext context);

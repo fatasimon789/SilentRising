@@ -4,8 +4,19 @@ using UnityEngine;
 
 public interface IWeapon
 {
-    string Name { get; set; }
-    int damages { get; set; }
-    CombatTypeManager.DamegesType DamagesType { get; set; }
+    public void ChanceNewWeapon();
+    public void DeleteOldWeapon();
    
+    public  void Healing();
+    public  void NormalAttack();
+
+    public  void Dashing();
+
+    public  void Passive();
+    public  void FirstSkill();
+
+
+    public  void SecondSkill();
+
+    public  void UltimateSkill();
 }

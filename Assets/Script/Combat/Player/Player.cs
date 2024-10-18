@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-[RequireComponent(typeof(PlayerInput))]
+
 public class Player : MonoBehaviour
 
 {
@@ -46,4 +46,5 @@ public class Player : MonoBehaviour
     {
         playerMovementStateMachine.PhysicUpdate();   
     }
+    
 }

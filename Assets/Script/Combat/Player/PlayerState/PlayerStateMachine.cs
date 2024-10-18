@@ -4,7 +4,7 @@ using UnityEngine;
 
 public abstract class PlayerStateMachine
 {
-    protected IState currentState;
+    public IState currentState { get; set; }
     public void ChanceState(IState newState) 
     {
         currentState?.ExitState();
@@ -23,4 +23,5 @@ public abstract class PlayerStateMachine
     {
         currentState?.FixedUpdate();
     }
+   
 }

@@ -15,7 +15,7 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "Attack",
+                    "name": "AttackSword",
                     "type": "Value",
                     "id": "4c2d63f9-331e-4dd0-89c6-50a3b4b141d8",
                     "expectedControlType": "Button",
@@ -119,11 +119,11 @@
                 {
                     "name": "",
                     "id": "598221ae-3e7a-4c3f-beb0-c411ab7bbd57",
-                    "path": "",
-                    "interactions": "",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "Tap",
                     "processors": "",
                     "groups": "",
-                    "action": "Attack",
+                    "action": "AttackSword",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },

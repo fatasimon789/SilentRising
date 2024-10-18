@@ -24,5 +24,38 @@ public class WeaponTypeMachine
          currentWeapon = CHANCE_NEW_WEAPON;
          currentWeapon.ChanceNewWeapon();
     }
-    
+    public void Dashing()
+    {
+        currentWeapon.Dashing();
+        
+    }
+    public void Healing() 
+    {
+       currentWeapon.Healing();
+        
+    }
+    public void passive() 
+    {
+        currentWeapon.Passive();
+    }
+    public void normalAttack()
+    {
+        currentWeapon.NormalAttack();
+      
+    }
+    public void FirstSkill()
+    {
+        currentWeapon.FirstSkill();
+       
+    }
+    public void SecondSkill()
+    {
+        currentWeapon.SecondSkill();
+      
+    }
+    public void Ultimate()
+    {
+       
+        currentWeapon.UltimateSkill();
+    }
 }

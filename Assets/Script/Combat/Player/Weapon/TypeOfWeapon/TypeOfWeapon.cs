@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TypeOfWeapon 
+public  class TypeOfWeapon : IWeapon
 {
    protected WeaponManager WeaponManager;
    protected WeaponTypeMachine WeaponTypeMachine;
@@ -12,21 +12,21 @@ public class TypeOfWeapon
         this.WeaponManager= WEAPON_MANAGER;
         this.WeaponTypeMachine= WEAPON_TYPE_MACHINE;
     }
-    public virtual void ChanceNewWeapon() 
+    public virtual void ChanceNewWeapon()
     {
-       
+
     }
-    public virtual void DeleteOldWeapon() 
+    public virtual void DeleteOldWeapon()
     {
-    
+
     }
-    public virtual void Healing() 
+    public virtual void Healing()
     {
-    
+
     }
-    public virtual void NormalAttack() 
+    public virtual void NormalAttack()
     {
-    
+
     }
 
     public virtual void Dashing()

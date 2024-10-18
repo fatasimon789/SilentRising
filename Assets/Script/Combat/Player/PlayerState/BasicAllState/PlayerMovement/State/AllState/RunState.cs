@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RunState : PlayerMovementState
+public class RunState : PlayerActionState
 {
     public RunState(PlayerMovementStateMachine PLAYER_MOVEMENT_STATE_MACHINE) : base(PLAYER_MOVEMENT_STATE_MACHINE)
     {
@@ -13,11 +13,13 @@ public class RunState : PlayerMovementState
         base.EnterState();
         // StartAnimator(playerMovementStateMachine.player.playerAnimator.runningParamaterHash);
         StartAnimator(playerMovementStateMachine.player.playerAnimatorData.S_movingString);
+       
     }
     public override void ExitState()
     {
         base.ExitState();
         StopAnimator(playerMovementStateMachine.player.playerAnimatorData.S_movingString);
+       
     }
     public override void Update()
     {
@@ -25,6 +27,7 @@ public class RunState : PlayerMovementState
         if(movementInput == Vector2.zero) 
         {
             playerMovementStateMachine.ChanceState(playerMovementStateMachine.hardStopState);
+          
         }
 
     }

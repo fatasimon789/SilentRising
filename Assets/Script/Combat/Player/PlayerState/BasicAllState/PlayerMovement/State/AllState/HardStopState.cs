@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HardStopState : PlayerMovementState
+public class HardStopState : PlayerActionState
 {
     public HardStopState(PlayerMovementStateMachine PLAYER_MOVEMENT_STATE_MACHINE) : base(PLAYER_MOVEMENT_STATE_MACHINE)
     {
@@ -29,7 +29,7 @@ public class HardStopState : PlayerMovementState
         base.FixedUpdate();
         if (!IsMovingHorizontally()) 
         {
-            return;
+            playerMovementStateMachine.ChanceState(playerMovementStateMachine.runState);
         }
         else 
         {
