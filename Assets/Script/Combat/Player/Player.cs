@@ -41,6 +41,7 @@ public class Player : MonoBehaviour
         playerMovementStateMachine.HandleInput();
        playerMovementStateMachine.Update();
         healSystem.UIUpdateHealthBar();
+       
     }
     private void FixedUpdate()
     {

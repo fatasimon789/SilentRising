@@ -14,7 +14,6 @@ public class AttackState : PlayerActionState
     {
         base.EnterState();
         StartAnimatorTrigger(playerMovementStateMachine.player.playerAnimatorData.S_attackString);
-        //Debug.Log("attack state 000 " + canAttack);
     }
     public override void ExitState()
     {
@@ -24,14 +23,10 @@ public class AttackState : PlayerActionState
     public override void Update()
     {
         base.Update();
-   //     Debug.Log(canAttack + "attackstate");
-       
     }
     public override void HandleInput()
     {
         base.HandleInput();
-        // tuy loi vu khi se chuyen dang tan cong khac nhau
-       
     }
     public override void AnimationTriggerEventBase(PlayerTriggerEventAnim.AnimationTriggerType triggerType)
     {
@@ -39,14 +34,17 @@ public class AttackState : PlayerActionState
         switch (triggerType) 
         {
             case PlayerTriggerEventAnim.AnimationTriggerType.Slash:
-                WaitToEndSlashAnimation();
+                   WaitToEndSlashAnimation();
+                
                 break;
             case PlayerTriggerEventAnim.AnimationTriggerType.ComboTo0:
                 ComboTab();
                 break;
+            case PlayerTriggerEventAnim.AnimationTriggerType.OffComboTo0:
+                OffComboTab();
+                break;
             case PlayerTriggerEventAnim.AnimationTriggerType.ThurshSlash:
                 WaitToEndSlashAnimation();
-               
                 break;
             default:
                 break;
@@ -56,13 +54,18 @@ public class AttackState : PlayerActionState
     #region Main Method
     private void WaitToEndSlashAnimation() 
     {
-        canAttack = true;
         playerMovementStateMachine.ChanceState(playerMovementStateMachine.idleState);
-       
+        IsPlayerMoving(true);
     }
+    
     private void ComboTab() 
     {
         canAttack = true;
+      
+    }
+    private void OffComboTab() 
+    {
+        canAttack = false;
     }
     #endregion
 }

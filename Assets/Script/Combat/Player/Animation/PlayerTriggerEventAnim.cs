@@ -11,7 +11,7 @@ public class PlayerTriggerEventAnim : MonoBehaviour
     }
     public enum AnimationTriggerType 
     {
-       Slash,ComboTo0,
+       Slash,ComboTo0,OffComboTo0,
        ThurshSlash,
     }
     
