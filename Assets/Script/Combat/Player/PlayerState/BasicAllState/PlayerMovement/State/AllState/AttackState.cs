@@ -34,8 +34,8 @@ public class AttackState : PlayerActionState
         switch (triggerType) 
         {
             case PlayerTriggerEventAnim.AnimationTriggerType.Slash:
-                   WaitToEndSlashAnimation();
-                
+                WaitToEndSlashAnimation();
+                vfxAllOff();
                 break;
             case PlayerTriggerEventAnim.AnimationTriggerType.ComboTo0:
                 ComboTab();
@@ -45,6 +45,16 @@ public class AttackState : PlayerActionState
                 break;
             case PlayerTriggerEventAnim.AnimationTriggerType.ThurshSlash:
                 WaitToEndSlashAnimation();
+                vfxAllOff();
+                break;
+            case PlayerTriggerEventAnim.AnimationTriggerType.vfxSlash1:
+                vfxNormalAttack(1);
+                break;
+            case PlayerTriggerEventAnim.AnimationTriggerType.vfxThursh:
+                vfxNormalAttack(2);
+                break;
+            case PlayerTriggerEventAnim.AnimationTriggerType.vfxSlash2:
+                vfxNormalAttack(3);
                 break;
             default:
                 break;
@@ -66,6 +76,27 @@ public class AttackState : PlayerActionState
     private void OffComboTab() 
     {
         canAttack = false;
+    }
+    private void vfxNormalAttack(int COMBO) 
+    {
+        if (COMBO == 1) 
+        {
+            playerMovementStateMachine.player.playerDataEffect.G_Slash1.SetActive(true);
+        }
+        if (COMBO == 2)
+        {
+            playerMovementStateMachine.player.playerDataEffect.G_Thursh1.SetActive(true);
+        }
+        if (COMBO == 3)
+        {
+            playerMovementStateMachine.player.playerDataEffect.G_Slash2.SetActive(true);
+        }
+    }
+    private void vfxAllOff() 
+    {
+        playerMovementStateMachine.player.playerDataEffect.G_Slash1.SetActive(false);
+        playerMovementStateMachine.player.playerDataEffect.G_Thursh1.SetActive(false);
+        playerMovementStateMachine.player.playerDataEffect.G_Slash2.SetActive(false);
     }
     #endregion
 }

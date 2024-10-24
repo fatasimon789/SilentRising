@@ -17,6 +17,8 @@ public class PlayerActionState : IState
     protected bool isAttack;
     protected static bool canAttack = true;
     protected static bool canMoving = true;
+    // Type Weapon :  Sword 
+    protected static int CountingAttack;
 
     // dat struct   ao~ de khoi tao ra new cua cac state nho~ thong qua PlayerMovementStatemachine
     // cac state duoc thua ke se co struct tuong tu cai nay
@@ -120,10 +122,8 @@ public class PlayerActionState : IState
         if(canAttack)
         {
           IsPlayerMoving(false);
-         
           playerMovementStateMachine.ChanceState(playerMovementStateMachine.attackSwordState);
         }
-      
     }
     #endregion
     // -------------------- Resauble Method ----------------------

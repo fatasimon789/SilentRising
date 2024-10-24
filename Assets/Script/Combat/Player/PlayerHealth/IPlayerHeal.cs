@@ -5,8 +5,13 @@ using UnityEngine;
 public interface IPlayerHeal 
 {
     float lerpSpeed { get; set; }
-    int currentHeal { get; set; }
-    int maxHeal { get; set; }
+    // Stats 
+    int attackValue { get; set; }
+    int maxHPValue { get; set; }
+    int currentHPValue { get; set; }
+    int defenseValue { get; set; }
+    float critRateValue { get; set; }
+
     void takeDamages(int DAMAGES);
     void takeHealing(int DAMAGES);
     void UIUpdateHealthBar();

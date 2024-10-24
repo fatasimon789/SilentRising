@@ -5,8 +5,13 @@ using UnityEngine;
 
 public class WeaponManager : MonoBehaviour
 {
+    public static WeaponManager instance;
     public SystemSkillWeapon SystemSkillWeapon;
-    public int damages { get; set; }
+
+    [HideInInspector] public int weaponDamages;
+    [HideInInspector] public int weaponHP ;
+    [HideInInspector] public int weaponDEF;
+    [HideInInspector] public float weaponCRIT;
     public CombatTypeManager.DamegesType DamagesType { get; set; }
     public string nameWeapon { get;  set; }
 
@@ -18,6 +23,14 @@ public class WeaponManager : MonoBehaviour
     #endregion
     private void Awake()
     {
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else 
+        {
+            Destroy(instance);
+        }
         WeaponMachine = new WeaponTypeMachine();
 
         FireSword = new FireSword(this,WeaponMachine);
@@ -25,18 +38,28 @@ public class WeaponManager : MonoBehaviour
     }
     private void Start()
     {
+        // give the value from weapon 
         WeaponMachine.Initialize(FireSword);
+     
     }
     private void Update()
     {
-      
-        // lay name lam ui thong bao ten weapon
+        // Weapon INFO
         nameWeapon = SystemSkillWeapon.name;
-        // lay damges type de thong qua code damages enemy  phu thuoc vao he
         DamagesType = SystemSkillWeapon.DamagesType;
-        // base dame co ban se dua vao thuoc tinh chinh cua nhan vat 
-        damages = SystemSkillWeapon.dameges;
-  
+        // stats value
+        weaponDamages = SystemSkillWeapon.dameges;
+        weaponHP = SystemSkillWeapon.heal;
+        weaponDEF = SystemSkillWeapon.defense;
+        weaponCRIT = SystemSkillWeapon.crit;
+        // Weapon Ability
+        PassivePlayer();
+        NormalAttackPlayer();
+        FirstSkillPlayer();
+        SecondSkillPlayer();
+        UltimateSkillPlayer();
+        DashingPlayer();
+        HealingPlayer();
     }
     private void ChangeWeapon()
     {
