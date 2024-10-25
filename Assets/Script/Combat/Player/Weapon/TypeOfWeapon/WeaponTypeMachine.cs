@@ -20,8 +20,11 @@ public class WeaponTypeMachine
  
     public void ChanceWeapon(TypeOfWeapon CHANCE_NEW_WEAPON) 
     {
+        // van nhan vu khi cu va xoa 
          currentWeapon.DeleteOldWeapon();
+        // add vu khi hien tai la vu khi moi 
          currentWeapon = CHANCE_NEW_WEAPON;
+        // nhan vu khi moi  va add
          currentWeapon.ChanceNewWeapon();
     }
     public void Dashing()

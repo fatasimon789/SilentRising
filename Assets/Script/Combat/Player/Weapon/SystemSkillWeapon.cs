@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditorInternal;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "New SystemSkill",menuName = "SystemSkill")]
@@ -10,11 +11,13 @@ public class SystemSkillWeapon : ScriptableObject
     public GameObject weaponPrefap;
     public int attackRange;
     public CombatTypeManager.DamegesType DamagesType;
-    public Animator animatorPlayer;
+    public RuntimeAnimatorController animatorPlayer;
 
     [Header(" Basic Stats")]
     public int heal;
     public int dameges;
     public int defense;
     public float crit; 
+   
+   
 }

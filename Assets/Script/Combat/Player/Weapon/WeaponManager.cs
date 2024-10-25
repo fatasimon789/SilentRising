@@ -8,10 +8,10 @@ public class WeaponManager : MonoBehaviour
     public static WeaponManager instance;
     public SystemSkillWeapon SystemSkillWeapon;
 
-    [HideInInspector] public int weaponDamages;
-    [HideInInspector] public int weaponHP ;
-    [HideInInspector] public int weaponDEF;
-    [HideInInspector] public float weaponCRIT;
+    public int weaponDamages { get; private set; }
+    public int weaponHP { get; private set; }
+    public int weaponDEF { get; private set; }
+    public float weaponCRIT { get; private set; }
     public CombatTypeManager.DamegesType DamagesType { get; set; }
     public string nameWeapon { get;  set; }
 
@@ -40,7 +40,6 @@ public class WeaponManager : MonoBehaviour
     {
         // give the value from weapon 
         WeaponMachine.Initialize(FireSword);
-     
     }
     private void Update()
     {
@@ -61,13 +60,7 @@ public class WeaponManager : MonoBehaviour
         DashingPlayer();
         HealingPlayer();
     }
-    private void ChangeWeapon()
-    {
-      //  WeaponMachine.ChanceWeapon(IcePunch);
-      // tao 1 system rieng chuyen swap va xoa method nay  neu chon weapon  ngau nhien ( vi du Ice Punch thi se thay systemskill weapon) 
-    }
     #region All Skill
-
     public  void HealingPlayer()
     {
         // refrence normal healling

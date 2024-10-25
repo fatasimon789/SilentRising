@@ -21,5 +21,6 @@ public class PlayerUI : MonoBehaviour
     {
         healBar = GameObject.Find("HealBarUI").GetComponent<Slider>();
         easeHealBar = GameObject.Find("EaseHealBarUI").GetComponent<Slider>();
+        
     }
 }

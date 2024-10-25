@@ -13,9 +13,10 @@ MonoBehaviour:
   m_Name: FireSword
   m_EditorClassIdentifier: 
   nameOfWeapon: FireSword
-  weaponPrefap: {fileID: 0}
+  weaponPrefap: {fileID: 2307835571431119504, guid: 4e80aa37a672f7444a157903e1e373e3, type: 3}
   attackRange: 5
   DamagesType: 0
+  animatorPlayer: {fileID: 9100000, guid: 0372e99ab32865b418e74224789cf89c, type: 2}
   heal: 500
   dameges: 100
   defense: 50

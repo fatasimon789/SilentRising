@@ -20,7 +20,7 @@ public class Player : MonoBehaviour
     public Animator animator { get; private set;} 
     public PlayerStatsSystem healSystem { get; private set; }
     
-   
+    public WeaponManager weaponManager { get; private set; }
     private void Awake()
     {
         if(instance == null) { instance = this; } else { Destroy(instance); }
@@ -34,22 +34,20 @@ public class Player : MonoBehaviour
         playerAnimatorData.Initilized();
         playerDataEffect.InitilizedVfx();
         animator = GetComponentInChildren<Animator>();
+        weaponManager = GetComponentInChildren<WeaponManager>();
     }
     private void Start()
     {
-        healSystem = new PlayerStatsSystem(WeaponManager.instance.weaponHP, WeaponManager.instance.weaponDamages,
-                                          WeaponManager.instance.weaponDEF, WeaponManager.instance.weaponCRIT);
-       
-        playerMovementStateMachine.ChanceState(playerMovementStateMachine.idleState);
+        healSystem = new PlayerStatsSystem(weaponManager.SystemSkillWeapon.heal, weaponManager.SystemSkillWeapon.dameges,
+                                          weaponManager.SystemSkillWeapon.defense, weaponManager.SystemSkillWeapon.crit);
         healSystem.StartHealSystem();
+        playerMovementStateMachine.ChanceState(playerMovementStateMachine.idleState);
     }
     private void Update()
     {
-       
         playerMovementStateMachine.HandleInput();
         playerMovementStateMachine.Update();
         healSystem.UIUpdateHealthBar();
-       
     }
     private void FixedUpdate()
     {

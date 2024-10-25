@@ -8,11 +8,11 @@ public interface IPlayerHeal
     // Stats 
     int attackValue { get; set; }
     int maxHPValue { get; set; }
-    int currentHPValue { get; set; }
-    int defenseValue { get; set; }
+    float currentHPValue { get; set; }
+    float defenseValue { get; set; }
     float critRateValue { get; set; }
 
-    void takeDamages(int DAMAGES);
+    void basicTakeDamages(float DAMAGES);
     void takeHealing(int DAMAGES);
     void UIUpdateHealthBar();
 }

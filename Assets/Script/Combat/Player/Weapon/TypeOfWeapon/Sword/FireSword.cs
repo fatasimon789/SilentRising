@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FireSword : TypeOfWeapon,IFireSwordData
+public class FireSword : TypeOfWeapon
 {
     public FireSword(WeaponManager WEAPON_MANAGER, WeaponTypeMachine WEAPON_TYPE_MACHINE) : base(WEAPON_MANAGER, WEAPON_TYPE_MACHINE)
     {
@@ -15,6 +15,7 @@ public class FireSword : TypeOfWeapon,IFireSwordData
     public override void ChanceNewWeapon()
     {
         base.ChanceNewWeapon();
+        // them vao day firesword
     }
 
     public override void Dashing()
@@ -25,6 +26,7 @@ public class FireSword : TypeOfWeapon,IFireSwordData
     public override void DeleteOldWeapon()
     {
         base.DeleteOldWeapon();
+        // xoa vao day firesword
     }
 
     public override void FirstSkill()

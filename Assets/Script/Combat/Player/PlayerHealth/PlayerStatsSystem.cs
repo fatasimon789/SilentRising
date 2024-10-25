@@ -8,12 +8,14 @@ public class PlayerStatsSystem : IPlayerHeal
     public float lerpSpeed { get; set; } = 0.05f;
     // ---------- STATS VALUE ----------------
     public int maxHPValue { get; set; }
-    public int currentHPValue { get ; set ; }
+    public float currentHPValue { get ; set ; }
     public int attackValue { get ; set; }
-    public int defenseValue { get ; set ; }
+    public float defenseValue { get ; set ; }
     public float critRateValue { get; set ; }
 
-    public PlayerStatsSystem( int HP,int ATTACK , int DEF , float CRITRATE)
+    private float enemyTestDamages = 80f;
+
+    public PlayerStatsSystem( int HP,int ATTACK , float DEF , float CRITRATE)
     {
         maxHPValue = HP;
         attackValue= ATTACK;
@@ -24,6 +26,8 @@ public class PlayerStatsSystem : IPlayerHeal
     public void StartHealSystem()
     {
         currentHPValue = maxHPValue;
+      //  PlayerUI.instance.healBar.value = maxHPValue;
+       // PlayerUI.instance.easeHealBar.value = maxHPValue;
     }
     
     public  void UIUpdateHealthBar()
@@ -39,12 +43,28 @@ public class PlayerStatsSystem : IPlayerHeal
         // test take damages
         if (Input.GetKeyDown(KeyCode.L))
         {
-            takeDamages(10);
+            //3 
+            basicTakeDamages(takeDamegesValue());
         }
+       
     }
     // enemy call
     // HP va DEF VALUE se bi tru phu thuoc vao damages enemy
-    public void takeDamages(int DAMAGES)
+    // 2
+    private float takeDamegesValue() 
+    {
+      float damagesValue = enemyTestDamages - damagesReduceDEF();
+
+        return damagesValue;
+    }
+    // 1 
+    private float damagesReduceDEF() 
+    {
+        float damagesReduce = enemyTestDamages * multiplyDEF();
+        return damagesReduce;
+    }
+    //0
+    public void basicTakeDamages(float DAMAGES)
     {
         currentHPValue -= DAMAGES;
         Debug.Log(currentHPValue);
@@ -53,5 +73,17 @@ public class PlayerStatsSystem : IPlayerHeal
     public void takeHealing(int DAMAGES)
     {
        currentHPValue += DAMAGES;
+    }
+    // 0
+    private float multiplyDEF(float averageValue = 200f) 
+    {
+        float baseDef =  defenseValue;
+        float averageDEF = defenseValue + averageValue;
+        float multiplyDEF = baseDef / averageDEF;
+        if (multiplyDEF == 0) 
+        {
+            multiplyDEF = 1f;
+        }
+        return multiplyDEF;
     }
 }
