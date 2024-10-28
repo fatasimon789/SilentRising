@@ -17,10 +17,10 @@ public class Player : MonoBehaviour
     public PlayerInput playerInput { get; private set; }
     public PlayerMovementStateMachine playerMovementStateMachine;
     public Camera _mainCamera { get; private set; }
-    public Animator animator { get; private set;} 
-    public PlayerStatsSystem healSystem { get; private set; }
+    public Animator animator { get; private set;}
+    public PlayerStatsSystem statsSystem { get;  set; }
+    private bool isTest;
     
-    public WeaponManager weaponManager { get; private set; }
     private void Awake()
     {
         if(instance == null) { instance = this; } else { Destroy(instance); }
@@ -34,24 +34,32 @@ public class Player : MonoBehaviour
         playerAnimatorData.Initilized();
         playerDataEffect.InitilizedVfx();
         animator = GetComponentInChildren<Animator>();
-        weaponManager = GetComponentInChildren<WeaponManager>();
+      
     }
     private void Start()
     {
-        healSystem = new PlayerStatsSystem(weaponManager.SystemSkillWeapon.heal, weaponManager.SystemSkillWeapon.dameges,
-                                          weaponManager.SystemSkillWeapon.defense, weaponManager.SystemSkillWeapon.crit);
-        healSystem.StartHealSystem();
+       
+        statsSystem = new PlayerStatsSystem(WeaponManager.instance.weaponHP, WeaponManager.instance.weaponDamages,
+                                          WeaponManager.instance.weaponDEF, WeaponManager.instance.weaponCRIT);
+        statsSystem.StartHealSystem();
         playerMovementStateMachine.ChanceState(playerMovementStateMachine.idleState);
     }
     private void Update()
     {
         playerMovementStateMachine.HandleInput();
         playerMovementStateMachine.Update();
-        healSystem.UIUpdateHealthBar();
+        statsSystem.UIUpdateHealthBar();
+        
+        if (SystemChanceWeapon.instance.isSwitch && !isTest ) 
+        {
+            isTest = true;
+            statsSystem = new PlayerStatsSystem(WeaponManager.instance.weaponHP, WeaponManager.instance.weaponDamages,
+                                                WeaponManager.instance.weaponDEF, WeaponManager.instance.weaponCRIT);
+        }
     }
     private void FixedUpdate()
     {
         playerMovementStateMachine.PhysicUpdate();   
     }
-    
+   
 }

@@ -14,5 +14,6 @@ public interface IPlayerHeal
 
     void basicTakeDamages(float DAMAGES);
     void takeHealing(int DAMAGES);
+    void takeFullHealing();
     void UIUpdateHealthBar();
 }

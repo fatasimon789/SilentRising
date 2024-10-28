@@ -8,11 +8,11 @@ public class WeaponManager : MonoBehaviour
     public static WeaponManager instance;
     public SystemSkillWeapon SystemSkillWeapon;
 
-    public int weaponDamages { get; private set; }
-    public int weaponHP { get; private set; }
-    public int weaponDEF { get; private set; }
-    public float weaponCRIT { get; private set; }
-    public CombatTypeManager.DamegesType DamagesType { get; set; }
+    public int weaponDamages { get;private  set; }
+    public int weaponHP { get;private  set; }
+    public int weaponDEF { get;private set; }
+    public float weaponCRIT { get;private set; }
+    public CombatTypeManager.DamegesType DamagesType { get;private set; }
     public string nameWeapon { get;  set; }
 
 
@@ -40,6 +40,12 @@ public class WeaponManager : MonoBehaviour
     {
         // give the value from weapon 
         WeaponMachine.Initialize(FireSword);
+       
+        // InitlizeFirstWeapon Start
+        weaponDamages = SystemSkillWeapon.dameges;
+        weaponHP = SystemSkillWeapon.heal;
+        weaponDEF = SystemSkillWeapon.defense;
+        weaponCRIT = SystemSkillWeapon.crit;
     }
     private void Update()
     {
@@ -47,10 +53,8 @@ public class WeaponManager : MonoBehaviour
         nameWeapon = SystemSkillWeapon.name;
         DamagesType = SystemSkillWeapon.DamagesType;
         // stats value
-        weaponDamages = SystemSkillWeapon.dameges;
-        weaponHP = SystemSkillWeapon.heal;
-        weaponDEF = SystemSkillWeapon.defense;
-        weaponCRIT = SystemSkillWeapon.crit;
+        StatsWeaponUpdate();
+       
         // Weapon Ability
         PassivePlayer();
         NormalAttackPlayer();
@@ -103,4 +107,11 @@ public class WeaponManager : MonoBehaviour
         // R input
     }
     #endregion
+    public void StatsWeaponUpdate()
+    {
+        weaponDamages = SystemSkillWeapon.dameges;
+        weaponHP = SystemSkillWeapon.heal;
+        weaponDEF = SystemSkillWeapon.defense;
+        weaponCRIT = SystemSkillWeapon.crit;
+    }
 }

@@ -21,17 +21,22 @@ public class PlayerStatsSystem : IPlayerHeal
         attackValue= ATTACK;
         defenseValue = DEF;
         critRateValue = CRITRATE;
+        
     }
-  
+
     public void StartHealSystem()
     {
         currentHPValue = maxHPValue;
-      //  PlayerUI.instance.healBar.value = maxHPValue;
-       // PlayerUI.instance.easeHealBar.value = maxHPValue;
+      
     }
-    
+  
     public  void UIUpdateHealthBar()
     {
+        if (SystemChanceWeapon.instance.isSwitch) 
+        {
+            StartHealSystem();
+            Debug.Log("current hp from start heal = " + currentHPValue);
+        }
         if (PlayerUI.instance.healBar.value != currentHPValue)
         {
             PlayerUI.instance.healBar.value = currentHPValue;
@@ -46,7 +51,7 @@ public class PlayerStatsSystem : IPlayerHeal
             //3 
             basicTakeDamages(takeDamegesValue());
         }
-       
+        
     }
     // enemy call
     // HP va DEF VALUE se bi tru phu thuoc vao damages enemy
@@ -54,7 +59,6 @@ public class PlayerStatsSystem : IPlayerHeal
     private float takeDamegesValue() 
     {
       float damagesValue = enemyTestDamages - damagesReduceDEF();
-
         return damagesValue;
     }
     // 1 
@@ -67,12 +71,17 @@ public class PlayerStatsSystem : IPlayerHeal
     public void basicTakeDamages(float DAMAGES)
     {
         currentHPValue -= DAMAGES;
-        Debug.Log(currentHPValue);
+        Debug.Log(currentHPValue + "take damages basic");
     }
     // player call
     public void takeHealing(int DAMAGES)
     {
        currentHPValue += DAMAGES;
+    }
+
+    public void takeFullHealing()
+    {
+        currentHPValue = maxHPValue;
     }
     // 0
     private float multiplyDEF(float averageValue = 200f) 
@@ -86,4 +95,5 @@ public class PlayerStatsSystem : IPlayerHeal
         }
         return multiplyDEF;
     }
+
 }
