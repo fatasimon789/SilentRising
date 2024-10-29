@@ -23,8 +23,16 @@ public class PlayerUI : MonoBehaviour
         easeHealBar = GameObject.Find("EaseHealBarUI").GetComponent<Slider>();
       
     }
+    private void Update()
+    {
+        UpdateHealBar();
+    }
     private void UpdateHealBar() 
     {
-        
+        if (SystemChanceWeapon.instance.isSwitch) 
+        {
+            healBar.maxValue = WeaponManager.instance.weaponHP;
+            easeHealBar.maxValue = WeaponManager.instance.weaponHP;
+        }   
     }
 }

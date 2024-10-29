@@ -19,7 +19,7 @@ public class Player : MonoBehaviour
     public Camera _mainCamera { get; private set; }
     public Animator animator { get; private set;}
     public PlayerStatsSystem statsSystem { get;  set; }
-    private bool isTest;
+    private bool isCheckingSwitch;
     
     private void Awake()
     {
@@ -50,16 +50,21 @@ public class Player : MonoBehaviour
         playerMovementStateMachine.Update();
         statsSystem.UIUpdateHealthBar();
         
-        if (SystemChanceWeapon.instance.isSwitch && !isTest ) 
+        if (SystemChanceWeapon.instance.isSwitch && !isCheckingSwitch ) 
         {
-            isTest = true;
+            isCheckingSwitch = true;
             statsSystem = new PlayerStatsSystem(WeaponManager.instance.weaponHP, WeaponManager.instance.weaponDamages,
                                                 WeaponManager.instance.weaponDEF, WeaponManager.instance.weaponCRIT);
+            StartCoroutine(checkingOff());
         }
     }
     private void FixedUpdate()
     {
         playerMovementStateMachine.PhysicUpdate();   
     }
-   
+    IEnumerator checkingOff() 
+    {
+      yield return new WaitForSeconds(1);
+        isCheckingSwitch = false;
+    }  
 }
