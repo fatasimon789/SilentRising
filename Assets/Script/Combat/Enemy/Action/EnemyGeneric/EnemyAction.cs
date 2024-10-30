@@ -2,28 +2,29 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyWolf :MonoBehaviour,IMeleeEnemy
+public class EnemyAction : IMeleeEnemy
 {
+    public EnemyWolf enemyWolf { get; private set; }
     public float distanceEnemy { get; set; } 
     public float damages { get;  set ; }
     public bool isAttack { get; set; } = true;
     public bool isDead { get; set; }
-    public float delayAttack { get; set; } = 1.5f;
+    public float delayAttack { get; set; } 
 
     public Rigidbody RGB { get ; set ; }
     public Transform playerPos { get; set; }
     public Animator animator { get; set; }
-    public float attackRange { get; set; } = 2f;
-    public float chasingSpeed { get; set; } = 3.5f;
-    public float visionRange { get; set; } = 10f;
+    public float attackRange { get; set; } 
+    public float chasingSpeed { get; set; } 
+    public float visionRange { get; set; } 
 
-    private void Start()
+    public EnemyAction(EnemyWolf ENEMY) 
     {
-        playerPos = GameObject.FindGameObjectWithTag("Player").transform;
-        RGB = GetComponent<Rigidbody>();
-        animator = GetComponent<Animator>();
-    }
-    private void Update()
+        enemyWolf = ENEMY;
+        
+    } 
+   
+    public void UpdateAction()
     {
        
         if (distanceEnemy <= attackRange && isAttack) 
@@ -47,7 +48,7 @@ public class EnemyWolf :MonoBehaviour,IMeleeEnemy
         // collider damages
         //effect slash
         isAttack = false;
-        StartCoroutine(CanAttack(delayAttack));
+        enemyWolf.WaitToAttack();
     }
 
 
@@ -80,7 +81,7 @@ public class EnemyWolf :MonoBehaviour,IMeleeEnemy
     private Vector3 EnemyMovement(float CHASING_SPEED)
     {
         Vector3 target = playerPos.position;
-        Vector3 enemyMovement = Vector3.MoveTowards(this.transform.position, target, CHASING_SPEED * Time.deltaTime);
+        Vector3 enemyMovement = Vector3.MoveTowards(enemyWolf.transform.position, target, CHASING_SPEED * Time.deltaTime);
     
         return enemyMovement; 
     }
@@ -93,17 +94,13 @@ public class EnemyWolf :MonoBehaviour,IMeleeEnemy
     //3
     private Vector2 EnemyPos() 
     {
-        Vector2 enemyCurrentPos = new Vector2(this.transform.position.x, this.transform.position.z);
+        Vector2 enemyCurrentPos = new Vector2(enemyWolf.transform.position.x, enemyWolf.transform.position.z);
         return enemyCurrentPos;
     } // 3
     private void UpdateDistance() 
     {
         distanceEnemy = Vector2.Distance(PlayerPos(), EnemyPos());
     }
-    private IEnumerator CanAttack(float TIME_DELAY) 
-    {
-        yield return new WaitForSeconds(TIME_DELAY);
-        isAttack = true;
-    }
+    
     #endregion
 }

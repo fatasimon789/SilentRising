@@ -2,17 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyHP : MonoBehaviour
+public class EnemyHP : MonoBehaviour,IEnemyHP
 {
-    // Start is called before the first frame update
-    void Start()
+    public  SystemEnemyStats systemStats ;
+    public float hpValue { get ; set; }
+    public bool isDead { get ; set; }
+
+    public void takeDamages()
     {
         
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+   
 }
