@@ -1,41 +1,39 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
-public class EnemyWolf : MonoBehaviour,IEnemy
+public class EnemyWolf : EnemyAction
 {
-    public SystemEnemyStats stats;
-    protected EnemyAction enemyAction;
-
-    private void Awake()
+    
+    public EnemyWolf(TheWolf ENEMY) : base(ENEMY)
     {
-        enemyAction = new EnemyAction(this);
-    }
-    private void Start()
-    {
-        enemyAction.playerPos = GameObject.FindGameObjectWithTag("Player").transform;
-        enemyAction.RGB = GetComponent<Rigidbody>();
-        enemyAction.animator = GetComponent<Animator>();
-        // start updating 
-        enemyAction.delayAttack = stats.delayAttack;
-        enemyAction.attackRange = stats.attackRange;
-        enemyAction.chasingSpeed = stats.chasingSpeed;
-        enemyAction.visionRange= stats.visionRange;
-    }
-    private void Update()
-    {
-        enemyAction.UpdateAction();
-    }
-    public void WaitToAttack() 
-    {
-        StartCoroutine(CanAttack(enemyAction.delayAttack));
-    }
-    #region Resauble Method
-    #endregion
-    private IEnumerator CanAttack(float TIME_DELAY)
-    {
-        yield return new WaitForSeconds(TIME_DELAY);
-        enemyAction.isAttack= true;
+        wolf = ENEMY;
        
     }
+    #region Main Method
+    public override void Attack(bool INTO_RANGES)
+    {
+        base.Attack(INTO_RANGES);
+        // effect
+        // colider
+    }
+   
+    #endregion
+    #region Method Event
+    public Collider[] ColiderDamages1() 
+    {
+        // tao collider damags
+        Collider[] colliderInfo = Physics.OverlapBox(wolf.colliderPos,wolf.colliderHalfExtend, Quaternion.identity);
+
+        return colliderInfo;
+        
+        // neu collider tra ve k null thi se lay script player take daamges
+    }
+    #endregion
+    #region Resauble Method
+
+    #endregion
+
+
 }
