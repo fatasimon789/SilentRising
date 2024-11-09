@@ -33,8 +33,8 @@ public class AttackState : PlayerActionState
         base.AnimationTriggerEventBase(triggerType);
         switch (triggerType) 
         {
-            case PlayerTriggerEventAnim.AnimationTriggerType.Slash:
-                WaitToEndSlashAnimation();
+            case PlayerTriggerEventAnim.AnimationTriggerType.EndAnim:
+                WaitToEndAnimation();
                 vfxAllOff();
                 break;
             case PlayerTriggerEventAnim.AnimationTriggerType.ComboTo0:
@@ -43,10 +43,7 @@ public class AttackState : PlayerActionState
             case PlayerTriggerEventAnim.AnimationTriggerType.OffComboTo0:
                 OffComboTab();
                 break;
-            case PlayerTriggerEventAnim.AnimationTriggerType.ThurshSlash:
-                WaitToEndSlashAnimation();
-                vfxAllOff();
-                break;
+         // ++++++++++++++++++++++++++ ATTACK SWORD +++++++++++++++++++++++
             case PlayerTriggerEventAnim.AnimationTriggerType.vfxSlash1:
                 vfxNormalAttack(1);
                 break;
@@ -56,13 +53,15 @@ public class AttackState : PlayerActionState
             case PlayerTriggerEventAnim.AnimationTriggerType.vfxSlash2:
                 vfxNormalAttack(3);
                 break;
+            // ++++++++++++++++++++++++++ ATTACK Fist +++++++++++++++++++++++
+
             default:
                 break;
         }
     }
     #endregion
     #region Main Method
-    private void WaitToEndSlashAnimation() 
+    private void WaitToEndAnimation() 
     {
         playerMovementStateMachine.ChanceState(playerMovementStateMachine.idleState);
         IsPlayerMoving(true);
@@ -79,6 +78,7 @@ public class AttackState : PlayerActionState
     }
     private void vfxNormalAttack(int COMBO) 
     {
+     // +++++++++++++++++++ ATTACK SWORD ++++++++++++++++
         if (COMBO == 1) 
         {
             playerMovementStateMachine.player.playerDataEffect.G_Slash1.SetActive(true);
@@ -91,12 +91,15 @@ public class AttackState : PlayerActionState
         {
             playerMovementStateMachine.player.playerDataEffect.G_Slash2.SetActive(true);
         }
+     // ++++++++++++++++++++ ATTACK FIST +++++++++++++++++
     }
     private void vfxAllOff() 
     {
+        // +++++++++++++++++++ ATTACK SWORD ++++++++++++++++
         playerMovementStateMachine.player.playerDataEffect.G_Slash1.SetActive(false);
         playerMovementStateMachine.player.playerDataEffect.G_Thursh1.SetActive(false);
         playerMovementStateMachine.player.playerDataEffect.G_Slash2.SetActive(false);
+        // +++++++++++++++++++ ATTACK FIST ++++++++++++++++
     }
     #endregion
 }

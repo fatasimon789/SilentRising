@@ -42,9 +42,27 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Ability",
+                    "name": "AbilityQ",
                     "type": "Button",
                     "id": "6d98bd75-2d16-4f21-9088-ee538e313660",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "AbilityE",
+                    "type": "Button",
+                    "id": "4bef5f86-1209-4804-a66a-5826a966cd60",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "AbilityR",
+                    "type": "Button",
+                    "id": "c0be5858-dd51-4207-be86-7f9d8886bf9a",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -152,11 +170,11 @@
                 {
                     "name": "",
                     "id": "682335df-631c-4890-81c6-359f037de7fe",
-                    "path": "",
+                    "path": "<Keyboard>/q",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Ability",
+                    "action": "AbilityQ",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -168,6 +186,28 @@
                     "processors": "",
                     "groups": "",
                     "action": "LookAt",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "6ed790ac-df5c-4d98-8542-351ed1589556",
+                    "path": "<Keyboard>/e",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "AbilityE",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "0c327bf3-6b5f-40a1-83af-bf2a61366552",
+                    "path": "<Keyboard>/r",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "AbilityR",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

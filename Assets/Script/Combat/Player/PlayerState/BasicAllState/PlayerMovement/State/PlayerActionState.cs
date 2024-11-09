@@ -53,24 +53,30 @@ public class PlayerActionState : IState
 
     public virtual void HandleInput()
     {
-        PlayerMovement();
-        AttackSword();
+        PlayerMovementInput();
+        AttackInput();
     }
     public virtual void AnimationTriggerEventBase(PlayerTriggerEventAnim.AnimationTriggerType triggerType)
     {
 
     }
     #endregion
-    //------------------------------- Main Method--------------------------
-    #region Main Method
-    public void PlayerMovement()
+    #region Input Method
+    // ++++++++++++++++++++++++ INPUT METHOD  ++++++++++++++++++++++++++++
+    public void PlayerMovementInput()
     {
         movementInput = playerMovementStateMachine.player.playerInput.playerActions.Movement.ReadValue<Vector2>();
     }
-    public void AttackSword()
+    public void AttackInput()
     {
         playerMovementStateMachine.player.playerInput.playerActions.AttackSword.performed += ctx => Attack();
     }
+    public void AbilityUltimateInput()
+    {
+
+    }
+    #endregion
+    #region Main method
 
     private void PlayerLookAtMouse()
     {
@@ -121,13 +127,13 @@ public class PlayerActionState : IState
     {
         if(canAttack)
         {
-          IsPlayerMoving(false);
-          playerMovementStateMachine.ChanceState(playerMovementStateMachine.attackSwordState);
+             IsPlayerMoving(false);
+             playerMovementStateMachine.ChanceState(playerMovementStateMachine.attackSwordState);
         }
     }
     #endregion
-    // -------------------- Resauble Method ----------------------
     #region Resauble Method
+    // -------------------- Resauble Method ----------------------
     protected void StartAnimator(string ANIMATION_NAME) 
     {
         playerMovementStateMachine.player.animator.SetBool(ANIMATION_NAME,true);
@@ -173,5 +179,6 @@ public class PlayerActionState : IState
         canMoving= isMoving;
         canAttack = isMoving;
     }
+    
     #endregion
 }

@@ -16,7 +16,7 @@ MonoBehaviour:
   weaponPrefap: {fileID: 0}
   attackRange: 3
   DamagesType: 1
-  animatorPlayer: {fileID: 0}
+  animatorPlayer: {fileID: 9100000, guid: d32b9542ee74a1c4d9188d65474f5b12, type: 2}
   heal: 450
   dameges: 80
   defense: 80

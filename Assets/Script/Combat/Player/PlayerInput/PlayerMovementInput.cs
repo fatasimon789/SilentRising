@@ -64,9 +64,27 @@ public partial class @PlayerMovementInput: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Ability"",
+                    ""name"": ""AbilityQ"",
                     ""type"": ""Button"",
                     ""id"": ""6d98bd75-2d16-4f21-9088-ee538e313660"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""AbilityE"",
+                    ""type"": ""Button"",
+                    ""id"": ""4bef5f86-1209-4804-a66a-5826a966cd60"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""AbilityR"",
+                    ""type"": ""Button"",
+                    ""id"": ""c0be5858-dd51-4207-be86-7f9d8886bf9a"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -174,11 +192,11 @@ public partial class @PlayerMovementInput: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""682335df-631c-4890-81c6-359f037de7fe"",
-                    ""path"": """",
+                    ""path"": ""<Keyboard>/q"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Ability"",
+                    ""action"": ""AbilityQ"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -190,6 +208,28 @@ public partial class @PlayerMovementInput: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""LookAt"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""6ed790ac-df5c-4d98-8542-351ed1589556"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""AbilityE"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""0c327bf3-6b5f-40a1-83af-bf2a61366552"",
+                    ""path"": ""<Keyboard>/r"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""AbilityR"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -204,7 +244,9 @@ public partial class @PlayerMovementInput: IInputActionCollection2, IDisposable
         m_Player_AttackSword = m_Player.FindAction("AttackSword", throwIfNotFound: true);
         m_Player_Healing = m_Player.FindAction("Healing", throwIfNotFound: true);
         m_Player_Dash = m_Player.FindAction("Dash", throwIfNotFound: true);
-        m_Player_Ability = m_Player.FindAction("Ability", throwIfNotFound: true);
+        m_Player_AbilityQ = m_Player.FindAction("AbilityQ", throwIfNotFound: true);
+        m_Player_AbilityE = m_Player.FindAction("AbilityE", throwIfNotFound: true);
+        m_Player_AbilityR = m_Player.FindAction("AbilityR", throwIfNotFound: true);
         m_Player_LookAt = m_Player.FindAction("LookAt", throwIfNotFound: true);
     }
 
@@ -271,7 +313,9 @@ public partial class @PlayerMovementInput: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_AttackSword;
     private readonly InputAction m_Player_Healing;
     private readonly InputAction m_Player_Dash;
-    private readonly InputAction m_Player_Ability;
+    private readonly InputAction m_Player_AbilityQ;
+    private readonly InputAction m_Player_AbilityE;
+    private readonly InputAction m_Player_AbilityR;
     private readonly InputAction m_Player_LookAt;
     public struct PlayerActions
     {
@@ -281,7 +325,9 @@ public partial class @PlayerMovementInput: IInputActionCollection2, IDisposable
         public InputAction @AttackSword => m_Wrapper.m_Player_AttackSword;
         public InputAction @Healing => m_Wrapper.m_Player_Healing;
         public InputAction @Dash => m_Wrapper.m_Player_Dash;
-        public InputAction @Ability => m_Wrapper.m_Player_Ability;
+        public InputAction @AbilityQ => m_Wrapper.m_Player_AbilityQ;
+        public InputAction @AbilityE => m_Wrapper.m_Player_AbilityE;
+        public InputAction @AbilityR => m_Wrapper.m_Player_AbilityR;
         public InputAction @LookAt => m_Wrapper.m_Player_LookAt;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
@@ -304,9 +350,15 @@ public partial class @PlayerMovementInput: IInputActionCollection2, IDisposable
             @Dash.started += instance.OnDash;
             @Dash.performed += instance.OnDash;
             @Dash.canceled += instance.OnDash;
-            @Ability.started += instance.OnAbility;
-            @Ability.performed += instance.OnAbility;
-            @Ability.canceled += instance.OnAbility;
+            @AbilityQ.started += instance.OnAbilityQ;
+            @AbilityQ.performed += instance.OnAbilityQ;
+            @AbilityQ.canceled += instance.OnAbilityQ;
+            @AbilityE.started += instance.OnAbilityE;
+            @AbilityE.performed += instance.OnAbilityE;
+            @AbilityE.canceled += instance.OnAbilityE;
+            @AbilityR.started += instance.OnAbilityR;
+            @AbilityR.performed += instance.OnAbilityR;
+            @AbilityR.canceled += instance.OnAbilityR;
             @LookAt.started += instance.OnLookAt;
             @LookAt.performed += instance.OnLookAt;
             @LookAt.canceled += instance.OnLookAt;
@@ -326,9 +378,15 @@ public partial class @PlayerMovementInput: IInputActionCollection2, IDisposable
             @Dash.started -= instance.OnDash;
             @Dash.performed -= instance.OnDash;
             @Dash.canceled -= instance.OnDash;
-            @Ability.started -= instance.OnAbility;
-            @Ability.performed -= instance.OnAbility;
-            @Ability.canceled -= instance.OnAbility;
+            @AbilityQ.started -= instance.OnAbilityQ;
+            @AbilityQ.performed -= instance.OnAbilityQ;
+            @AbilityQ.canceled -= instance.OnAbilityQ;
+            @AbilityE.started -= instance.OnAbilityE;
+            @AbilityE.performed -= instance.OnAbilityE;
+            @AbilityE.canceled -= instance.OnAbilityE;
+            @AbilityR.started -= instance.OnAbilityR;
+            @AbilityR.performed -= instance.OnAbilityR;
+            @AbilityR.canceled -= instance.OnAbilityR;
             @LookAt.started -= instance.OnLookAt;
             @LookAt.performed -= instance.OnLookAt;
             @LookAt.canceled -= instance.OnLookAt;
@@ -355,7 +413,9 @@ public partial class @PlayerMovementInput: IInputActionCollection2, IDisposable
         void OnAttackSword(InputAction.CallbackContext context);
         void OnHealing(InputAction.CallbackContext context);
         void OnDash(InputAction.CallbackContext context);
-        void OnAbility(InputAction.CallbackContext context);
+        void OnAbilityQ(InputAction.CallbackContext context);
+        void OnAbilityE(InputAction.CallbackContext context);
+        void OnAbilityR(InputAction.CallbackContext context);
         void OnLookAt(InputAction.CallbackContext context);
     }
 }

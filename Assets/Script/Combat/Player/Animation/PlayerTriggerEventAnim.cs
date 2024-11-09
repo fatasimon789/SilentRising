@@ -11,11 +11,20 @@ public class PlayerTriggerEventAnim : MonoBehaviour
     }
     public enum AnimationTriggerType 
     {
-       // Sword Type
-       Slash,ComboTo0,OffComboTo0,
-       ThurshSlash,
+       // Attack Type
+       EndAnim,ComboTo0,OffComboTo0,
        //+ Effect Sword Type
-       vfxSlash1,vfxSlash2,vfxThursh
+       vfxSlash1,vfxSlash2,vfxThursh,
+       //+ Effect Firt Type
+       vfxPunch1,vfxPunch2,vfxPunch3,vfxPunch4,
+       //+ Effect Axe Type 
+       
+       // Ability Q 
+       FirstAbi,
+       // Ability E
+       SecondAbi,
+       // Ability R
+       UltimateAbi,
     }
     
 }

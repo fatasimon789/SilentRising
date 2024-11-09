@@ -57,6 +57,7 @@ public class Player : MonoBehaviour
                                                 WeaponManager.instance.weaponDEF, WeaponManager.instance.weaponCRIT);
             StartCoroutine(checkingOff());
         }
+        animator.runtimeAnimatorController = WeaponManager.instance.SystemSkillWeapon.animatorPlayer;
     }
     private void FixedUpdate()
     {

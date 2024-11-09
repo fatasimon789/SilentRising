@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -15,7 +16,12 @@ public abstract class EnemyAction : IMeleeEnemy
     public float damages { get;  set ; }
     public bool isAttack { get; set; } = true;
     public bool isDead { get; set; }
+    public bool isChasing { get; set; }
+    public bool isIdling { get; set; }
     public float delayAttack { get; set; } 
+
+    public Vector3 direction { get; set; }
+    public Quaternion rotation { get; set; }
 
     public Rigidbody RGB { get ; set ; }
     public Transform playerPos { get; set; }
@@ -44,49 +50,66 @@ public abstract class EnemyAction : IMeleeEnemy
         UpdateDistance();
         if (distanceEnemy <= attackRange && isAttack)
         {
+            EnemyAttackRotate();
             Attack(isAttack);
-
             return;
         }
-        // -1
+        // 0
         if (isAttack)
         {
             OnVision(visionRange);
+            EnemyRotate();
         }
-
     }
-    public virtual void Attack(bool INTO_RANGES)
+    public virtual void Attack(bool INTO_RANGE)
     {
 
         animator.SetTrigger("Attacking");
-        // collider damages
-        //effect slash
-        isAttack = false;
-        WaitToAttackAgain(EnemyID);
         Debug.Log("attack");
+        isAttack = false;
+        fixAnimationOnUpdate("Attacking");
+        WaitToAttackAgain(EnemyID);
+        
     }
+    // 1 VISION
     public  virtual void OnVision(float VISION_RANGES)
     {
-        Debug.Log(distanceEnemy + "  distance");
-
         if (distanceEnemy < VISION_RANGES)
         {
-            //0
-
+           
             OnRange(chasingSpeed);
         }
-        else
+        else if(distanceEnemy >= VISION_RANGES && !isIdling)
         {
             animator.SetTrigger("Idling");
+            isIdling = true;
+            fixAnimationOnUpdate("Idling");
         }
     }
+    // 2 CHASING
     public virtual void OnRange(float CHASING_RANGE)
     {
-        // 1
-        // Chasing
+        
         RGB.MovePosition(EnemyMovement(CHASING_RANGE));
-        animator.SetTrigger("Chasing");
-
+        if (!isChasing) 
+        {
+            animator.SetTrigger("Chasing");
+            isChasing = true;
+            fixAnimationOnUpdate("Chasing");
+        }
+    }
+    private void EnemyAttackRotate() 
+    {
+        direction = playerPos.transform.position - theEnemy.transform.position;
+        theEnemy.transform.rotation = Quaternion.LookRotation(direction);
+    }
+    private void EnemyRotate()
+    {
+        var rotateSpeed = 20f;
+       
+        direction = playerPos.transform.position - theEnemy.transform.position;
+        rotation = Quaternion.LookRotation(direction);
+        theEnemy.transform.rotation = Quaternion.RotateTowards(theEnemy.transform.rotation, rotation, rotateSpeed); ;
     }
 
     #region Resauble Method
@@ -114,6 +137,22 @@ public abstract class EnemyAction : IMeleeEnemy
     private void UpdateDistance()
     {
         distanceEnemy = Vector2.Distance(PlayerPos(), EnemyPos());
+    }
+    private void fixAnimationOnUpdate(string NAME_STATE) 
+    {
+        switch (NAME_STATE) 
+        {
+            case("Idling"):
+                isChasing = false;
+                break;
+            case ("Chasing"):
+                isIdling = false;
+                break;
+            case ("Attacking"):
+                isChasing = false;
+                isIdling = false;
+                break;
+        }
     }
     private void WaitToAttackAgain(int ID) 
     {

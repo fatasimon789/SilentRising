@@ -12,9 +12,9 @@ public class EnemyWolf : EnemyAction
        
     }
     #region Main Method
-    public override void Attack(bool INTO_RANGES)
+    public override void Attack(bool INTO_RANGE)
     {
-        base.Attack(INTO_RANGES);
+        base.Attack(isAttack);
         // effect
         // colider
     }
@@ -24,11 +24,9 @@ public class EnemyWolf : EnemyAction
     public Collider[] ColiderDamages1() 
     {
         // tao collider damags
-        Collider[] colliderInfo = Physics.OverlapBox(wolf.colliderPos,wolf.colliderHalfExtend, Quaternion.identity);
-
+       
+        Collider[] colliderInfo = Physics.OverlapBox(wolf.colliderPos.position,wolf.localColliderHalfExtend,Quaternion.identity,wolf.layerMask);
         return colliderInfo;
-        
-        // neu collider tra ve k null thi se lay script player take daamges
     }
     #endregion
     #region Resauble Method

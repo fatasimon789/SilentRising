@@ -15,7 +15,6 @@ public class WeaponManager : MonoBehaviour
     public CombatTypeManager.DamegesType DamagesType { get;private set; }
     public string nameWeapon { get;  set; }
 
-
     #region Weapon Type Machine
     public WeaponTypeMachine  WeaponMachine { get; set; }
     public FireSword FireSword { get; set; }
@@ -35,12 +34,15 @@ public class WeaponManager : MonoBehaviour
 
         FireSword = new FireSword(this,WeaponMachine);
         IcePunch  = new IcePunch(this,WeaponMachine);
+        
+
     }
     private void Start()
     {
         // give the value from weapon 
         WeaponMachine.Initialize(FireSword);
-       
+        nameWeapon = SystemSkillWeapon.name;
+        DamagesType = SystemSkillWeapon.DamagesType;
         // InitlizeFirstWeapon Start
         weaponDamages = SystemSkillWeapon.dameges;
         weaponHP = SystemSkillWeapon.heal;
@@ -54,7 +56,7 @@ public class WeaponManager : MonoBehaviour
         DamagesType = SystemSkillWeapon.DamagesType;
         // stats value
         StatsWeaponUpdate();
-       
+     
         // Weapon Ability
         PassivePlayer();
         NormalAttackPlayer();
@@ -65,6 +67,7 @@ public class WeaponManager : MonoBehaviour
         HealingPlayer();
     }
     #region All Skill
+    // H
     public  void HealingPlayer()
     {
         // refrence normal healling
@@ -75,38 +78,36 @@ public class WeaponManager : MonoBehaviour
     public  void NormalAttackPlayer()
     {
         WeaponMachine.normalAttack();
-        // left mouse input
     }
 
+    // left CTRL
     public void DashingPlayer()
     {
         WeaponMachine.Dashing();
-        // left ctrl input
     }
 
     public void PassivePlayer()
     {
         WeaponMachine.passive();
     }
+    // Q 
     public void FirstSkillPlayer()
     {
         WeaponMachine.FirstSkill();
-        // Q input
     }
 
-
+    // E
     public void SecondSkillPlayer()
     {
         WeaponMachine.SecondSkill();
-        // E input
     }
-
+    // R
     public void UltimateSkillPlayer()
     {
         WeaponMachine.Ultimate();
-        // R input
     }
     #endregion
+    #region Updating event 
     public void StatsWeaponUpdate()
     {
         weaponDamages = SystemSkillWeapon.dameges;
@@ -114,4 +115,27 @@ public class WeaponManager : MonoBehaviour
         weaponDEF = SystemSkillWeapon.defense;
         weaponCRIT = SystemSkillWeapon.crit;
     }
+    #endregion
+    #region Input Player
+    public void Ability1Input()
+    {
+        Player.instance.playerInput.playerActions.AbilityQ.performed += ctx => FirstSkillPlayer();
+    }
+    public void Ability2Input()
+    {
+        Player.instance.playerInput.playerActions.AbilityE.performed += ctx => SecondSkillPlayer();
+    }
+    public void AbilityUltimate()
+    {
+        Player.instance.playerInput.playerActions.AbilityR.performed += ctx => UltimateSkillPlayer();
+    }
+    public void HealingIpnut() 
+    {
+       Player.instance.playerInput.playerActions.Healing.performed+= ctx => HealingPlayer();
+    }
+    public void DashingIpnut()
+    {
+        Player.instance.playerInput.playerActions.Dash.performed += ctx => DashingPlayer();
+    }
+    #endregion
 }

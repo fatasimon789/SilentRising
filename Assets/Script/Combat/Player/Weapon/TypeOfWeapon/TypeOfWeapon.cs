@@ -52,4 +52,8 @@ public  class TypeOfWeapon : IWeapon
     {
 
     }
+    public virtual void triggerAbilitySkill(PlayerTriggerEventAnim.AnimationTriggerType triggerAbility) 
+    {
+    
+    }
 }

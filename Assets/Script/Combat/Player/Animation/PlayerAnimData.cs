@@ -8,7 +8,9 @@ public class PlayerAnimData
     [Header("attack")]
     [SerializeField] private string _attacking = "IsAttack";
     [Header("Ability Skill")]
-    [SerializeField] private string _Ultimate = "isR";
+    [SerializeField] private string _FirstAbility = "IsQ";
+    [SerializeField] private string _SecondAbility = "IsE";
+    [SerializeField] private string _Ultimate = "IsR";
     [Header("Default Skill")]
     [SerializeField] private string _healing = "IsHealing";
     [SerializeField] private string _dashing = "IsDashing";
@@ -23,6 +25,9 @@ public class PlayerAnimData
     public string S_attackString{ get; private set; }
     public string S_healString{ get; private set; }
     public string S_dashString{ get; private set; }
+    public string S_FirstAbi { get; private set; }
+    public string S_SecondAbi { get; private set; }
+    public string S_UltimateAbi { get; private set; }
 
     public void Initilized() 
     {
@@ -32,5 +37,8 @@ public class PlayerAnimData
         S_dashString = _dashing;
         S_StopingString = _hardStop;
         S_idleString = _idling;
+        S_FirstAbi = _FirstAbility;
+        S_SecondAbi = _SecondAbility;
+        S_UltimateAbi = _Ultimate;
     }
 }

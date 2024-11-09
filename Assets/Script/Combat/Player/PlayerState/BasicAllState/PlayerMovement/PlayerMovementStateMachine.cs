@@ -12,6 +12,9 @@ public class PlayerMovementStateMachine : PlayerStateMachine
 
     public HealState healState { get; private set; }
     public AttackState attackSwordState { get; private set; }
+    public FirstAbility firstAbility { get; private set; }
+    public SecondAbility secondAbility { get; private set; }
+    public UltimateAbility ultimateAbility { get; private set; }
     //   struct  chua cac khoi tao state nho va dat Player vao de  initlize tat ca trang thai
     public PlayerMovementStateMachine(Player PLAYER) 
     {
@@ -21,5 +24,7 @@ public class PlayerMovementStateMachine : PlayerStateMachine
        hardStopState = new HardStopState(this);
        healState= new HealState(this);
        attackSwordState= new AttackState(this);
+       firstAbility= new FirstAbility(this);
+      //  secondAbility = new SecondAbility(this);
     }
 }

@@ -11,28 +11,25 @@ public class FireSword : TypeOfWeapon
     public float critValue { get ; set ; }
     public int attackRange { get ; set ; }
     public int cd { get; set; }
-
+    #region  Weapon Chance / Delete
     public override void ChanceNewWeapon()
     {
         base.ChanceNewWeapon();
         // them vao day firesword
+        Debug.Log("Fire sword ");
     }
-
-    public override void Dashing()
-    {
-        base.Dashing();
-    }
-
     public override void DeleteOldWeapon()
     {
         base.DeleteOldWeapon();
         // xoa vao day firesword
     }
-
-    public override void FirstSkill()
+    #endregion
+    #region Basic Ability
+    public override void Dashing()
     {
-        base.FirstSkill();
+        base.Dashing();
     }
+
 
     public override void Healing()
     {
@@ -43,10 +40,15 @@ public class FireSword : TypeOfWeapon
     {
         base.NormalAttack();
     }
-
+    #endregion
+    #region Ability Weapon
     public override void Passive()
     {
         base.Passive();
+    }
+    public override void FirstSkill()
+    {
+        base.FirstSkill();
     }
 
     public override void SecondSkill()
@@ -58,4 +60,15 @@ public class FireSword : TypeOfWeapon
     {
         base.UltimateSkill();
     }
+    #endregion
+
+    #region Main Method
+    public override void triggerAbilitySkill(PlayerTriggerEventAnim.AnimationTriggerType triggerAbility)
+    {
+        base.triggerAbilitySkill(triggerAbility);
+    }
+    #endregion
+
+    #region Resauble Method
+    #endregion
 }

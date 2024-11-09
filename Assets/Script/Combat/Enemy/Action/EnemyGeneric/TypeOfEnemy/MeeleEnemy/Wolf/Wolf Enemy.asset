@@ -15,7 +15,7 @@ MonoBehaviour:
   nameOfEnemy: 
   hp: 200
   attack: 30
-  attackRange: 2
+  attackRange: 2.5
   delayAttack: 1.5
   chasingSpeed: 4.5
   visionRange: 10
