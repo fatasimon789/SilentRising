@@ -8,25 +8,25 @@ public class IcePunch : TypeOfWeapon
     {
     }
 
+    #region  Weapon Chance / Delete
     public override void ChanceNewWeapon()
     {
         base.ChanceNewWeapon();
+        // them vao day firesword
+        Debug.Log("Fire sword ");
     }
-
-
     public override void DeleteOldWeapon()
     {
         base.DeleteOldWeapon();
+        // xoa vao day firesword
     }
+    #endregion
+    #region Basic Ability
     public override void Dashing()
     {
         base.Dashing();
     }
 
-    public override void FirstSkill()
-    {
-        base.FirstSkill();
-    }
 
     public override void Healing()
     {
@@ -37,10 +37,17 @@ public class IcePunch : TypeOfWeapon
     {
         base.NormalAttack();
     }
-
+    #endregion
+    #region Ability Weapon
     public override void Passive()
     {
         base.Passive();
+
+    }
+    public override void FirstSkill()
+    {
+        base.FirstSkill();
+      
     }
 
     public override void SecondSkill()
@@ -52,4 +59,16 @@ public class IcePunch : TypeOfWeapon
     {
         base.UltimateSkill();
     }
+    #endregion
+
+    #region Main Method
+    public override void triggerAbilitySkill(PlayerTriggerEventAnim.AbilityTriggerType triggerAbility)
+    {
+        base.triggerAbilitySkill(triggerAbility);
+    }
+    #endregion
+
+    #region Resauble Method
+
+    #endregion
 }

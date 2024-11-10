@@ -57,14 +57,18 @@ public class WeaponManager : MonoBehaviour
         // stats value
         StatsWeaponUpdate();
      
+        
+    }
+    private void FixedUpdate()
+    {
         // Weapon Ability
         PassivePlayer();
         NormalAttackPlayer();
-        FirstSkillPlayer();
-        SecondSkillPlayer();
-        UltimateSkillPlayer();
-        DashingPlayer();
-        HealingPlayer();
+        Ability1Input();
+        Ability2Input();
+        AbilityUltimate();
+        DashingIpnut();
+        HealingIpnut();
     }
     #region All Skill
     // H

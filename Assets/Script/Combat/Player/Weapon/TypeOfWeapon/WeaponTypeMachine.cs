@@ -58,7 +58,6 @@ public class WeaponTypeMachine
     }
     public void Ultimate()
     {
-       
         currentWeapon.UltimateSkill();
     }
 }

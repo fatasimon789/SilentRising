@@ -39,21 +39,26 @@ public  class TypeOfWeapon : IWeapon
     }
     public virtual void FirstSkill()
     {
-
+        StartAnimation(Player.instance.playerAnimatorData.S_FirstAbi);
+        Debug.Log("1");
     }
 
 
     public virtual void SecondSkill()
     {
-
+        StartAnimation(Player.instance.playerAnimatorData.S_SecondAbi);
     }
 
     public virtual void UltimateSkill()
     {
-
+       // StartAnimation(Player.instance.playerAnimatorData.S_UltimateAbi);
     }
-    public virtual void triggerAbilitySkill(PlayerTriggerEventAnim.AnimationTriggerType triggerAbility) 
+    public virtual void triggerAbilitySkill(PlayerTriggerEventAnim.AbilityTriggerType triggerAbility) 
     {
     
+    }
+    public  void StartAnimation(string ANIM) 
+    {
+        Player.instance.animator.SetTrigger(ANIM);
     }
 }

@@ -45,30 +45,68 @@ public class FireSword : TypeOfWeapon
     public override void Passive()
     {
         base.Passive();
+        // crease 30 crit rate value 
     }
     public override void FirstSkill()
     {
         base.FirstSkill();
+      // anim
     }
 
     public override void SecondSkill()
     {
         base.SecondSkill();
+       // anim
     }
 
     public override void UltimateSkill()
     {
         base.UltimateSkill();
+       // anim
     }
     #endregion
 
     #region Main Method
-    public override void triggerAbilitySkill(PlayerTriggerEventAnim.AnimationTriggerType triggerAbility)
+    public override void triggerAbilitySkill(PlayerTriggerEventAnim.AbilityTriggerType triggerAbility)
     {
         base.triggerAbilitySkill(triggerAbility);
+        switch (triggerAbility) 
+        {
+            // COLLIDER
+            case PlayerTriggerEventAnim.AbilityTriggerType.FirstAbi:
+                Player.instance.playerDataEffect.G_AbilityQ.SetActive(true);
+                FirstAbilityCollider();
+                break;
+            case PlayerTriggerEventAnim.AbilityTriggerType.SecondAbi:
+                SecondAbilityCollider();
+                break;
+            case PlayerTriggerEventAnim.AbilityTriggerType.UltimateAbi:
+                UltimateAbilityCollider();
+                break;
+            // VFX
+            case PlayerTriggerEventAnim.AbilityTriggerType.vfxFirstAbiSword:
+                break;
+            case PlayerTriggerEventAnim.AbilityTriggerType.vfxSecondAbiSword:
+                break;
+            case PlayerTriggerEventAnim.AbilityTriggerType.vfxUltimateAbiSword:
+                break;
+        }
+    }
+
+    public void FirstAbilityCollider() 
+    {
+    
+    }
+    public void SecondAbilityCollider() 
+    {
+    
+    }
+    public void UltimateAbilityCollider() 
+    {
+    
     }
     #endregion
-
     #region Resauble Method
+      
     #endregion
 }

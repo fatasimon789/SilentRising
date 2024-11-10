@@ -9,22 +9,37 @@ public class PlayerTriggerEventAnim : MonoBehaviour
     {
       Player.instance.playerMovementStateMachine.currentState.AnimationTriggerEventBase(type);
     }
+    public void AbilityTriggerEvent(AbilityTriggerType ABITYPE) 
+    {
+        WeaponManager.instance.WeaponMachine.currentWeapon.triggerAbilitySkill(ABITYPE);
+    }
     public enum AnimationTriggerType 
     {
        // Attack Type
        EndAnim,ComboTo0,OffComboTo0,
-       //+ Effect Sword Type
+       //+ Effect Sword NormalAttack
        vfxSlash1,vfxSlash2,vfxThursh,
-       //+ Effect Firt Type
+       //+ Effect Firt NormalAttack
        vfxPunch1,vfxPunch2,vfxPunch3,vfxPunch4,
-       //+ Effect Axe Type 
+       //+ Effect Axe NormalAttack
        
-       // Ability Q 
-       FirstAbi,
-       // Ability E
-       SecondAbi,
-       // Ability R
-       UltimateAbi,
+     
     }
-    
+    public enum AbilityTriggerType 
+    {
+        // Ending Ability Anim
+        EndAnimAbility,
+        // Ability Q  Box collider
+        FirstAbi,
+        // Ability E  Box Collider 
+        SecondAbi,
+        // Ability R  Box Collider
+        UltimateAbi,
+        //+ Effect Sword Ability
+        vfxFirstAbiSword, vfxSecondAbiSword, vfxUltimateAbiSword,
+        //+ Effect Sword Ability
+        vfxFirstAbiFist, vfxSecondAbiFist, vfxUltimateAbiFist,
+        //+ Effect Sword Ability
+        vfxFirstAbiAxe, vfxSecondAbiAxe, vfxUltimateAbiAxe,
+    }
 }
