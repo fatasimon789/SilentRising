@@ -34,7 +34,7 @@ public class AttackState : PlayerActionState
         switch (triggerType) 
         {
             case PlayerTriggerEventAnim.AnimationTriggerType.EndAnim:
-                WaitToEndAnimation();
+                OnableControls();
                 vfxAllOff();
                 break;
             case PlayerTriggerEventAnim.AnimationTriggerType.ComboTo0:
@@ -61,12 +61,15 @@ public class AttackState : PlayerActionState
     }
     #endregion
     #region Main Method
-    private void WaitToEndAnimation() 
+    public void OnableControls() 
     {
         playerMovementStateMachine.ChanceState(playerMovementStateMachine.idleState);
         IsPlayerMoving(true);
     }
-    
+    public void DisableControls() 
+    {
+        IsPlayerMoving(false);
+    }
     private void ComboTab() 
     {
         canAttack = true;
@@ -93,7 +96,7 @@ public class AttackState : PlayerActionState
         }
      // ++++++++++++++++++++ ATTACK FIST +++++++++++++++++
     }
-    private void vfxAllOff() 
+    public void vfxAllOff() 
     {
         // +++++++++++++++++++ ATTACK SWORD ++++++++++++++++
         playerMovementStateMachine.player.playerDataEffect.G_Slash1.SetActive(false);

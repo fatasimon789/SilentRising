@@ -40,6 +40,7 @@ public  class TypeOfWeapon : IWeapon
     public virtual void FirstSkill()
     {
         StartAnimation(Player.instance.playerAnimatorData.S_FirstAbi);
+        ControllBehaviourDisable();
         Debug.Log("1");
     }
 
@@ -55,10 +56,23 @@ public  class TypeOfWeapon : IWeapon
     }
     public virtual void triggerAbilitySkill(PlayerTriggerEventAnim.AbilityTriggerType triggerAbility) 
     {
-    
+        switch(triggerAbility) 
+        {
+            case PlayerTriggerEventAnim.AbilityTriggerType.EndAnimAbility:
+                ControllBehaviourEnable();
+                break;
+        }
     }
     public  void StartAnimation(string ANIM) 
     {
         Player.instance.animator.SetTrigger(ANIM);
+    }
+    private void ControllBehaviourEnable() 
+    {
+      Player.instance.playerMovementStateMachine.attackSwordState.OnableControls();
+    }
+    private void ControllBehaviourDisable() 
+    {
+     Player.instance.playerMovementStateMachine.attackSwordState.DisableControls();
     }
 }

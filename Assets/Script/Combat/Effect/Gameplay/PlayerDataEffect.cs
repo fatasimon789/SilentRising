@@ -11,10 +11,12 @@ public class PlayerDataEffect
     [SerializeField] private GameObject Thursh1;
     [SerializeField] private GameObject Slash2;
     [SerializeField] private GameObject AbilitySword1;
+    [SerializeField] private GameObject AbilitySword2;
     public GameObject G_Slash1 { get; private set; }
     public GameObject G_Thursh1 { get; private set; }
     public GameObject G_Slash2 { get; private set; }
     public GameObject G_AbilityQ { get; private set; }
+    public GameObject G_AbilityE { get; private set; }
 
     public void InitilizedVfx() 
     {
@@ -22,5 +24,6 @@ public class PlayerDataEffect
         G_Thursh1= Thursh1;
         G_Slash2 = Slash2;
         G_AbilityQ = AbilitySword1;
+        G_AbilityE= AbilitySword2;
     }
 }

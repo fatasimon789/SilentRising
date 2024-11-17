@@ -29,6 +29,8 @@ public class TheWolf : MonoBehaviour
         enemyWolf.attackRange = stats.attackRange;
         enemyWolf.chasingSpeed = stats.chasingSpeed;
         enemyWolf.visionRange = stats.visionRange;
+        enemyWolf.hp = stats.hp;
+
     }
 
     // Update is called once per frame

@@ -14,6 +14,7 @@ public abstract class EnemyAction : IMeleeEnemy
     #region Enemy Action Field
     public float distanceEnemy { get; set; } 
     public float damages { get;  set ; }
+    public float hp { get; set; }
     public bool isAttack { get; set; } = true;
     public bool isDead { get; set; }
     public bool isChasing { get; set; }

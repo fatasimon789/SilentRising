@@ -8,6 +8,8 @@ public class WeaponManager : MonoBehaviour
     public static WeaponManager instance;
     public SystemSkillWeapon SystemSkillWeapon;
 
+    [field: Header("PosColliderAbi")]
+    [field: SerializeField] public UpdatingPositionAbility updatingPosAbi { get; private set; }
     public int weaponDamages { get;private  set; }
     public int weaponHP { get;private  set; }
     public int weaponDEF { get;private set; }
@@ -56,8 +58,10 @@ public class WeaponManager : MonoBehaviour
         DamagesType = SystemSkillWeapon.DamagesType;
         // stats value
         StatsWeaponUpdate();
-     
-        
+
+        VirtualBox.DisplayBox(updatingPosAbi.colliderPosQ.position, updatingPosAbi.localColliderHalfExtendQ, Quaternion.identity);
+        VirtualBox.DisplayBox(updatingPosAbi.colliderPosE.position, updatingPosAbi.localColliderHalfExtendE, Quaternion.identity);
+        VirtualBox.DisplayBox(updatingPosAbi.colliderPosR.position, updatingPosAbi.localColliderHalfExtendR, Quaternion.identity);
     }
     private void FixedUpdate()
     {
