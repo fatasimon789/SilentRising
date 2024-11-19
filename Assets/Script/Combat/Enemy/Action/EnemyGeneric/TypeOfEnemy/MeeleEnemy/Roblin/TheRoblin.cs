@@ -2,10 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TheRoblin : MonoBehaviour
+public class TheRoblin : MonoBehaviour,IEnemy
 {
-    public SystemEnemyStats statsRobilin;
     protected EnemyRoblin enemyRoblin;
+    [field: SerializeField] public SystemEnemyStats statsRobilin { get; set; }
+    public SystemEnemyStats stats { get ; set ; }
+    public EnemyHP enemyHP { get ; set ; }
+    public Transform colliderPos { get ; set ; }
+    public Vector3 localColliderHalfExtend { get ; set ; }
+    public LayerMask layerMask { get ; set; }
 
     private void Awake()
     {

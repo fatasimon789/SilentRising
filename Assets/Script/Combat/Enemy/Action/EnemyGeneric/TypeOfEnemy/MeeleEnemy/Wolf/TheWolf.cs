@@ -3,16 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class TheWolf : MonoBehaviour
+public class TheWolf : MonoBehaviour,IEnemy
 {
-    public SystemEnemyStats stats;
     protected EnemyWolf enemyWolf;
+    [field:SerializeField] public SystemEnemyStats stats { get; set; }
+    public EnemyHP enemyHP { get; set; }
 
     [field:SerializeField] public Transform colliderPos { get; set; }
     [field:SerializeField] public Vector3 localColliderHalfExtend { get; set; }
     [field:SerializeField] public LayerMask layerMask { get; set; }
 
-   // public Vector3 colliderPos { get; set; }
     private void Awake()
     {
         enemyWolf = new EnemyWolf(this);
@@ -30,7 +30,9 @@ public class TheWolf : MonoBehaviour
         enemyWolf.chasingSpeed = stats.chasingSpeed;
         enemyWolf.visionRange = stats.visionRange;
         enemyWolf.hp = stats.hp;
-
+        // Initlize Basic Value
+        enemyHP = new EnemyHP(enemyWolf.hp);
+        
     }
 
     // Update is called once per frame
@@ -41,26 +43,27 @@ public class TheWolf : MonoBehaviour
         enemyWolf.UpdateAction();
         VirtualBox.DisplayBox(colliderPos.position, localColliderHalfExtend, Quaternion.identity);
     }
-    public void AttackCollider()
+    public void AttackCollider0()
     {
         foreach (Collider col in enemyWolf.ColiderDamages1())
         {
+           
             Vector3 closetPoint = col.ClosestPoint(this.transform.position); // diem collider gan nhat
-            
+
             Vector3 posDifferent = (closetPoint - this.transform.position); //  chi ra huong khi va cham lan dau
                                                                             //  va den trung tam collider
             Vector3 overlapDirection = posDifferent.normalized;
 
             RaycastHit hit;
-            int layerMask0 = 1;  // Set to something that will only hit your object
+          //  int layerMask0 = 1;  // Set to something that will only hit your object
             float raycastDistance = 10.0f; // something greater than your object's largest radius, 
                                            // so that the ray doesn't start inside of your object
             Vector3 rayStart = this.transform.position + overlapDirection * raycastDistance;
             Vector3 rayDirection = -overlapDirection;
 
-            if (Physics.Raycast(rayStart, rayDirection, out hit, Mathf.Infinity, layerMask0))
+            if (Physics.Raycast(rayStart, rayDirection, out hit, Mathf.Infinity, layerMask))
             {
-                Player.instance.statsSystem.basicTakeDamages(stats.attack);
+                Player.instance.statsSystem.basicTakeDamages(this.stats.attack);
             }
             else
             {
@@ -69,15 +72,11 @@ public class TheWolf : MonoBehaviour
                 // or there is a mistake in the layerMask
             }
         }
-        
     }
     public void WaitToAttack() 
     {
         StartCoroutine(enemyWolf.CanAttack(enemyWolf.delayAttack));
     }
-    public void EventFinishAnimInfo() 
-    {
-       // enemyWolf.hasDoneAnim = true;
-    }
+    
    
 }

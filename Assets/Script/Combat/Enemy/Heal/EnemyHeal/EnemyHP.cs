@@ -2,15 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyHP : MonoBehaviour,IEnemyHP
+public class EnemyHP : IEnemyHP
 {
-    public  SystemEnemyStats systemStats ;
     public float hpValue { get ; set; }
-    public bool isDead { get ; set; }
-
-    public void takeDamages()
+    public EnemyHP(float HP) 
     {
-        
+        hpValue = HP;
+    }
+    public void takeDamages(int TAKE_DAMAGES)
+    {
+        hpValue -= TAKE_DAMAGES;
+      //  Debug.Log("current hp = " + hpValue);
     }
 
    

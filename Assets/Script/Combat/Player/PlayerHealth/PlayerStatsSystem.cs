@@ -71,7 +71,7 @@ public class PlayerStatsSystem : IPlayerHeal
     public void basicTakeDamages(float DAMAGES)
     {
         currentHPValue -= DAMAGES;
-        Debug.Log(currentHPValue + "take damages basic");
+      //  Debug.Log(currentHPValue + "take damages basic");
     }
     // player call
     public void takeHealing(int DAMAGES)

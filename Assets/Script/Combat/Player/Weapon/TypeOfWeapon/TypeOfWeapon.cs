@@ -41,7 +41,7 @@ public  class TypeOfWeapon : IWeapon
     {
         StartAnimation(Player.instance.playerAnimatorData.S_FirstAbi);
         ControllBehaviourDisable();
-        Debug.Log("1");
+      
     }
 
 

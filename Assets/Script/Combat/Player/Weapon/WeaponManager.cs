@@ -10,6 +10,8 @@ public class WeaponManager : MonoBehaviour
 
     [field: Header("PosColliderAbi")]
     [field: SerializeField] public UpdatingPositionAbility updatingPosAbi { get; private set; }
+    [field: SerializeField] public LayerMask layerMask { get; set; }
+
     public int weaponDamages { get;private  set; }
     public int weaponHP { get;private  set; }
     public int weaponDEF { get;private set; }
@@ -59,9 +61,9 @@ public class WeaponManager : MonoBehaviour
         // stats value
         StatsWeaponUpdate();
 
-        VirtualBox.DisplayBox(updatingPosAbi.colliderPosQ.position, updatingPosAbi.localColliderHalfExtendQ, Quaternion.identity);
+      //  VirtualBox.DisplayBox(updatingPosAbi.colliderPosQ.position, updatingPosAbi.localColliderHalfExtendQ, Quaternion.identity);
         VirtualBox.DisplayBox(updatingPosAbi.colliderPosE.position, updatingPosAbi.localColliderHalfExtendE, Quaternion.identity);
-        VirtualBox.DisplayBox(updatingPosAbi.colliderPosR.position, updatingPosAbi.localColliderHalfExtendR, Quaternion.identity);
+       // VirtualBox.DisplayBox(updatingPosAbi.colliderPosR.position, updatingPosAbi.localColliderHalfExtendR, Quaternion.identity);
     }
     private void FixedUpdate()
     {
@@ -146,4 +148,6 @@ public class WeaponManager : MonoBehaviour
         Player.instance.playerInput.playerActions.Dash.performed += ctx => DashingPlayer();
     }
     #endregion
+   
+   
 }

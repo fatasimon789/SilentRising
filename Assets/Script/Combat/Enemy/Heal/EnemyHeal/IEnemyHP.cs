@@ -6,8 +6,6 @@ public interface IEnemyHP
 {
     float hpValue { get; set; }
 
-    bool isDead { get; set; }
-
-    void takeDamages();
+    void takeDamages(int TAKE_DAMAGES);
 
 }

@@ -9,8 +9,8 @@ public class FireSword : TypeOfWeapon
     {
     }
 
-    public float critValue { get ; set ; }
-    public int attackRange { get ; set ; }
+    public float critValue { get; set; }
+    public int attackRange { get; set; }
     public int cd { get; set; }
     #region  Weapon Chance / Delete
     public override void ChanceNewWeapon()
@@ -51,22 +51,22 @@ public class FireSword : TypeOfWeapon
     public override void FirstSkill()
     {
         base.FirstSkill();
-      // anim
-      // CD  5S
+        // anim
+        // CD  5S
     }
 
     public override void SecondSkill()
     {
         base.SecondSkill();
-       // anim
-       // 6S
+        // anim
+        // 6S
     }
 
     public override void UltimateSkill()
     {
         base.UltimateSkill();
-       // anim
-       //20S
+        // anim
+        //20S
     }
     #endregion
 
@@ -74,7 +74,7 @@ public class FireSword : TypeOfWeapon
     public override void triggerAbilitySkill(PlayerTriggerEventAnim.AbilityTriggerType triggerAbility)
     {
         base.triggerAbilitySkill(triggerAbility);
-        switch (triggerAbility) 
+        switch (triggerAbility)
         {
             // COLLIDER
             case PlayerTriggerEventAnim.AbilityTriggerType.FirstAbi:
@@ -101,25 +101,27 @@ public class FireSword : TypeOfWeapon
         }
     }
 
-    public void FirstAbilityCollider() 
+    public void FirstAbilityCollider()
     {
         AttackColliderAbility(ColiderDamagesQ());
+       
     }
-    public void SecondAbilityCollider() 
+    public void SecondAbilityCollider()
     {
         AttackColliderAbility(ColiderDamagesE());
+       
     }
-    public void UltimateAbilityCollider() 
+    public void UltimateAbilityCollider()
     {
         AttackColliderAbility(ColiderDamagesR());
     }
     #endregion
-    public void OffVfx() 
+    public void OffVfx()
     {
         // Q VFX
-           Player.instance.playerDataEffect.G_AbilityQ.SetActive(false);
+        Player.instance.playerDataEffect.G_AbilityQ.SetActive(false);
         // E VFX
-           Player.instance.playerDataEffect.G_AbilityE.SetActive(false);
+        Player.instance.playerDataEffect.G_AbilityE.SetActive(false);
         // R VFX
 
         // Attack VFX
@@ -131,7 +133,8 @@ public class FireSword : TypeOfWeapon
         // tao collider damags
 
         Collider[] colliderInfo = Physics.OverlapBox(WeaponManager.updatingPosAbi.colliderPosQ.position,
-                                                     WeaponManager.updatingPosAbi.localColliderHalfExtendQ, Quaternion.identity);
+                                        WeaponManager.updatingPosAbi.localColliderHalfExtendQ, Quaternion.identity,WeaponManager.layerMask);
+       
         return colliderInfo;
     }
     private Collider[] ColiderDamagesE()
@@ -139,7 +142,7 @@ public class FireSword : TypeOfWeapon
         // tao collider damags
 
         Collider[] colliderInfo = Physics.OverlapBox(WeaponManager.updatingPosAbi.colliderPosE.position,
-                                                     WeaponManager.updatingPosAbi.localColliderHalfExtendE, Quaternion.identity);
+                                         WeaponManager.updatingPosAbi.localColliderHalfExtendE, Quaternion.identity,WeaponManager.layerMask);
         return colliderInfo;
     }
     private Collider[] ColiderDamagesR()
@@ -147,29 +150,32 @@ public class FireSword : TypeOfWeapon
         // tao collider damags
 
         Collider[] colliderInfo = Physics.OverlapBox(WeaponManager.updatingPosAbi.colliderPosR.position,
-                                                     WeaponManager.updatingPosAbi.localColliderHalfExtendR, Quaternion.identity);
+                                         WeaponManager.updatingPosAbi.localColliderHalfExtendR, Quaternion.identity, WeaponManager.layerMask);
         return colliderInfo;
     }
     private void AttackColliderAbility(Collider[] ABILITY_COL)
     {
         foreach (Collider col in ABILITY_COL)
         {
-            Vector3 closetPoint = col.ClosestPoint(Player.instance.transform.position); // diem collider gan nhat
+            Debug.Log("S4");
+            Vector3 closetPoint0 = col.ClosestPoint(Player.instance.transform.position); // diem collider gan nhat
 
-            Vector3 posDifferent = (closetPoint - Player.instance.transform.position); //  chi ra huong khi va cham lan dau
-                                                                                          //  va den trung tam collider
+            Vector3 posDifferent = (closetPoint0 - Player.instance.transform.position); //  chi ra huong khi va cham lan dau
+                                                                                        //  va den trung tam collider
             Vector3 overlapDirection = posDifferent.normalized;
 
             RaycastHit hit;
-            int layerMask0 = 1;  // Set to something that will only hit your object
+           
             float raycastDistance = 10.0f; // something greater than your object's largest radius, 
                                            // so that the ray doesn't start inside of your object
             Vector3 rayStart = Player.instance.transform.position + overlapDirection * raycastDistance;
             Vector3 rayDirection = -overlapDirection;
 
-            if (Physics.Raycast(rayStart, rayDirection, out hit, Mathf.Infinity, layerMask0))
+            if (Physics.Raycast(rayStart, rayDirection, out hit, Mathf.Infinity, WeaponManager.layerMask))
             {
-                //   Player.instance.statsSystem.basicTakeDamages(stats.attack);
+                var targetInfo = hit.collider.GetComponent<IEnemy>();
+                targetInfo.enemyHP.takeDamages(WeaponManager.weaponDamages);
+             
             }
             else
             {
@@ -178,6 +184,8 @@ public class FireSword : TypeOfWeapon
                 // or there is a mistake in the layerMask
             }
         }
+        
     }
-    #endregion
+    
+        #endregion
 }

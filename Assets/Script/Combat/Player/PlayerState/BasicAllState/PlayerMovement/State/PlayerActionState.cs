@@ -29,7 +29,7 @@ public class PlayerActionState : IState
     #region IState Method 
     public virtual void EnterState()
     {
-        Debug.Log("State: " + GetType().Name);
+     //   Debug.Log("State: " + GetType().Name);
     }
 
     public virtual void ExitState()

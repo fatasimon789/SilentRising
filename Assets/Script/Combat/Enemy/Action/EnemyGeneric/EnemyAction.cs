@@ -66,7 +66,7 @@ public abstract class EnemyAction : IMeleeEnemy
     {
 
         animator.SetTrigger("Attacking");
-        Debug.Log("attack");
+      
         isAttack = false;
         fixAnimationOnUpdate("Attacking");
         WaitToAttackAgain(EnemyID);
