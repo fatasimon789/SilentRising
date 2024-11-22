@@ -12,6 +12,7 @@ public class TheWolf : MonoBehaviour,IEnemy
     [field:SerializeField] public Transform colliderPos { get; set; }
     [field:SerializeField] public Vector3 localColliderHalfExtend { get; set; }
     [field:SerializeField] public LayerMask layerMask { get; set; }
+    [field:SerializeField]public GameObject floatingDamages { get ; set ; }
 
     private void Awake()
     {
@@ -32,7 +33,7 @@ public class TheWolf : MonoBehaviour,IEnemy
         enemyWolf.hp = stats.hp;
         // Initlize Basic Value
         enemyHP = new EnemyHP(enemyWolf.hp);
-        
+       
     }
 
     // Update is called once per frame
@@ -41,6 +42,7 @@ public class TheWolf : MonoBehaviour,IEnemy
         enemyWolf.playerPos = GameObject.FindGameObjectWithTag("Player").transform;
      
         enemyWolf.UpdateAction();
+        CheckingDamages();
         VirtualBox.DisplayBox(colliderPos.position, localColliderHalfExtend, Quaternion.identity);
     }
     public void AttackCollider0()
@@ -77,6 +79,21 @@ public class TheWolf : MonoBehaviour,IEnemy
     {
         StartCoroutine(enemyWolf.CanAttack(enemyWolf.delayAttack));
     }
-    
-   
+
+    public void CheckingDamages()
+    {
+        if (floatingDamages && enemyHP.isTakingDamages) 
+        {
+            FloatingDamagesUI();
+        }
+    }
+
+    public void FloatingDamagesUI()
+    {
+       
+       var  addDamagesText = Instantiate(floatingDamages,this.transform.position,Quaternion.identity);
+        addDamagesText.GetComponent<TextMesh>().text = enemyHP.damageReceive.ToString();
+        
+        enemyHP.isTakingDamages = false;
+    }
 }

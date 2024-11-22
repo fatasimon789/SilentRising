@@ -11,6 +11,8 @@ public class TheRoblin : MonoBehaviour,IEnemy
     public Transform colliderPos { get ; set ; }
     public Vector3 localColliderHalfExtend { get ; set ; }
     public LayerMask layerMask { get ; set; }
+    [field: SerializeField] public GameObject floatingDamages { get; set; }
+
 
     private void Awake()
     {
@@ -30,5 +32,15 @@ public class TheRoblin : MonoBehaviour,IEnemy
     public void WaitToAttack()
     {
         StartCoroutine(enemyRoblin.CanAttack(enemyRoblin.delayAttack));
+    }
+
+    public void CheckingDamages()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void FloatingDamagesUI()
+    {
+        throw new System.NotImplementedException();
     }
 }

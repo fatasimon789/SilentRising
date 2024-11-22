@@ -20,4 +20,4 @@ MonoBehaviour:
   heal: 500
   dameges: 100
   defense: 50
-  crit: 20
+  crit: 35

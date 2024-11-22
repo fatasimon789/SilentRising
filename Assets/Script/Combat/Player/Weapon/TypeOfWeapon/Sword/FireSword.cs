@@ -157,7 +157,7 @@ public class FireSword : TypeOfWeapon
     {
         foreach (Collider col in ABILITY_COL)
         {
-            Debug.Log("S4");
+           
             Vector3 closetPoint0 = col.ClosestPoint(Player.instance.transform.position); // diem collider gan nhat
 
             Vector3 posDifferent = (closetPoint0 - Player.instance.transform.position); //  chi ra huong khi va cham lan dau
@@ -175,7 +175,7 @@ public class FireSword : TypeOfWeapon
             {
                 var targetInfo = hit.collider.GetComponent<IEnemy>();
                 targetInfo.enemyHP.takeDamages(WeaponManager.weaponDamages);
-             
+                
             }
             else
             {

@@ -10,4 +10,8 @@ public interface  IEnemy
     [SerializeField] public Transform colliderPos { get; set; }
     [SerializeField] public Vector3 localColliderHalfExtend { get; set; }
     [SerializeField] public LayerMask layerMask { get; set; }
+    [SerializeField] public GameObject floatingDamages { get; set; }
+
+    void CheckingDamages();
+    void FloatingDamagesUI();
 }

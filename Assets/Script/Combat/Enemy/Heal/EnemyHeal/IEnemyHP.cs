@@ -5,7 +5,10 @@ using UnityEngine;
 public interface IEnemyHP 
 {
     float hpValue { get; set; }
-
+    float critValue { get; set; }
+    float multiplyCrit { get; set; }
+    bool isTakingDamages { get; set; }
+    float damageReceive { get; set; }
     void takeDamages(int TAKE_DAMAGES);
 
 }
