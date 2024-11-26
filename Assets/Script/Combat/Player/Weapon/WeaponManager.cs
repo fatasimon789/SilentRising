@@ -19,6 +19,10 @@ public class WeaponManager : MonoBehaviour
     public CombatTypeManager.DamegesType DamagesType { get;private set; }
     public string nameWeapon { get;  set; }
 
+    public bool IsCDAbiQ { get; private set; }
+    public bool IsCDAbiE { get ; private set; }
+    public bool IsCDAbiR { get ; private set; }
+
     #region Weapon Type Machine
     public WeaponTypeMachine  WeaponMachine { get; set; }
     public FireSword FireSword { get; set; }
@@ -103,18 +107,30 @@ public class WeaponManager : MonoBehaviour
     // Q 
     public void FirstSkillPlayer()
     {
-        WeaponMachine.FirstSkill();
+        if (!IsCDAbiQ) 
+        {
+            WeaponMachine.FirstSkill();
+            StartCoroutine(CDAbiQ());
+        }
     }
 
     // E
     public void SecondSkillPlayer()
     {
-        WeaponMachine.SecondSkill();
+        if (!IsCDAbiE) 
+        {
+            WeaponMachine.SecondSkill();
+            StartCoroutine(CDAbiE());
+        }
     }
     // R
     public void UltimateSkillPlayer()
     {
-        WeaponMachine.Ultimate();
+        if (!IsCDAbiR) 
+        {
+            WeaponMachine.Ultimate();
+            StartCoroutine(CDAbiR());
+        }
     }
     #endregion
     #region Updating event 
@@ -129,15 +145,17 @@ public class WeaponManager : MonoBehaviour
     #region Input Player
     public void Ability1Input()
     {
-        Player.instance.playerInput.playerActions.AbilityQ.performed += ctx => FirstSkillPlayer();
+         Player.instance.playerInput.playerActions.AbilityQ.performed += ctx => FirstSkillPlayer();
     }
     public void Ability2Input()
     {
-        Player.instance.playerInput.playerActions.AbilityE.performed += ctx => SecondSkillPlayer();
+      
+          Player.instance.playerInput.playerActions.AbilityE.performed += ctx => SecondSkillPlayer();
     }
     public void AbilityUltimate()
     {
-        Player.instance.playerInput.playerActions.AbilityR.performed += ctx => UltimateSkillPlayer();
+       
+          Player.instance.playerInput.playerActions.AbilityR.performed += ctx => UltimateSkillPlayer();
     }
     public void HealingIpnut() 
     {
@@ -147,7 +165,35 @@ public class WeaponManager : MonoBehaviour
     {
         Player.instance.playerInput.playerActions.Dash.performed += ctx => DashingPlayer();
     }
+
+
     #endregion
-   
-   
+    #region Clone Event
+    public void CreateInstantitate(GameObject PROJECTILE) 
+    {
+        Instantiate(PROJECTILE,updatingPosAbi.colliderPosR.position,Quaternion.identity);
+    }
+    #endregion
+    #region Ability CoolDown
+    private IEnumerator CDAbiQ() 
+    {
+        IsCDAbiQ = true;
+        yield return new WaitForSeconds(SystemSkillWeapon.AbiCoolDownQ);
+        IsCDAbiQ = false;
+    }
+    private IEnumerator CDAbiE()
+    {
+        IsCDAbiE = true;
+        yield return new WaitForSeconds(SystemSkillWeapon.AbiCoolDownE);
+        IsCDAbiE = false;
+    }
+    private IEnumerator CDAbiR()
+    {
+        IsCDAbiR = true;
+        yield return new WaitForSeconds(SystemSkillWeapon.AbiCoolDownR);
+        IsCDAbiR = false;
+    }
+
+    #endregion
+
 }

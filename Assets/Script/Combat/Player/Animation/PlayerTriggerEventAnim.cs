@@ -42,5 +42,6 @@ public class PlayerTriggerEventAnim : MonoBehaviour
         //+ Effect Sword Ability
         vfxFirstAbiAxe, vfxSecondAbiAxe, vfxUltimateAbiAxe,
     }
-    
+   
+
 }

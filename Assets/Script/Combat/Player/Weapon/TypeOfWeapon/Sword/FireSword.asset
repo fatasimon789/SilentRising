@@ -21,3 +21,7 @@ MonoBehaviour:
   dameges: 100
   defense: 50
   crit: 35
+  AbiCoolDownQ: 3
+  AbiCoolDownE: 7.5
+  AbiCoolDownR: 15
+  projectile: []

@@ -65,6 +65,43 @@ public class IcePunch : TypeOfWeapon
     public override void triggerAbilitySkill(PlayerTriggerEventAnim.AbilityTriggerType triggerAbility)
     {
         base.triggerAbilitySkill(triggerAbility);
+        switch (triggerAbility)
+        {
+            // COLLIDER
+            case PlayerTriggerEventAnim.AbilityTriggerType.FirstAbi:
+                FirstAbilityCollider();
+                break;
+            case PlayerTriggerEventAnim.AbilityTriggerType.SecondAbi:
+                SecondAbilityCollider();
+                break;
+            case PlayerTriggerEventAnim.AbilityTriggerType.UltimateAbi:
+                UltimateAbilityCollider();
+                break;
+            // VFX
+            case PlayerTriggerEventAnim.AbilityTriggerType.EndAnimAbility:
+              //  OffVfx();
+                break;
+            case PlayerTriggerEventAnim.AbilityTriggerType.vfxFirstAbiSword:
+            //    Player.instance.playerDataEffect.G_AbilityQ.SetActive(true);
+                break;
+            case PlayerTriggerEventAnim.AbilityTriggerType.vfxSecondAbiSword:
+             //   Player.instance.playerDataEffect.G_AbilityE.SetActive(true);
+                break;
+            case PlayerTriggerEventAnim.AbilityTriggerType.vfxUltimateAbiSword:
+                break;
+        }
+    }
+    public void FirstAbilityCollider()
+    {
+     
+    }
+    public void SecondAbilityCollider()
+    {
+      
+    }
+    public void UltimateAbilityCollider()
+    {
+     
     }
     #endregion
 

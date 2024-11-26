@@ -17,7 +17,13 @@ public class SystemSkillWeapon : ScriptableObject
     public int heal;
     public int dameges;
     public int defense;
-    public float crit; 
-   
-   
+    public float crit;
+
+    [Header("CD")]
+    public float AbiCoolDownQ;
+    public float AbiCoolDownE;
+    public float AbiCoolDownR;
+
+    [Header("Projectile")]
+    public List<GameObject> projectile; 
 }

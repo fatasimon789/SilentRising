@@ -23,6 +23,7 @@ public class AttackState : PlayerActionState
     public override void Update()
     {
         base.Update();
+        
     }
     public override void HandleInput()
     {
@@ -46,12 +47,15 @@ public class AttackState : PlayerActionState
          // ++++++++++++++++++++++++++ ATTACK SWORD +++++++++++++++++++++++
             case PlayerTriggerEventAnim.AnimationTriggerType.vfxSlash1:
                 vfxNormalAttack(1);
+                AttackCollider(ColiderDamagesSlash());
                 break;
             case PlayerTriggerEventAnim.AnimationTriggerType.vfxThursh:
                 vfxNormalAttack(2);
+                AttackCollider(ColiderDamagesSlash());
                 break;
             case PlayerTriggerEventAnim.AnimationTriggerType.vfxSlash2:
                 vfxNormalAttack(3);
+                AttackCollider(ColiderDamagesSlash());
                 break;
             // ++++++++++++++++++++++++++ ATTACK Fist +++++++++++++++++++++++
 
@@ -65,6 +69,7 @@ public class AttackState : PlayerActionState
     {
         playerMovementStateMachine.ChanceState(playerMovementStateMachine.idleState);
         IsPlayerMoving(true);
+       
     }
     public void DisableControls() 
     {
@@ -103,6 +108,47 @@ public class AttackState : PlayerActionState
         playerMovementStateMachine.player.playerDataEffect.G_Thursh1.SetActive(false);
         playerMovementStateMachine.player.playerDataEffect.G_Slash2.SetActive(false);
         // +++++++++++++++++++ ATTACK FIST ++++++++++++++++
+    }
+    private Collider[] ColiderDamagesSlash()
+    {
+        // tao collider damags
+
+        Collider[] colliderInfo = Physics.OverlapBox(WeaponManager.instance.updatingPosAbi.colliderPosAttack.position,
+                                         WeaponManager.instance.updatingPosAbi.localColliderHalfExtendAttack
+                                         , Quaternion.identity, WeaponManager.instance.layerMask);
+        return colliderInfo;
+    }
+    private void AttackCollider(Collider[] ABILITY_COL)
+    {
+        foreach (Collider col in ABILITY_COL)
+        {
+
+            Vector3 closetPoint0 = col.ClosestPoint(Player.instance.transform.position); // diem collider gan nhat
+
+            Vector3 posDifferent = (closetPoint0 - Player.instance.transform.position); //  chi ra huong khi va cham lan dau
+                                                                                        //  va den trung tam collider
+            Vector3 overlapDirection = posDifferent.normalized;
+
+            RaycastHit hit;
+
+            float raycastDistance = 10.0f; // something greater than your object's largest radius, 
+                                           // so that the ray doesn't start inside of your object
+            Vector3 rayStart = Player.instance.transform.position + overlapDirection * raycastDistance;
+            Vector3 rayDirection = -overlapDirection;
+
+            if (Physics.Raycast(rayStart, rayDirection, out hit, Mathf.Infinity, WeaponManager.instance.layerMask))
+            {
+                var targetInfo = hit.collider.GetComponent<IEnemy>();
+                targetInfo.enemyHP.takeDamages(WeaponManager.instance.weaponDamages);
+            }
+            else
+            {
+                // The ray missed your object, somehow. 
+                // Most likely it started inside your object 
+                // or there is a mistake in the layerMask
+            }
+        }
+
     }
     #endregion
 }

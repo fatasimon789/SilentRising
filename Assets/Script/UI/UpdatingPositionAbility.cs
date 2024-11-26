@@ -13,5 +13,7 @@ public class UpdatingPositionAbility
     [SerializeField] public Transform colliderPosE ;
     [SerializeField] public Vector3 localColliderHalfExtendE;
     [SerializeField] public Transform colliderPosR ;
-    [SerializeField] public Vector3 localColliderHalfExtendR ;
+    [SerializeField] public Vector3 localColliderHalfExtendR;
+    [SerializeField] public Transform colliderPosAttack;
+    [SerializeField] public Vector3 localColliderHalfExtendAttack;
 }

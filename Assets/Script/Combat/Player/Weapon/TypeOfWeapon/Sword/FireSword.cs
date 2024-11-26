@@ -66,6 +66,7 @@ public class FireSword : TypeOfWeapon
     {
         base.UltimateSkill();
         // anim
+     //   WeaponManager.CreateInstantitate(WeaponManager.SystemSkillWeapon.projectile[0]);
         //20S
     }
     #endregion
@@ -113,7 +114,7 @@ public class FireSword : TypeOfWeapon
     }
     public void UltimateAbilityCollider()
     {
-        AttackColliderAbility(ColiderDamagesR());
+       // AttackColliderAbility(ColiderDamagesR());
     }
     #endregion
     public void OffVfx()

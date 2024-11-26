@@ -14,7 +14,7 @@ public class PlayerActionState : IState
     protected float speedModifer = 1f;
     protected float rotateSpeed = 18f;
     // Onenable||disable controls 
-    protected bool isAttack;
+    protected static bool isRotating;
     protected static bool canAttack = true;
     protected static bool canMoving = true;
     // Type Weapon :  Sword 
@@ -39,14 +39,16 @@ public class PlayerActionState : IState
 
     public virtual void Update()
     {
+       
     }
     public virtual void FixedUpdate()
     {
         Move();
         PlayerRotate();
-        if (isAttack)
+        if (isRotating)
         {
             PlayerLookAtMouse();
+            isRotating = false;
         }
     }
 
@@ -55,6 +57,7 @@ public class PlayerActionState : IState
     {
         PlayerMovementInput();
         AttackInput();
+   
     }
     public virtual void AnimationTriggerEventBase(PlayerTriggerEventAnim.AnimationTriggerType triggerType)
     {
@@ -125,8 +128,9 @@ public class PlayerActionState : IState
     }
     private void Attack()
     {
-        if(canAttack)
+        if (canAttack)
         {
+             isRotating = true;
              IsPlayerMoving(false);
              playerMovementStateMachine.ChanceState(playerMovementStateMachine.attackSwordState);
         }
