@@ -66,7 +66,7 @@ public class FireSword : TypeOfWeapon
     {
         base.UltimateSkill();
         // anim
-     //   WeaponManager.CreateInstantitate(WeaponManager.SystemSkillWeapon.projectile[0]);
+    
         //20S
     }
     #endregion
@@ -98,6 +98,7 @@ public class FireSword : TypeOfWeapon
                 Player.instance.playerDataEffect.G_AbilityE.SetActive(true);
                 break;
             case PlayerTriggerEventAnim.AbilityTriggerType.vfxUltimateAbiSword:
+
                 break;
         }
     }
@@ -114,7 +115,7 @@ public class FireSword : TypeOfWeapon
     }
     public void UltimateAbilityCollider()
     {
-       // AttackColliderAbility(ColiderDamagesR());
+        WeaponManager.SwordInstanceR();
     }
     #endregion
     public void OffVfx()

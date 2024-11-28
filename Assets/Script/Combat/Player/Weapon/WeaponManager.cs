@@ -169,10 +169,24 @@ public class WeaponManager : MonoBehaviour
 
     #endregion
     #region Clone Event
-    public void CreateInstantitate(GameObject PROJECTILE) 
+    public GameObject CreateInstantitate(GameObject PROJECTILE) 
     {
-        Instantiate(PROJECTILE,updatingPosAbi.colliderPosR.position,Quaternion.identity);
+       var  projectileObj = Instantiate(PROJECTILE,updatingPosAbi.colliderPosR.position,Quaternion.identity);
+        return projectileObj;
     }
+    // ++++++ Sword +++++
+    public void SwordInstanceR() 
+    {
+        // lay var tao objech trong' chua' = method tao clone (ten clone);
+        var projectObjSword = CreateInstantitate(SystemSkillWeapon.projectile[0]);
+        // lay GroundSlash trong' chua' = groundslash o trong object clone; 
+        GroundSlash groundSlash = projectObjSword.GetComponent<GroundSlash>();
+        //lay object clone tham chieu vao rigidbody  va nhap van toc bay ;
+        projectObjSword.GetComponent<Rigidbody>().velocity = Player.instance.transform.forward * groundSlash.speed;
+    }
+    // ++++++ FIRT  +++++
+    
+    // ++++++ AXE   +++++
     #endregion
     #region Ability CoolDown
     private IEnumerator CDAbiQ() 

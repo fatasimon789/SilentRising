@@ -24,4 +24,5 @@ MonoBehaviour:
   AbiCoolDownQ: 3
   AbiCoolDownE: 7.5
   AbiCoolDownR: 15
-  projectile: []
+  projectile:
+  - {fileID: 0}
