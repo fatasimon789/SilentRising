@@ -15,7 +15,7 @@ public class EnemyHP : IEnemyHP
         hpValue = HP;
        
     }
-    public void takeDamages(int TAKE_DAMAGES)
+    public void takeDamages(float TAKE_DAMAGES)
     {
         if (CritRandom()) 
         {

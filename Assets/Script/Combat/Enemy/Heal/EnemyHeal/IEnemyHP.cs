@@ -9,6 +9,6 @@ public interface IEnemyHP
     float multiplyCrit { get; set; }
     bool isTakingDamages { get; set; }
     float damageReceive { get; set; }
-    void takeDamages(int TAKE_DAMAGES);
+    void takeDamages(float TAKE_DAMAGES);
 
 }

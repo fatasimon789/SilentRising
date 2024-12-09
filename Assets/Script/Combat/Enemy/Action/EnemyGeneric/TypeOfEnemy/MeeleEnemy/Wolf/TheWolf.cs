@@ -44,6 +44,8 @@ public class TheWolf : MonoBehaviour,IEnemy
         enemyWolf.UpdateAction();
         CheckingDamages();
         VirtualBox.DisplayBox(colliderPos.position, localColliderHalfExtend, Quaternion.identity);
+        CheckHP();
+       
     }
     public void AttackCollider0()
     {
@@ -87,7 +89,13 @@ public class TheWolf : MonoBehaviour,IEnemy
             FloatingDamagesUI();
         }
     }
-
+    public void CheckHP() 
+    {
+        if (enemyHP.hpValue <= 0 ) 
+        {
+            enemyWolf.animator.SetTrigger("Death");
+        }
+    }
     public void FloatingDamagesUI()
     {
        

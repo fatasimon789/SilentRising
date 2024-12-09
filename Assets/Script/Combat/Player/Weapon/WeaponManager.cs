@@ -178,11 +178,13 @@ public class WeaponManager : MonoBehaviour
     public void SwordInstanceR() 
     {
         // lay var tao objech trong' chua' = method tao clone (ten clone);
-        var projectObjSword = CreateInstantitate(SystemSkillWeapon.projectile[0]);
+        var projectObjSword = CreateInstantitate(SystemSkillWeapon.projectile);
         // lay GroundSlash trong' chua' = groundslash o trong object clone; 
         GroundSlash groundSlash = projectObjSword.GetComponent<GroundSlash>();
         //lay object clone tham chieu vao rigidbody  va nhap van toc bay ;
+       
         projectObjSword.GetComponent<Rigidbody>().velocity = Player.instance.transform.forward * groundSlash.speed;
+        
     }
     // ++++++ FIRT  +++++
     

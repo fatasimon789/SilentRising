@@ -105,12 +105,12 @@ public class FireSword : TypeOfWeapon
 
     public void FirstAbilityCollider()
     {
-        AttackColliderAbility(ColiderDamagesQ());
+        AttackColliderAbility(ColiderDamagesQ(),WeaponManager.SystemSkillWeapon.multiQ);
        
     }
     public void SecondAbilityCollider()
     {
-        AttackColliderAbility(ColiderDamagesE());
+        AttackColliderAbility(ColiderDamagesE(), WeaponManager.SystemSkillWeapon.multiE);
        
     }
     public void UltimateAbilityCollider()
@@ -155,7 +155,7 @@ public class FireSword : TypeOfWeapon
                                          WeaponManager.updatingPosAbi.localColliderHalfExtendR, Quaternion.identity, WeaponManager.layerMask);
         return colliderInfo;
     }
-    private void AttackColliderAbility(Collider[] ABILITY_COL)
+    private void AttackColliderAbility(Collider[] ABILITY_COL,float MULTIPLY_DAMAGES)
     {
         foreach (Collider col in ABILITY_COL)
         {
@@ -176,8 +176,8 @@ public class FireSword : TypeOfWeapon
             if (Physics.Raycast(rayStart, rayDirection, out hit, Mathf.Infinity, WeaponManager.layerMask))
             {
                 var targetInfo = hit.collider.GetComponent<IEnemy>();
-                targetInfo.enemyHP.takeDamages(WeaponManager.weaponDamages);
-                
+                targetInfo.enemyHP.takeDamages(WeaponManager.weaponDamages * MULTIPLY_DAMAGES);
+              
             }
             else
             {

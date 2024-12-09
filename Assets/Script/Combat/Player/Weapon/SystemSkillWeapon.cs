@@ -25,5 +25,10 @@ public class SystemSkillWeapon : ScriptableObject
     public float AbiCoolDownR;
 
     [Header("Projectile")]
-    public List<GameObject> projectile; 
+    public GameObject projectile;
+
+    [Header("Multiply Damages")]
+    public float multiQ;
+    public float multiE;
+    public float multiR;
 }

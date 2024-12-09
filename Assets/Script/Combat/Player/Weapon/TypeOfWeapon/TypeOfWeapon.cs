@@ -48,11 +48,13 @@ public  class TypeOfWeapon : IWeapon
     public virtual void SecondSkill()
     {
         StartAnimation(Player.instance.playerAnimatorData.S_SecondAbi);
+        ControllBehaviourDisable();
     }
 
     public virtual void UltimateSkill()
     {
-       // StartAnimation(Player.instance.playerAnimatorData.S_UltimateAbi);
+        StartAnimation(Player.instance.playerAnimatorData.S_UltimateAbi);
+        ControllBehaviourDisable();
     }
     public virtual void triggerAbilitySkill(PlayerTriggerEventAnim.AbilityTriggerType triggerAbility) 
     {
