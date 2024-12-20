@@ -68,6 +68,7 @@ public class TheWolf : MonoBehaviour,IEnemy
             if (Physics.Raycast(rayStart, rayDirection, out hit, Mathf.Infinity, layerMask))
             {
                 Player.instance.statsSystem.basicTakeDamages(this.stats.attack);
+               
             }
             else
             {
@@ -91,9 +92,16 @@ public class TheWolf : MonoBehaviour,IEnemy
     }
     public void CheckHP() 
     {
-        if (enemyHP.hpValue <= 0 ) 
+        if (enemyHP.hpValue <= 0  && !enemyWolf.isDead) 
         {
             enemyWolf.animator.SetTrigger("Death");
+            enemyWolf.isDead= true;
+            Destroy(this.gameObject,3f);
+        }
+        else if (enemyHP.hpValue != enemyHP.oldHP && !enemyWolf.isDead) 
+        {
+            enemyHP.oldHP = enemyHP.hpValue;
+            enemyWolf.animator.SetTrigger("GotDamages");
         }
     }
     public void FloatingDamagesUI()
@@ -104,4 +112,6 @@ public class TheWolf : MonoBehaviour,IEnemy
         
         enemyHP.isTakingDamages = false;
     }
+    
+    
 }

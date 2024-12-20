@@ -22,7 +22,8 @@ public class PlayerTriggerEventAnim : MonoBehaviour
        //+ Effect Firt NormalAttack
        vfxPunch1,vfxPunch2,vfxPunch3,vfxPunch4,
        //+ Effect Axe NormalAttack
-       
+       v,v2,v3,v4,v5,
+       CancelAnim
      
     }
     public enum AbilityTriggerType 

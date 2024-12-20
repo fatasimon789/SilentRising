@@ -36,7 +36,7 @@ public class GroundSlash : MonoBehaviour
         if (collision.CompareTag("Enemy")) 
         { 
           var targetInfo = collision.gameObject.GetComponent<IEnemy>();
-          targetInfo.enemyHP.takeDamages(WeaponManager.instance.SystemSkillWeapon.dameges * WeaponManager.instance.SystemSkillWeapon.multiR);
+          targetInfo.enemyHP.takeDamages(WeaponManager.instance.SystemSkillWeapon.AbilityRSword());
         }
     }
    

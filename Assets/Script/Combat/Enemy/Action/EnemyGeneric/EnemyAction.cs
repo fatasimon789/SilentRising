@@ -49,14 +49,15 @@ public abstract class EnemyAction : IMeleeEnemy
     public virtual void UpdateAction()
     {
         UpdateDistance();
-        if (distanceEnemy <= attackRange && isAttack)
+        if (distanceEnemy <= attackRange && isAttack && !isDead)
         {
             EnemyAttackRotate();
             Attack(isAttack);
+           
             return;
         }
         // 0
-        if (isAttack)
+        if (isAttack && !isDead)
         {
             OnVision(visionRange);
             EnemyRotate();
@@ -64,40 +65,35 @@ public abstract class EnemyAction : IMeleeEnemy
     }
     public virtual void Attack(bool INTO_RANGE)
     {
-
-        animator.SetTrigger("Attacking");
-      
+        animator.SetBool("Attacking",true);
         isAttack = false;
-        fixAnimationOnUpdate("Attacking");
         WaitToAttackAgain(EnemyID);
         
     }
     // 1 VISION
     public  virtual void OnVision(float VISION_RANGES)
     {
-        if (distanceEnemy < VISION_RANGES)
+        // VO RANGE VISION THI SE CHASING
+        // NEU DANG DANH THI SE NGUNG DANH VA CHUYEN LAI CHASING
+        if (distanceEnemy <= VISION_RANGES)
         {
-           
+            animator.SetBool("Attacking",false);
             OnRange(chasingSpeed);
         }
-        else if(distanceEnemy >= VISION_RANGES && !isIdling)
+        // OUT RANGE THI DUNG LAI
+        else if(distanceEnemy > VISION_RANGES )
         {
-            animator.SetTrigger("Idling");
-            isIdling = true;
-            fixAnimationOnUpdate("Idling");
+            animator.SetBool("Chasing", false);
         }
+
     }
     // 2 CHASING
     public virtual void OnRange(float CHASING_RANGE)
     {
         
         RGB.MovePosition(EnemyMovement(CHASING_RANGE));
-        if (!isChasing) 
-        {
-            animator.SetTrigger("Chasing");
-            isChasing = true;
-            fixAnimationOnUpdate("Chasing");
-        }
+        animator.SetBool("Chasing", true);
+       
     }
     private void EnemyAttackRotate() 
     {
@@ -139,22 +135,7 @@ public abstract class EnemyAction : IMeleeEnemy
     {
         distanceEnemy = Vector2.Distance(PlayerPos(), EnemyPos());
     }
-    private void fixAnimationOnUpdate(string NAME_STATE) 
-    {
-        switch (NAME_STATE) 
-        {
-            case("Idling"):
-                isChasing = false;
-                break;
-            case ("Chasing"):
-                isIdling = false;
-                break;
-            case ("Attacking"):
-                isChasing = false;
-                isIdling = false;
-                break;
-        }
-    }
+  
     private void WaitToAttackAgain(int ID) 
     {
         switch(ID) 

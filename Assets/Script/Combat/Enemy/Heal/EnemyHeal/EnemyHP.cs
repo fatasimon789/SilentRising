@@ -9,21 +9,22 @@ public class EnemyHP : IEnemyHP
     public float multiplyCrit { get ; set ; }
     public float damageReceive { get; set; }
     public bool isTakingDamages { get; set; }
+    public float oldHP { get; set; }
 
     public EnemyHP(float HP) 
     {
         hpValue = HP;
-       
+        oldHP = HP;
     }
     public void takeDamages(float TAKE_DAMAGES)
     {
         if (CritRandom()) 
         {
-            multiplyCrit= 1;
+            multiplyCrit= 2;
         }
         else 
         {
-            multiplyCrit= 2;
+            multiplyCrit= 1;
         }
         damageReceive = TAKE_DAMAGES * multiplyCrit;
         hpValue -= damageReceive;

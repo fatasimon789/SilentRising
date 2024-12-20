@@ -17,6 +17,7 @@ public class PlayerActionState : IState
     protected static bool isRotating;
     protected static bool canAttack = true;
     protected static bool canMoving = true;
+    protected static bool isCancel;
     // Type Weapon :  Sword 
     protected static int CountingAttack;
 

@@ -25,6 +25,17 @@ MonoBehaviour:
   AbiCoolDownE: 7.5
   AbiCoolDownR: 15
   projectile: {fileID: 4076685852760168977, guid: 3305fa7f48b8c264ca3103940e6cba97, type: 3}
-  multiQ: 1.35
+  basicDmgQ: 640000007d00000096000000c8000000fa000000
+  basicDmgE: 110
+  basicDmgR: 250
+  multiQ:
+  - 1.35
+  - 1.5
+  - 1.75
+  - 2
+  - 2.5
   multiE: 2.15
   multiR: 4
+  percentDmgQ: 70
+  percentDmgE: 85
+  percentDmgR: 100

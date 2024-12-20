@@ -14,6 +14,7 @@ public class AttackState : PlayerActionState
     {
         base.EnterState();
         StartAnimatorTrigger(playerMovementStateMachine.player.playerAnimatorData.S_attackString);
+        isCancel = false;
     }
     public override void ExitState()
     {
@@ -23,6 +24,13 @@ public class AttackState : PlayerActionState
     public override void Update()
     {
         base.Update();
+
+        if (movementInput != Vector2.zero && isCancel) 
+        {
+            playerMovementStateMachine.ChanceState(playerMovementStateMachine.runState);
+            OnableControls();
+            vfxAllOff();
+        }
         
     }
     public override void HandleInput()
@@ -43,6 +51,9 @@ public class AttackState : PlayerActionState
                 break;
             case PlayerTriggerEventAnim.AnimationTriggerType.OffComboTo0:
                 OffComboTab();
+                break;
+            case PlayerTriggerEventAnim.AnimationTriggerType.CancelAnim:
+                isCancel = true;
                 break;
          // ++++++++++++++++++++++++++ ATTACK SWORD +++++++++++++++++++++++
             case PlayerTriggerEventAnim.AnimationTriggerType.vfxSlash1:
@@ -139,7 +150,7 @@ public class AttackState : PlayerActionState
             if (Physics.Raycast(rayStart, rayDirection, out hit, Mathf.Infinity, WeaponManager.instance.layerMask))
             {
                 var targetInfo = hit.collider.GetComponent<IEnemy>();
-                targetInfo.enemyHP.takeDamages(WeaponManager.instance.weaponDamages);
+                targetInfo.enemyHP.takeDamages(WeaponManager.instance.SystemSkillWeapon.NormalAttackSword());
             }
             else
             {
