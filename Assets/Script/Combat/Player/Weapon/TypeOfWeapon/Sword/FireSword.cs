@@ -105,12 +105,12 @@ public class FireSword : TypeOfWeapon
 
     public void FirstAbilityCollider()
     {
-        AttackColliderAbility(ColiderDamagesQ(),UpdatingGameplay.instance.FirstAbilityDMG());
+        AttackColliderAbility(ColiderDamagesQ(),UpdatingAbility.instance.FirstAbilityDMG());
        
     }
     public void SecondAbilityCollider()
     {
-        AttackColliderAbility(ColiderDamagesE(),WeaponManager.SystemSkillWeapon.AbilityESword());
+        AttackColliderAbility(ColiderDamagesE(),UpdatingAbility.instance.SecondAbilityDMG());
        
     }
     public void UltimateAbilityCollider()

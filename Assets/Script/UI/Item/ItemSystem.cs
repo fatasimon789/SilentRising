@@ -7,6 +7,8 @@ public class ItemSystem : ScriptableObject
 {
     public int id;
     public string itemName;
-    public int value;
+    [TextArea(3,8)]public string itemDisciption;
+    public int cost;
     public Sprite icon;
+
 }

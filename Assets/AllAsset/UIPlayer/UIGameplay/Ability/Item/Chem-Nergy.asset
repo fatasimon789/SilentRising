@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7659b1acd1f053141ad4d51d3903985d, type: 3}
   m_Name: Chem-Nergy
   m_EditorClassIdentifier: 
-  id: 0
+  id: 1
   itemName: Chem-Nergy
-  value: 0
+  itemDisciption: Updating  basic stats (health , healing , enerygy , )
+  cost: 200
   icon: {fileID: 21300000, guid: 7326b6df7223641468a241f6dea2db20, type: 3}

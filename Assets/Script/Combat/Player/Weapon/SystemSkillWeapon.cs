@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditorInternal;
 using UnityEngine;
+using UnityEngine.UI;
 
 [CreateAssetMenu(fileName = "New SystemSkill",menuName = "SystemSkill")]
 public class SystemSkillWeapon : ScriptableObject
@@ -30,20 +31,47 @@ public class SystemSkillWeapon : ScriptableObject
 
     [Header("Basic Damages")]
     public List<int> basicDmgQ;
-    public float basicDmgE;
-    public float basicDmgR;
+    public List<int> basicDmgE;
+    public List<int> basicDmgR;
 
     [Header("Multiply Damages")]
     public List<float> multiQ;
-    public float multiE;
-    public float multiR;
+    public List<float> multiE;
+    public List<float> multiR;
 
     [Header("User Percent Damages")]
     public float percentDmgQ;
     public float percentDmgE;
     public float percentDmgR;
+
+    [Header("DiscriptionFirstAbility")]
+    public string nameFirstAbility;
+    [TextArea(10,15)]
+    public string baseFirstAbility;
+    [TextArea(3, 8)]
+    public string perfectFirstAbility;
+    public Sprite[] abilityIcon1;
+
+    [Header("DiscriptionSecondAbility")]
+    public string nameSecondAbility;
+    [TextArea(10, 15)]
+    public string baseSecondAbility;
+    [TextArea(3, 8)]
+    public string perfectSecondAbility;
+    public Sprite[] abilityIcon2;
+
+    [Header("DiscriptionUltimateAbility")]
+    public string nameUltimateAbility;
+    [TextArea(10, 15)]
+    public string baseUltimateAbility;
+    [TextArea(3, 8)]
+    public string perfectUltimateAbility;
+    public Sprite[] abilityIcon3;
+
+    [Header("Material Upgrade ")]
+    public List<ItemSystem> requiredItemUpgrade;
     #endregion
-   
+
     #region Total Main  Stats
     // hp    lv 1 
     public int PlayerHP() 
@@ -73,19 +101,19 @@ public class SystemSkillWeapon : ScriptableObject
         Debug.Log(totalDMG);
         return (int)totalDMG;
     }
-    public float AbilityESword()
+    public int AbilityESword(int BASE_DMG, float MULTI_E)
     {
         var percentUserDMG = dameges / 100 * percentDmgE;
-        var resultDMG = basicDmgE + percentUserDMG;
-        var totalDMG = resultDMG * multiE;
-        return totalDMG;
+        var resultDMG = BASE_DMG + percentUserDMG;
+        var totalDMG = resultDMG * MULTI_E;
+        return (int)totalDMG;
     }
-    public float AbilityRSword()
+    public int AbilityRSword(int BASE_DMG, float MULTI_R)
     {
         var percentUserDMG = dameges / 100 * percentDmgR;
-        var resultDMG = basicDmgR + percentUserDMG;
-        var totalDMG = resultDMG * multiR;
-        return totalDMG;
+        var resultDMG = BASE_DMG + percentUserDMG;
+        var totalDMG = resultDMG * MULTI_R;
+        return (int)totalDMG;
     }
     // Ice fist , Q , E ,R  // attack
     #endregion
@@ -106,8 +134,8 @@ public class SystemSkillWeapon : ScriptableObject
   
         return newBonusHP;
     }
-    // -------------- Q ------------------
     // S0 ADD ARRAY VALUE 
+    // -------------- Q ------------------
     public void LevelCDQ() 
     {
     
@@ -121,5 +149,22 @@ public class SystemSkillWeapon : ScriptableObject
         return multiQ[I_MULTI_Q];
     }
     // --------------- E -------------------
+    public int LevelBaseDmgE(int I_BASE_DMG)
+    {
+        return basicDmgE[I_BASE_DMG];
+    }
+    public float LevelMultiE(int I_MULTI_E)
+    {
+        return multiE[I_MULTI_E];
+    } 
+    // --------------- R -------------------
+    public int LevelBaseDmgR(int I_BASE_DMG)
+    {
+        return basicDmgR[I_BASE_DMG];
+    }
+    public float LevelMultiR(int I_MULTI_R)
+    {
+        return multiR[I_MULTI_R];
+    }
     #endregion
 }

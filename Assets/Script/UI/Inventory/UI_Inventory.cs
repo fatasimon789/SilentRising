@@ -1,61 +1,122 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
+using static UnityEditor.Progress;
 
 public class UI_Inventory : MonoBehaviour
 {
     public static UI_Inventory instance;
-    private InventoryGameplay _inventoryGameplay;
-    public GameObject inventoryObj;
-    public GameObject inventory;
+    public Dictionary<ItemSystem,int> _items;
     public Transform itemContent;
-
+    public GameObject inventoryItem;
+    public GameObject inventory;
+    #region Main Monobehaivour
     private void Awake()
     {
-        if (instance == null) 
+        if (instance == null)
         {
             instance = this;
         }
-        else 
+        else
         {
             Destroy(gameObject);
         }
     }
     private void Start()
     {
-        _inventoryGameplay = new InventoryGameplay(this);
+        _items= new Dictionary<ItemSystem, int>();
     }
     private void Update()
     {
         InputIventory();
     }
+    #endregion
     #region UI INPUT 
-    private void InputIventory() 
+    private void InputIventory()
     {
-         Player.instance.playerInput.playerActions.Inventory.performed += ctx => InventoryUIActive();
+        Player.instance.playerInput.playerActions.Inventory.performed += ctx => InventoryUIActive();
     }
-    private void InventoryUIActive() 
+    private void InventoryUIActive()
     {
-       inventory.SetActive(true);
+        inventory.SetActive(true);
         RefreshItemList();
     }
     #endregion
+    #region Main Method
+    public void AddItem(ItemSystem ITEM)
+    {
+        foreach (var item in GetItemList()) 
+        {
+            if (ITEM.id == item.Key.id) 
+            {
+                // set value moi vao day
+                if (GetItemList().TryGetValue(item.Key,out int amount)) 
+                {
+                   _items[item.Key] = amount + 1;
+                }
+                return;
+            
+            }
+        }
+        _items.Add(ITEM,0);
+      // se tao ra list amount va setup sao cho List [index] amount = List[index] list
+      // neu co chung` id se lay id(index) = 1  index cua List amount ( cung same )
+     
+    }
+    public void RemoveItem(ItemSystem ITEM)
+    {
+        _items.Remove(ITEM);
+    }
     public void RefreshItemList()
     {
-        // clear content before  open ;
-        foreach (Transform item in itemContent) 
-        {
+         // clear content before  open ;
+         foreach (Transform item in itemContent)
+         {
             Destroy(item.gameObject);
-        }
-        foreach (ItemSystem item in _inventoryGameplay.GetItemList())
-        {
-           GameObject obj = Instantiate(inventoryObj,itemContent);
-            var itemName = obj.transform.Find("Item Name").GetComponent<Text>();
-            var itemIcon = obj.transform.Find("ItemIcon").GetComponent<Image>();
+         }
 
-            itemName.text = item.itemName;
-            itemIcon.sprite = item.icon;
+        foreach (var item in GetItemList())
+        {
+            var objTransform = Instantiate(inventoryItem, itemContent);
+            RectTransform objItemSlot = objTransform.GetComponent<RectTransform>();
+           
+            objItemSlot.Find("ItemName").GetComponent<TextMeshProUGUI>().text = item.Key.itemName;
+            objItemSlot.Find("ItemIcon").GetComponent<Image>().sprite = item.Key.icon;
+            var amountText = objItemSlot.Find("ItemStack").GetComponent<TextMeshProUGUI>();
+            var renderText = item.Value + 1;
+            if (item.Value >= 1) 
+            {
+                amountText.SetText(renderText.ToString());
+            }
+            else 
+            {
+                amountText.SetText("");
+            }
+
         }
     }
+    #endregion
+    #region Resauble Method
+    public Dictionary<ItemSystem,int> GetItemList()
+    {
+        return _items;
+    }
+    public Tuple<int,int> CheckingIdItemInventory(int ID) 
+    {
+
+         foreach(var item in GetItemList()) 
+         {
+            if (ID == item.Key.id) 
+            {
+                return new Tuple<int,int>(item.Key.id,item.Value) ;
+            }
+        }
+        return new Tuple<int, int>(0 , 0);
+
+    }
+    #endregion 
 }
