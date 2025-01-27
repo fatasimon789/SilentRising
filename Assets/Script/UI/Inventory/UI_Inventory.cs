@@ -33,6 +33,7 @@ public class UI_Inventory : MonoBehaviour
     private void Update()
     {
         InputIventory();
+        RefreshItemList();
     }
     #endregion
     #region UI INPUT 
@@ -43,7 +44,6 @@ public class UI_Inventory : MonoBehaviour
     private void InventoryUIActive()
     {
         inventory.SetActive(true);
-        RefreshItemList();
     }
     #endregion
     #region Main Method
@@ -105,18 +105,36 @@ public class UI_Inventory : MonoBehaviour
     {
         return _items;
     }
+    // kiem tra xem id cua item phia ngoai co trung` vs id trong inventory k , neu co se tra lai. data co'
     public Tuple<int,int> CheckingIdItemInventory(int ID) 
     {
-
          foreach(var item in GetItemList()) 
          {
             if (ID == item.Key.id) 
             {
-                return new Tuple<int,int>(item.Key.id,item.Value) ;
+                // vi value luc nao cung bat dau la so 0 chu k phai 1 
+                return new Tuple<int,int>(item.Key.id,item.Value + 1);
+                
             }
         }
         return new Tuple<int, int>(0 , 0);
-
+    }
+    public void SetItemValueUpdating(int ID, int DEGREE_VALUE) 
+    {
+        foreach (var item in GetItemList()) 
+        {
+            if (ID == item.Key.id) 
+            {
+                if (GetItemList().TryGetValue(item.Key, out int amount))
+                {
+                    // set lai data 
+                    //
+                    //   _items[item.Key] = amount -DEGREE_VALUE;
+                    var test = amount - DEGREE_VALUE;
+                    Debug.Log("SET DATA " + test);
+                }
+            }
+        }
     }
     #endregion 
 }

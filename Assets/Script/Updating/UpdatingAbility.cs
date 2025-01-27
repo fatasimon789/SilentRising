@@ -33,14 +33,17 @@ public class UpdatingAbility : MonoBehaviour
     public void UpdatingAbilityTreeQ() 
     {
         _abilityLevelQ++;
+        Debug.Log("You LevelQ is " + _abilityLevelQ.ToString());
     }
     public void UpdatingAbilityTreeE()
     {
         _abilityLevelE++;
+        Debug.Log("You LevelE is " + _abilityLevelE.ToString());
     }
     public void UpdatingAbilityTreeR()
     {
         _abilityLevelR++;
+        Debug.Log("You LevelR is " + _abilityLevelR.ToString());
     }
     #endregion
     #region Ability Damages Caculation

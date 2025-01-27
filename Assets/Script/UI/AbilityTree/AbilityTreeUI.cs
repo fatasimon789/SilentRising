@@ -32,6 +32,7 @@ public class AbilityTreeUI : MonoBehaviour
         if (Input.GetKey(KeyCode.P))
         {
             // open abity tree
+            RenderInfoAbilityQ(0);
         }
     }
     private void Start()
@@ -40,17 +41,20 @@ public class AbilityTreeUI : MonoBehaviour
         GetMaterialUpgrade();
     }
     #region Main Method
-    public void ActiveUpdateQ()
+    public void ActiveUpdateQ(int LEVEL_VALUE)
     {
         UpdatingAbility.instance.UpdatingAbilityTreeQ();
+        DegreeMaterials(LEVEL_VALUE);
     }
-    public void ActiveUpdateE()
+    public void ActiveUpdateE(int LEVEL_VALUE)
     {
         UpdatingAbility.instance.UpdatingAbilityTreeE();
+        DegreeMaterials(LEVEL_VALUE);
     }
-    public void ActiveUpdateR()
+    public void ActiveUpdateR(int LEVEL_VALUE)
     {
         UpdatingAbility.instance.UpdatingAbilityTreeR();
+        DegreeMaterials(LEVEL_VALUE);
     }
     public void RenderInfoAbilityQ(int LEVEL)
     {
@@ -59,20 +63,28 @@ public class AbilityTreeUI : MonoBehaviour
         discriptionPerfect.text = weapon.perfectFirstAbility + "";
         RenderInfoMaterials(LEVEL);
         ActiveButtonUpgrade();
+        buttonActive.onClick.RemoveAllListeners();
+        buttonActive.onClick.AddListener(delegate { ActiveUpdateQ(LEVEL); });
     }
     public void RenderInfoAbilityE(int LEVEL)
     {
         nameAbility.text = weapon.nameSecondAbility;
         discriptionBase.text = weapon.baseSecondAbility + IndexValueInfoAbilityE(LEVEL);
         discriptionPerfect.text = weapon.perfectSecondAbility + "";
-        //     GetMaterialUpgrade(LEVEL);
+        RenderInfoMaterials(LEVEL);
+        ActiveButtonUpgrade();
+        buttonActive.onClick.RemoveAllListeners();
+        buttonActive.onClick.AddListener(delegate { ActiveUpdateE(LEVEL); });
     }
     public void RenderInfoAbilityR(int LEVEL)
     {
         nameAbility.text = weapon.nameUltimateAbility;
         discriptionBase.text = weapon.baseUltimateAbility + IndexValueInfoAbilityR(LEVEL);
         discriptionPerfect.text = weapon.perfectUltimateAbility + "";
-        //      GetMaterialUpgrade(LEVEL);
+        RenderInfoMaterials(LEVEL);
+        ActiveButtonUpgrade();
+        buttonActive.onClick.RemoveAllListeners();
+        buttonActive.onClick.AddListener(delegate { ActiveUpdateR(LEVEL); });
     }
     #region Material method
     public void RenderInfoMaterials(int LEVEL)
@@ -94,10 +106,14 @@ public class AbilityTreeUI : MonoBehaviour
             objItemSlot.Find("ItemIcon").GetComponent<Image>().sprite = abilityMaterialsData.ElementAt(i).Key.icon;
             var materialRequired = UpdatingAbility.instance.GetItemRequiredUpgrade(LEVEL_MATERIAL_REQUIRED);
             // vi list bat dau = 0 con` logic gameplay la 1 
-            var materialValue = abilityMaterialsData.ElementAt(i).Value + 1;
+            var materialValue = abilityMaterialsData.ElementAt(i).Value;
             objItemSlot.Find("ItemStack").GetComponent<TextMeshProUGUI>().text
                  = materialValue.ToString() + "/" + materialRequired[i].ToString();
             GetInfoButtonUpgrade(materialValue, materialRequired[i],i);
+            if (materialRequired[i] == 0) 
+            {
+               objTransform.SetActive(false);
+            }
         }
     }
     private void GetMaterialUpgrade()
@@ -152,20 +168,22 @@ public class AbilityTreeUI : MonoBehaviour
         if (!conditionActive1 || !conditionActive2)
         {
             buttonActive.GetComponent<Image>().color = new Color(1,1,1,0.25f);
-            Debug.Log("off");
             buttonActive.enabled = false;
         } else if (conditionActive1 && conditionActive2) 
         {
             buttonActive.GetComponent<Image>().color = new Color (1,1,1,1);
-            Debug.Log("on");
             buttonActive.enabled = true;
         }
     }
-    public void UpgradeAbility() 
+    public void DegreeMaterials(int LEVEL) 
     {
-        // hit button 
-       
+        // degree materials (material required value)
+        for(int i = 0; i < weapon.requiredItemUpgrade.Count; i++) 
+        {
+            UI_Inventory.instance.SetItemValueUpdating(weapon.requiredItemUpgrade[i].id,LEVEL);
+        }
     }
+   
     public void removeOldDataMaterials() 
     {
        // khi doi vu khi se xoa' cai cu~ 
@@ -188,6 +206,7 @@ public class AbilityTreeUI : MonoBehaviour
         string valueDMG = weapon.basicDmgR[LEVEL].ToString();
         return valueDMG;
     }
+    
     // method neu button vao skill se hien ra dong` text cho ca 3 cai tren
 
 
