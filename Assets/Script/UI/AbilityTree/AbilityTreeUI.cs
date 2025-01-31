@@ -24,11 +24,17 @@ public class AbilityTreeUI : MonoBehaviour
     [field: Header("ButtonEvent")]
     [field: SerializeField] public Button buttonActive { get; private set; }
     // field
-    private  bool conditionActive1, conditionActive2;
+    private bool conditionActive1, conditionActive2;
+
+    private int _currentAbilityLevelQ { get; set; }
+    private int _currentAbilityLevelE { get; set; }
+    private int _currentAbilityLevelR { get; set; }
 
     private void Update()
     {
-
+        _currentAbilityLevelQ = UpdatingAbility.instance.abilityLevelQ;
+        _currentAbilityLevelE = UpdatingAbility.instance.abilityLevelE;
+        _currentAbilityLevelR = UpdatingAbility.instance.abilityLevelR;
         if (Input.GetKey(KeyCode.P))
         {
             // open abity tree
@@ -62,7 +68,7 @@ public class AbilityTreeUI : MonoBehaviour
         discriptionBase.text = weapon.baseFirstAbility + IndexValueInfoAbilityQ(LEVEL);
         discriptionPerfect.text = weapon.perfectFirstAbility + "";
         RenderInfoMaterials(LEVEL);
-        ActiveButtonUpgrade();
+        ActiveButtonUpgrade(LEVEL);
         buttonActive.onClick.RemoveAllListeners();
         buttonActive.onClick.AddListener(delegate { ActiveUpdateQ(LEVEL); });
     }
@@ -72,7 +78,7 @@ public class AbilityTreeUI : MonoBehaviour
         discriptionBase.text = weapon.baseSecondAbility + IndexValueInfoAbilityE(LEVEL);
         discriptionPerfect.text = weapon.perfectSecondAbility + "";
         RenderInfoMaterials(LEVEL);
-        ActiveButtonUpgrade();
+        ActiveButtonUpgrade(LEVEL);
         buttonActive.onClick.RemoveAllListeners();
         buttonActive.onClick.AddListener(delegate { ActiveUpdateE(LEVEL); });
     }
@@ -82,7 +88,7 @@ public class AbilityTreeUI : MonoBehaviour
         discriptionBase.text = weapon.baseUltimateAbility + IndexValueInfoAbilityR(LEVEL);
         discriptionPerfect.text = weapon.perfectUltimateAbility + "";
         RenderInfoMaterials(LEVEL);
-        ActiveButtonUpgrade();
+        ActiveButtonUpgrade(LEVEL);
         buttonActive.onClick.RemoveAllListeners();
         buttonActive.onClick.AddListener(delegate { ActiveUpdateR(LEVEL); });
     }
@@ -109,10 +115,10 @@ public class AbilityTreeUI : MonoBehaviour
             var materialValue = abilityMaterialsData.ElementAt(i).Value;
             objItemSlot.Find("ItemStack").GetComponent<TextMeshProUGUI>().text
                  = materialValue.ToString() + "/" + materialRequired[i].ToString();
-            GetInfoButtonUpgrade(materialValue, materialRequired[i],i);
-            if (materialRequired[i] == 0) 
+            GetInfoButtonUpgrade(materialValue, materialRequired[i], i);
+            if (materialRequired[i] == 0)
             {
-               objTransform.SetActive(false);
+                objTransform.SetActive(false);
             }
         }
     }
@@ -145,31 +151,47 @@ public class AbilityTreeUI : MonoBehaviour
             }
         }
     }
-    public void GetInfoButtonUpgrade(int DATA_MATERIAL, int DATA_MATERIAL_REQUIRED,int INDEX_ITEM)
+    public void GetInfoButtonUpgrade(int DATA_MATERIAL, int DATA_MATERIAL_REQUIRED, int INDEX_ITEM)
     {
-            if (DATA_MATERIAL > DATA_MATERIAL_REQUIRED && INDEX_ITEM == 0)
-            {
-                conditionActive1 = true;
-            }
-            if (DATA_MATERIAL > DATA_MATERIAL_REQUIRED && INDEX_ITEM == 1)
-            {
-                conditionActive2 = true;
-            }
-            else if(DATA_MATERIAL <= DATA_MATERIAL_REQUIRED)
-            {
-                conditionActive1= false;
-                conditionActive2= false;
-            }
+        if (DATA_MATERIAL >= DATA_MATERIAL_REQUIRED && INDEX_ITEM == 0)
+        {
+            conditionActive1 = true;
+        }
+        if (DATA_MATERIAL >= DATA_MATERIAL_REQUIRED && INDEX_ITEM == 1)
+        {
+            conditionActive2 = true;
+        }
+        else if (DATA_MATERIAL < DATA_MATERIAL_REQUIRED)
+        {
+            conditionActive1 = false;
+            conditionActive2 = false;
+        }
 
     }
-    public void ActiveButtonUpgrade()
+    public void ActiveButtonUpgrade(int LEVEL_INDEX)
     {
-       
-        if (!conditionActive1 || !conditionActive2)
+        // Actived
+        if (_currentAbilityLevelQ >= LEVEL_INDEX || _currentAbilityLevelE >= LEVEL_INDEX 
+         || _currentAbilityLevelR >= LEVEL_INDEX) 
+        {
+            buttonActive.GetComponent<Image>().color = new Color(1, 1, 1, 0.25f);
+            buttonActive.GetComponentInChildren<TextMeshProUGUI>().text = "Actived";
+            buttonActive.enabled= false;
+            return;
+        }
+        // too far to Active (out limit is 2 )
+        else if (!LimitUpgradeAbility(LEVEL_INDEX)) 
+        {
+           //  make its need to upgrade something first 
+        }
+        // limit is 1 (cant upgraded , ran out materials )
+        else if (!conditionActive1 || !conditionActive2 )
         {
             buttonActive.GetComponent<Image>().color = new Color(1,1,1,0.25f);
             buttonActive.enabled = false;
-        } else if (conditionActive1 && conditionActive2) 
+        }
+        //limit is 1 (can upgraed)
+        else if (conditionActive1 && conditionActive2 ) 
         {
             buttonActive.GetComponent<Image>().color = new Color (1,1,1,1);
             buttonActive.enabled = true;
@@ -180,7 +202,8 @@ public class AbilityTreeUI : MonoBehaviour
         // degree materials (material required value)
         for(int i = 0; i < weapon.requiredItemUpgrade.Count; i++) 
         {
-            UI_Inventory.instance.SetItemValueUpdating(weapon.requiredItemUpgrade[i].id,LEVEL);
+            var getRequiredValue = UpdatingAbility.instance.GetItemRequiredUpgrade(LEVEL);
+            UI_Inventory.instance.SetItemValueUpdating(weapon.requiredItemUpgrade[i].id, getRequiredValue[i]);
         }
     }
    
@@ -206,7 +229,19 @@ public class AbilityTreeUI : MonoBehaviour
         string valueDMG = weapon.basicDmgR[LEVEL].ToString();
         return valueDMG;
     }
-    
+
+    private bool LimitUpgradeAbility(int GET_LEVEL) 
+    {
+        var limitValue = GET_LEVEL - _currentAbilityLevelQ;
+        if (limitValue >= 2 ) 
+        {
+           return false;
+        }
+        else  
+        {
+          return true;
+        }
+    }
     // method neu button vao skill se hien ra dong` text cho ca 3 cai tren
 
 

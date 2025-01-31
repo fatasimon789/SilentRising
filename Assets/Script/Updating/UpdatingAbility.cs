@@ -6,7 +6,9 @@ using UnityEngine;
 public class UpdatingAbility : MonoBehaviour
 {
     public static UpdatingAbility instance;
-    private int _abilityLevelQ,_abilityLevelE,_abilityLevelR;
+    public int abilityLevelQ { get;private set; }
+    public int abilityLevelE { get;private set; }
+    public int abilityLevelR { get;private set; }
     private bool test;
     #region Main monobehaviour
     private void Awake()
@@ -24,7 +26,7 @@ public class UpdatingAbility : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.U) && !test) 
         {
-            _abilityLevelQ++;
+            abilityLevelQ++;
             test = true;
         }
     }
@@ -32,18 +34,18 @@ public class UpdatingAbility : MonoBehaviour
     #region Call Upgrade Ability 
     public void UpdatingAbilityTreeQ() 
     {
-        _abilityLevelQ++;
-        Debug.Log("You LevelQ is " + _abilityLevelQ.ToString());
+        abilityLevelQ++;
+        Debug.Log("You LevelQ is " + abilityLevelQ.ToString());
     }
     public void UpdatingAbilityTreeE()
     {
-        _abilityLevelE++;
-        Debug.Log("You LevelE is " + _abilityLevelE.ToString());
+        abilityLevelE++;
+        Debug.Log("You LevelE is " + abilityLevelE.ToString());
     }
     public void UpdatingAbilityTreeR()
     {
-        _abilityLevelR++;
-        Debug.Log("You LevelR is " + _abilityLevelR.ToString());
+        abilityLevelR++;
+        Debug.Log("You LevelR is " + abilityLevelR.ToString());
     }
     #endregion
     #region Ability Damages Caculation
@@ -71,46 +73,46 @@ public class UpdatingAbility : MonoBehaviour
     // S1 MAKE  THE UPDATING VALUE FROM  ARRAY     
     private int  LevelBaseDmgQUpdating() 
     {
-        if (WeaponManager.instance.SystemSkillWeapon.basicDmgQ.Count == _abilityLevelQ) 
+        if (WeaponManager.instance.SystemSkillWeapon.basicDmgQ.Count == abilityLevelQ) 
         {
             Debug.Log("Ability Q is full");
         }
-        var totalBaseDMG=  WeaponManager.instance.SystemSkillWeapon.LevelBaseDmgQ(_abilityLevelQ);
+        var totalBaseDMG=  WeaponManager.instance.SystemSkillWeapon.LevelBaseDmgQ(abilityLevelQ);
         return totalBaseDMG;
     }
     private float LevelMultiQUpdating() 
     {
-        var totalMultiQ = WeaponManager.instance.SystemSkillWeapon.LevelMultiQ(_abilityLevelQ);
+        var totalMultiQ = WeaponManager.instance.SystemSkillWeapon.LevelMultiQ(abilityLevelQ);
         return totalMultiQ;
     }
     // ------------------------- E ---------------------------
     private int LevelBaseDmgEUpdating()
     {
-        if (WeaponManager.instance.SystemSkillWeapon.basicDmgE.Count == _abilityLevelE)
+        if (WeaponManager.instance.SystemSkillWeapon.basicDmgE.Count == abilityLevelE)
         {
             Debug.Log("Ability E is full");
         }
-        var totalBaseDMG = WeaponManager.instance.SystemSkillWeapon.LevelBaseDmgE(_abilityLevelE);
+        var totalBaseDMG = WeaponManager.instance.SystemSkillWeapon.LevelBaseDmgE(abilityLevelE);
         return totalBaseDMG;
     }
     private float LevelMultiEUpdating()
     {
-        var totalMultiE = WeaponManager.instance.SystemSkillWeapon.LevelMultiE(_abilityLevelE);
+        var totalMultiE = WeaponManager.instance.SystemSkillWeapon.LevelMultiE(abilityLevelE);
         return totalMultiE;
     }
     // ------------------------- R ---------------------------
     private int LevelBaseDmgRUpdating()
     {
-        if (WeaponManager.instance.SystemSkillWeapon.basicDmgR.Count == _abilityLevelR)
+        if (WeaponManager.instance.SystemSkillWeapon.basicDmgR.Count == abilityLevelR)
         {
             Debug.Log("Ability R is full");
         }
-        var totalBaseDMG = WeaponManager.instance.SystemSkillWeapon.LevelBaseDmgR(_abilityLevelR);
+        var totalBaseDMG = WeaponManager.instance.SystemSkillWeapon.LevelBaseDmgR(abilityLevelR);
         return totalBaseDMG;
     }
     private float LevelMultiRUpdating()
     {
-        var totalMultiR = WeaponManager.instance.SystemSkillWeapon.LevelMultiR(_abilityLevelR);
+        var totalMultiR = WeaponManager.instance.SystemSkillWeapon.LevelMultiR(abilityLevelR);
         return totalMultiR;
     }
     #endregion

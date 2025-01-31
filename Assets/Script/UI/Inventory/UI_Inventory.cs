@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -62,7 +63,7 @@ public class UI_Inventory : MonoBehaviour
             
             }
         }
-        _items.Add(ITEM,0);
+        _items.Add(ITEM,1);
       // se tao ra list amount va setup sao cho List [index] amount = List[index] list
       // neu co chung` id se lay id(index) = 1  index cua List amount ( cung same )
      
@@ -87,8 +88,8 @@ public class UI_Inventory : MonoBehaviour
             objItemSlot.Find("ItemName").GetComponent<TextMeshProUGUI>().text = item.Key.itemName;
             objItemSlot.Find("ItemIcon").GetComponent<Image>().sprite = item.Key.icon;
             var amountText = objItemSlot.Find("ItemStack").GetComponent<TextMeshProUGUI>();
-            var renderText = item.Value + 1;
-            if (item.Value >= 1) 
+            var renderText = item.Value ;// 1     va =
+            if (item.Value > 1) 
             {
                 amountText.SetText(renderText.ToString());
             }
@@ -112,8 +113,7 @@ public class UI_Inventory : MonoBehaviour
          {
             if (ID == item.Key.id) 
             {
-                // vi value luc nao cung bat dau la so 0 chu k phai 1 
-                return new Tuple<int,int>(item.Key.id,item.Value + 1);
+                return new Tuple<int,int>(item.Key.id,item.Value);
                 
             }
         }
@@ -121,17 +121,16 @@ public class UI_Inventory : MonoBehaviour
     }
     public void SetItemValueUpdating(int ID, int DEGREE_VALUE) 
     {
-        foreach (var item in GetItemList()) 
+        for (int i = 0; i < GetItemList().Count; i++) 
         {
-            if (ID == item.Key.id) 
+            if (GetItemList().ElementAt(i).Key.id == ID) 
             {
-                if (GetItemList().TryGetValue(item.Key, out int amount))
+                if (GetItemList().TryGetValue(GetItemList().ElementAt(i).Key, out int amount))
                 {
                     // set lai data 
-                    //
-                    //   _items[item.Key] = amount -DEGREE_VALUE;
-                    var test = amount - DEGREE_VALUE;
-                    Debug.Log("SET DATA " + test);
+                    var newValue = amount - DEGREE_VALUE;
+                    _items[GetItemList().ElementAt(i).Key] = newValue;
+                    Debug.Log("NEW VALUE  " + newValue);
                 }
             }
         }
