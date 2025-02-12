@@ -130,7 +130,6 @@ public class UI_Inventory : MonoBehaviour
                     // set lai data 
                     var newValue = amount - DEGREE_VALUE;
                     _items[GetItemList().ElementAt(i).Key] = newValue;
-                    Debug.Log("NEW VALUE  " + newValue);
                 }
             }
         }

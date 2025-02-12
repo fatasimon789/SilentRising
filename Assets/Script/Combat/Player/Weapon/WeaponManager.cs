@@ -64,7 +64,7 @@ public class WeaponManager : MonoBehaviour
         DamagesType = SystemSkillWeapon.DamagesType;
         // stats value
         StatsWeaponUpdate();
-
+        WeaponMachine.currentWeapon.UpdateEvent();
       //  VirtualBox.DisplayBox(updatingPosAbi.colliderPosQ.position, updatingPosAbi.localColliderHalfExtendQ, Quaternion.identity);
         VirtualBox.DisplayBox(updatingPosAbi.colliderPosE.position, updatingPosAbi.localColliderHalfExtendE, Quaternion.identity);
        // VirtualBox.DisplayBox(updatingPosAbi.colliderPosR.position, updatingPosAbi.localColliderHalfExtendR, Quaternion.identity);
@@ -171,24 +171,18 @@ public class WeaponManager : MonoBehaviour
     #region Clone Event
     public GameObject CreateInstantitate(GameObject PROJECTILE) 
     {
-       var  projectileObj = Instantiate(PROJECTILE,updatingPosAbi.colliderPosR.position,Quaternion.identity);
+       var  projectileObj = Instantiate(PROJECTILE,updatingPosAbi.colliderPosR.position,Quaternion.identity,this.transform);
         return projectileObj;
     }
-    // ++++++ Sword +++++
-    public void SwordInstanceR() 
+    public GameObject CreateInstantitateWithoutParent(GameObject PROJECTILE)
     {
-        // lay var tao objech trong' chua' = method tao clone (ten clone);
-        var projectObjSword = CreateInstantitate(SystemSkillWeapon.projectile);
-        // lay GroundSlash trong' chua' = groundslash o trong object clone; 
-        GroundSlash groundSlash = projectObjSword.GetComponent<GroundSlash>();
-        //lay object clone tham chieu vao rigidbody  va nhap van toc bay ;
-       
-        projectObjSword.GetComponent<Rigidbody>().velocity = Player.instance.transform.forward * groundSlash.speed;
-        
+        var projectileObj = Instantiate(PROJECTILE, updatingPosAbi.colliderPosR.position, Quaternion.identity);
+        return projectileObj;
     }
-    // ++++++ FIRT  +++++
-    
-    // ++++++ AXE   +++++
+    public void DestroyInstantiate(GameObject GAMEOBJECT) 
+    {
+        Destroy(GAMEOBJECT);
+    }
     #endregion
     #region Ability CoolDown
     private IEnumerator CDAbiQ() 

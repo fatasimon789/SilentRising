@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
 
@@ -8,16 +9,16 @@ public class FireSword : TypeOfWeapon
     public FireSword(WeaponManager WEAPON_MANAGER, WeaponTypeMachine WEAPON_TYPE_MACHINE) : base(WEAPON_MANAGER, WEAPON_TYPE_MACHINE)
     {
     }
-
-    public float critValue { get; set; }
-    public int attackRange { get; set; }
-    public int cd { get; set; }
+    private bool isStrengthenAttack;
+   
+    private float timeDuration = 3f;
     #region  Weapon Chance / Delete
     public override void ChanceNewWeapon()
     {
         base.ChanceNewWeapon();
         // them vao day firesword
-        Debug.Log("Fire sword ");
+       // Debug.Log("Fire sword ");
+       
     }
     public override void DeleteOldWeapon()
     {
@@ -72,6 +73,14 @@ public class FireSword : TypeOfWeapon
     #endregion
 
     #region Main Method
+    // update event
+    public override void UpdateEvent()
+    {
+        base.UpdateEvent();
+        perfectAttackQ();
+    }
+
+    // animation event 
     public override void triggerAbilitySkill(PlayerTriggerEventAnim.AbilityTriggerType triggerAbility)
     {
         base.triggerAbilitySkill(triggerAbility);
@@ -98,7 +107,30 @@ public class FireSword : TypeOfWeapon
                 Player.instance.playerDataEffect.G_AbilityE.SetActive(true);
                 break;
             case PlayerTriggerEventAnim.AbilityTriggerType.vfxUltimateAbiSword:
-
+                break;
+            // PerfectAbility
+            case PlayerTriggerEventAnim.AbilityTriggerType.firstPerfectAbility:
+                if (isOnPerfectAbilityQ)
+                {
+                    //  code : time duration on :  animation on , target on , disable normal attack , onable perfect attack 
+                    // taget animation : duration off straightaway ,- heal enemy , + heal player ...
+                    isStrengthenAttack= true;
+                    timeDuration = 3;
+                    var perfectAbilityIndicator = WeaponManager.CreateInstantitate(WeaponManager.SystemSkillWeapon.perfectAbilityProjectile[0]);
+                    perfectAbilityIndicator.SetActive(true);
+                }
+                break;
+            case PlayerTriggerEventAnim.AbilityTriggerType.secondPerfectAbility:
+                if(isOnPerfectAbilityE) 
+                {
+                
+                }
+                break;
+            case PlayerTriggerEventAnim.AbilityTriggerType.UltimatePerfectAbility:
+                if(isOnPerfectAbilityR) 
+                {
+                
+                }
                 break;
         }
     }
@@ -115,7 +147,11 @@ public class FireSword : TypeOfWeapon
     }
     public void UltimateAbilityCollider()
     {
-        WeaponManager.SwordInstanceR();
+        var projectObjSword = WeaponManager.CreateInstantitateWithoutParent(WeaponManager.SystemSkillWeapon.projectile[0]);
+        GroundSlash groundSlash = projectObjSword.GetComponent<GroundSlash>();
+        //lay object clone tham chieu vao rigidbody  va nhap van toc bay ;
+
+        projectObjSword.GetComponent<Rigidbody>().velocity = Player.instance.transform.forward * groundSlash.speed;
     }
     #endregion
     public void OffVfx()
@@ -187,6 +223,31 @@ public class FireSword : TypeOfWeapon
         }
         
     }
-    
-        #endregion
+    private void perfectAttackQ() 
+    {
+      
+       if (isStrengthenAttack) 
+       {
+          float timeStarting = Time.deltaTime;
+          timeDuration -= timeStarting;
+      //    Transform indicatorRectTransform =
+            if (timeDuration > 0) 
+            {
+                // attack per fect 
+               
+            }
+            else 
+            {
+              var indicatorObject =  WeaponManager.transform.Find("FireSwordPerfectQ(Clone)").gameObject;
+              WeaponManager.DestroyInstantiate(indicatorObject);
+              isStrengthenAttack = false;
+                // off all 
+            }
+        
+        }
+    }
+    #endregion
+#region Resauble Method
+  
+#endregion
 }

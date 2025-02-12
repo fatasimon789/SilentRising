@@ -6,15 +6,18 @@ public  class TypeOfWeapon : IWeapon
 {
    protected WeaponManager WeaponManager;
    protected WeaponTypeMachine WeaponTypeMachine;
+   public bool isOnPerfectAbilityQ { get; set; }
+   public bool isOnPerfectAbilityE { get; set; }
+   public bool isOnPerfectAbilityR { get; set; }
 
-   public TypeOfWeapon (WeaponManager WEAPON_MANAGER , WeaponTypeMachine WEAPON_TYPE_MACHINE) 
+    public TypeOfWeapon (WeaponManager WEAPON_MANAGER , WeaponTypeMachine WEAPON_TYPE_MACHINE) 
     {
         this.WeaponManager= WEAPON_MANAGER;
         this.WeaponTypeMachine= WEAPON_TYPE_MACHINE;
     }
     public virtual void ChanceNewWeapon()
     {
-
+     
     }
     public virtual void DeleteOldWeapon()
     {
@@ -41,7 +44,6 @@ public  class TypeOfWeapon : IWeapon
     {
         StartAnimation(Player.instance.playerAnimatorData.S_FirstAbi);
         ControllBehaviourDisable();
-      
     }
 
 
@@ -64,6 +66,10 @@ public  class TypeOfWeapon : IWeapon
                 ControllBehaviourEnable();
                 break;
         }
+    }
+    public virtual void UpdateEvent() 
+    {
+        
     }
     public  void StartAnimation(string ANIM) 
     {

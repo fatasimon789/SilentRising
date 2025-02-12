@@ -14,7 +14,7 @@ TagManager:
   - UI
   - Player
   - Enemy
-  - Objects
+  - Indicator
   - 
   - 
   - 
@@ -39,9 +39,9 @@ TagManager:
   - 
   - 
   m_SortingLayers:
-  - name: Default
-    uniqueID: 0
-    locked: 0
   - name: TestObjects
     uniqueID: 3246011071
+    locked: 0
+  - name: Default
+    uniqueID: 0
     locked: 0

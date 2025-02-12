@@ -49,15 +49,13 @@ public class GroundSlash : MonoBehaviour
            
             if (Physics.Raycast(distance,transform.TransformDirection(-Vector3.up),out hit,detectingDistance,layerMask)) 
             {
-               transform.position = new Vector3(transform.position.x,hit.point.y,transform.position.z);
-                
+               transform.position = new Vector3(transform.position.x,hit.point.y,transform.position.z); 
             }
             else 
             {
                transform.position = new Vector3(transform.position.x,transform.position.y,transform.position.z);
-               
             }
-            Debug.DrawRay(distance, transform.TransformDirection(-Vector3.up * detectingDistance),Color.red);
+            // Debug.DrawRay(distance, transform.TransformDirection(-Vector3.up * detectingDistance),Color.red);
         }
     }
     IEnumerator SlowDown() 

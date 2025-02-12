@@ -24,6 +24,7 @@ public class UpdatingAbility : MonoBehaviour
     }
     private void Update()
     {
+        PerfectAbilityQ();
         if (Input.GetKey(KeyCode.U) && !test) 
         {
             abilityLevelQ++;
@@ -46,6 +47,35 @@ public class UpdatingAbility : MonoBehaviour
     {
         abilityLevelR++;
         Debug.Log("You LevelR is " + abilityLevelR.ToString());
+    }
+    public void PerfectAbilityQ() 
+    {
+        if (abilityLevelQ >= 0 ) 
+        {
+            WeaponManager.instance.WeaponMachine.currentWeapon.isOnPerfectAbilityQ = true;
+        }
+        if (abilityLevelQ >= 6)
+        {
+            WeaponManager.instance.FireSword.isOnPerfectAbilityQ = true;
+        }
+        if (abilityLevelQ >= 7)
+        {
+            WeaponManager.instance.FireSword.isOnPerfectAbilityQ = true;
+        }
+    }
+    public void PerfectAbilityE()
+    {
+        if (abilityLevelE == 5)
+        {
+
+        }
+    }
+    public void PerfectAbilityR()
+    {
+        if (abilityLevelR == 5)
+        {
+
+        }
     }
     #endregion
     #region Ability Damages Caculation

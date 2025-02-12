@@ -42,6 +42,8 @@ public class PlayerTriggerEventAnim : MonoBehaviour
         vfxFirstAbiFist, vfxSecondAbiFist, vfxUltimateAbiFist,
         //+ Effect Sword Ability
         vfxFirstAbiAxe, vfxSecondAbiAxe, vfxUltimateAbiAxe,
+        // Perfect Ability EVENT
+        firstPerfectAbility,secondPerfectAbility,UltimatePerfectAbility
     }
    
 

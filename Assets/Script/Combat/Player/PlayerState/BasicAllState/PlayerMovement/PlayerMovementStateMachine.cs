@@ -25,6 +25,5 @@ public class PlayerMovementStateMachine : PlayerStateMachine
        healState= new HealState(this);
        attackSwordState= new AttackState(this);
        firstAbility= new FirstAbility(this);
-      //  secondAbility = new SecondAbility(this);
     }
 }

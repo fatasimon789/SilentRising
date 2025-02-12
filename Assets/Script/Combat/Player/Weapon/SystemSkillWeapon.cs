@@ -27,7 +27,10 @@ public class SystemSkillWeapon : ScriptableObject
     public float AbiCoolDownR;
 
     [Header("Projectile")]
-    public GameObject projectile;
+    public  GameObject [] projectile;
+
+    [Header("Indicator")]
+    public GameObject[] perfectAbilityProjectile;
 
     [Header("Basic Damages")]
     public List<int> basicDmgQ;
@@ -76,7 +79,6 @@ public class SystemSkillWeapon : ScriptableObject
     // hp    lv 1 
     public int PlayerHP() 
     {
-       
         int currentHP = heal  ;// more
         return currentHP;
     }
@@ -94,23 +96,22 @@ public class SystemSkillWeapon : ScriptableObject
     //                  S2  
     public int AbilityQSword(int  BASE_DMG , float MULTI_Q) 
     {
-      
-        var percentUserDMG = dameges / 100 * percentDmgQ;
+        var percentUserDMG = Player.instance.statsSystem.attackValue/ 100 * percentDmgQ;
         var resultDMG = BASE_DMG + percentUserDMG;
         var totalDMG =  resultDMG * MULTI_Q;
-        Debug.Log(totalDMG);
+     //   Debug.Log(totalDMG);
         return (int)totalDMG;
     }
     public int AbilityESword(int BASE_DMG, float MULTI_E)
     {
-        var percentUserDMG = dameges / 100 * percentDmgE;
+        var percentUserDMG = Player.instance.statsSystem.attackValue / 100 * percentDmgE;
         var resultDMG = BASE_DMG + percentUserDMG;
         var totalDMG = resultDMG * MULTI_E;
         return (int)totalDMG;
     }
     public int AbilityRSword(int BASE_DMG, float MULTI_R)
     {
-        var percentUserDMG = dameges / 100 * percentDmgR;
+        var percentUserDMG = Player.instance.statsSystem.attackValue / 100 * percentDmgR;
         var resultDMG = BASE_DMG + percentUserDMG;
         var totalDMG = resultDMG * MULTI_R;
         return (int)totalDMG;

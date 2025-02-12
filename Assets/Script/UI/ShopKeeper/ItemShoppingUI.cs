@@ -18,7 +18,7 @@ public class ItemShoppingUI : MonoBehaviour
     private Transform _shopTemplate;
  
     public List<ItemSystem> Items;
-    private int testMoneyValue = 5000;
+    private int testMoneyValue = 50000;
 
     #region Main Monobehaviour
     private void Awake()

@@ -49,28 +49,28 @@ public class PlayerStatsSystem : IPlayerHeal
         if (Input.GetKeyDown(KeyCode.L))
         {
             //3 
-            basicTakeDamages(takeDamegesValue());
+            basicTakeDamages(takeDamegesValue(enemyTestDamages));
         }
         
     }
     // enemy call
     // HP va DEF VALUE se bi tru phu thuoc vao damages enemy
     // 2
-    private float takeDamegesValue() 
+    private float takeDamegesValue(float DAMAGES) 
     {
-      float damagesValue = enemyTestDamages - damagesReduceDEF();
+      float damagesValue = DAMAGES - damagesReduceDEF(DAMAGES);
         return damagesValue;
     }
     // 1 
-    private float damagesReduceDEF() 
+    private float damagesReduceDEF(float DAMEGES_TAKEN) 
     {
-        float damagesReduce = enemyTestDamages * multiplyDEF();
+        float damagesReduce = DAMEGES_TAKEN * multiplyDEF();
         return damagesReduce;
     }
     //0
     public void basicTakeDamages(float DAMAGES)
     {
-        currentHPValue -= DAMAGES;
+        currentHPValue -= takeDamegesValue(DAMAGES);
       //  Debug.Log(currentHPValue + "take damages basic");
     }
     // player call

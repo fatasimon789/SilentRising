@@ -24,16 +24,24 @@ MonoBehaviour:
   AbiCoolDownQ: 3
   AbiCoolDownE: 7.5
   AbiCoolDownR: 15
-  projectile: {fileID: 4076685852760168977, guid: 3305fa7f48b8c264ca3103940e6cba97, type: 3}
+  projectile:
+  - {fileID: 4076685852760168977, guid: 3305fa7f48b8c264ca3103940e6cba97, type: 3}
+  - {fileID: 0}
+  - {fileID: 0}
+  perfectAbilityProjectile:
+  - {fileID: 7292997302267279079, guid: 32f06a54164415e4b98871bf571545f9, type: 3}
   basicDmgQ: 460000005a0000006e0000008200000096000000aa000000c80000002c010000
-  basicDmgE: 6400000096000000c8000000fa0000002c010000
-  basicDmgR: fa0000005e010000c201000026020000bc020000
+  basicDmgE: 6400000096000000c8000000fa0000002c01000090010000f4010000bc020000
+  basicDmgR: fa0000005e010000c20100002602000058020000bc02000052030000e8030000
   multiQ:
   - 1.35
   - 1.5
   - 1.75
   - 2
   - 2.5
+  - 3
+  - 3.75
+  - 5
   multiE:
   - 2.15
   - 2.6
@@ -41,11 +49,14 @@ MonoBehaviour:
   - 3.5
   - 5
   multiR:
+  - 3.5
   - 4
+  - 4.5
   - 5
   - 6
-  - 7
-  - 8
+  - 7.5
+  - 9
+  - 12
   percentDmgQ: 70
   percentDmgE: 85
   percentDmgR: 100
@@ -56,8 +67,9 @@ MonoBehaviour:
     bonus damages ++ \n"
   abilityIcon1: []
   nameSecondAbility: Smashing Circle
-  baseSecondAbility: 
-  perfectSecondAbility: 
+  baseSecondAbility: Winds up and swing sword in wide circle . Enemies struck by
+    the blade take damage
+  perfectSecondAbility: 'unknow '
   abilityIcon2: []
   nameUltimateAbility: 'The Equalizer '
   baseUltimateAbility: 

@@ -32,7 +32,7 @@ public class EnemyHP : IEnemyHP
     }
     private bool CritRandom() 
     {
-        critValue = WeaponManager.instance.weaponCRIT / 100;
+        critValue = Player.instance.statsSystem.critRateValue / 100;
         var critRandom = Random.value <= critValue;
       //  Debug.Log(critRandom);
         return critRandom;
