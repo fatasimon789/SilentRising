@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class PlayerTriggerEventAnim : MonoBehaviour
 {
+    #region Animation Event 
     public void AnimationTriggerEvent(AnimationTriggerType type) 
     {
       Player.instance.playerMovementStateMachine.currentState.AnimationTriggerEventBase(type);
@@ -13,6 +14,13 @@ public class PlayerTriggerEventAnim : MonoBehaviour
     {
         WeaponManager.instance.WeaponMachine.currentWeapon.triggerAbilitySkill(ABITYPE);
     }
+    #endregion
+    #region Special Perfect Ability Event
+    public void FireSwordPerfectEvent() 
+    {
+        WeaponManager.instance.FireSword.enemyTarget();
+    }
+    #endregion
     public enum AnimationTriggerType 
     {
        // Attack Type
@@ -45,6 +53,5 @@ public class PlayerTriggerEventAnim : MonoBehaviour
         // Perfect Ability EVENT
         firstPerfectAbility,secondPerfectAbility,UltimatePerfectAbility
     }
-   
-
+    
 }

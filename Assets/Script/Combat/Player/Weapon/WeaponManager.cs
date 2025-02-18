@@ -203,7 +203,11 @@ public class WeaponManager : MonoBehaviour
         yield return new WaitForSeconds(SystemSkillWeapon.AbiCoolDownR);
         IsCDAbiR = false;
     }
-
     #endregion
-
+    #region Coroutine Event
+    public void DelayCoroutineEvent(IEnumerator TIME_DELAY) 
+    {
+        StartCoroutine(TIME_DELAY);
+    }
+    #endregion
 }

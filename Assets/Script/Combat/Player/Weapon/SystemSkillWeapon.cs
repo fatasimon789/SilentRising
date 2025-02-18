@@ -31,6 +31,7 @@ public class SystemSkillWeapon : ScriptableObject
 
     [Header("Indicator")]
     public GameObject[] perfectAbilityProjectile;
+ 
 
     [Header("Basic Damages")]
     public List<int> basicDmgQ;
@@ -46,6 +47,11 @@ public class SystemSkillWeapon : ScriptableObject
     public float percentDmgQ;
     public float percentDmgE;
     public float percentDmgR;
+
+    [Header("Perfect Damages")]
+    public float basePerfectATK;
+    public float multiPerfectATK;
+    public float[] percentPerfectATK;
 
     [Header("DiscriptionFirstAbility")]
     public string nameFirstAbility;
@@ -116,6 +122,13 @@ public class SystemSkillWeapon : ScriptableObject
         var totalDMG = resultDMG * MULTI_R;
         return (int)totalDMG;
     }
+    public int PerfectDamages(float PERCENT_PERFECT_ATK) 
+    {
+        var resultDMG = basePerfectATK * multiPerfectATK;
+        var percentDMG  =  Player.instance.statsSystem.attackValue/100 * PERCENT_PERFECT_ATK;
+        var totalDMG = resultDMG + percentDMG;
+        return(int)totalDMG;
+    }
     // Ice fist , Q , E ,R  // attack
     #endregion
 
@@ -166,6 +179,10 @@ public class SystemSkillWeapon : ScriptableObject
     public float LevelMultiR(int I_MULTI_R)
     {
         return multiR[I_MULTI_R];
+    }
+    public float LevelPerfect(int I_PERFECT) 
+    {
+        return percentPerfectATK[I_PERFECT];
     }
     #endregion
 }

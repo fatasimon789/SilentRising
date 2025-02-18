@@ -20,7 +20,6 @@ public class PlayerActionState : IState
     protected static bool isCancel;
     // Type Weapon :  Sword 
     protected static int CountingAttack;
-
     // dat struct   ao~ de khoi tao ra new cua cac state nho~ thong qua PlayerMovementStatemachine
     // cac state duoc thua ke se co struct tuong tu cai nay
     public PlayerActionState(PlayerMovementStateMachine PLAYER_MOVEMENT_STATE_MACHINE)
@@ -51,14 +50,14 @@ public class PlayerActionState : IState
             PlayerLookAtMouse();
             isRotating = false;
         }
+   
     }
 
 
     public virtual void HandleInput()
     {
         PlayerMovementInput();
-        AttackInput();
-   
+        AttackInput(); 
     }
     public virtual void AnimationTriggerEventBase(PlayerTriggerEventAnim.AnimationTriggerType triggerType)
     {
@@ -73,6 +72,7 @@ public class PlayerActionState : IState
     }
     public void AttackInput()
     {
+          
         playerMovementStateMachine.player.playerInput.playerActions.AttackSword.performed += ctx => Attack();
     }
     public void AbilityUltimateInput()
@@ -184,6 +184,6 @@ public class PlayerActionState : IState
         canMoving= isMoving;
         canAttack = isMoving;
     }
-    
+
     #endregion
 }

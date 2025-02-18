@@ -4,8 +4,8 @@ using UnityEngine;
 
 public abstract class PlayerStateMachine
 {
-    public IState currentState { get; set; }
-    public void ChanceState(IState newState) 
+    public PlayerActionState currentState { get; set; }
+    public void ChanceState(PlayerActionState newState) 
     {
         currentState?.ExitState();
         currentState = newState;

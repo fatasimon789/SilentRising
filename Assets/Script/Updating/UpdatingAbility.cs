@@ -9,6 +9,7 @@ public class UpdatingAbility : MonoBehaviour
     public int abilityLevelQ { get;private set; }
     public int abilityLevelE { get;private set; }
     public int abilityLevelR { get;private set; }
+    public int perfectAbilityLevel { get;private set; }
     private bool test;
     #region Main monobehaviour
     private void Awake()
@@ -52,15 +53,15 @@ public class UpdatingAbility : MonoBehaviour
     {
         if (abilityLevelQ >= 0 ) 
         {
-            WeaponManager.instance.WeaponMachine.currentWeapon.isOnPerfectAbilityQ = true;
+            WeaponManager.instance.FireSword.isOnPerfectAbilityQ[0] = true;
         }
         if (abilityLevelQ >= 6)
         {
-            WeaponManager.instance.FireSword.isOnPerfectAbilityQ = true;
+            WeaponManager.instance.FireSword.isOnPerfectAbilityQ[1] = true;
         }
         if (abilityLevelQ >= 7)
         {
-            WeaponManager.instance.FireSword.isOnPerfectAbilityQ = true;
+            WeaponManager.instance.FireSword.isOnPerfectAbilityQ[2] = true;
         }
     }
     public void PerfectAbilityE()
@@ -96,6 +97,11 @@ public class UpdatingAbility : MonoBehaviour
         var resultDMG = WeaponManager.instance.SystemSkillWeapon.AbilityRSword(LevelBaseDmgRUpdating(), LevelMultiRUpdating());
         return resultDMG;
     }
+    public int PerfectDMG() 
+    {
+        var resultDMG = WeaponManager.instance.SystemSkillWeapon.PerfectDamages(LevelPerfectPercentDamages());
+        return resultDMG;
+    }
     // DMG E
     #endregion
     #region  Resauble method (Damages paramater)
@@ -115,6 +121,7 @@ public class UpdatingAbility : MonoBehaviour
         var totalMultiQ = WeaponManager.instance.SystemSkillWeapon.LevelMultiQ(abilityLevelQ);
         return totalMultiQ;
     }
+
     // ------------------------- E ---------------------------
     private int LevelBaseDmgEUpdating()
     {
@@ -144,6 +151,11 @@ public class UpdatingAbility : MonoBehaviour
     {
         var totalMultiR = WeaponManager.instance.SystemSkillWeapon.LevelMultiR(abilityLevelR);
         return totalMultiR;
+    }
+    private float LevelPerfectPercentDamages() 
+    {
+        var totalDMG = WeaponManager.instance.SystemSkillWeapon.LevelPerfect(perfectAbilityLevel);
+        return totalDMG;
     }
     #endregion
     #region Item Upgrade

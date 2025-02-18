@@ -60,6 +60,12 @@ MonoBehaviour:
   percentDmgQ: 70
   percentDmgE: 85
   percentDmgR: 100
+  basePerfectATK: 200
+  multiPerfectATK: 1.5
+  percentPerfectATK:
+  - 200
+  - 300
+  - 350
   nameFirstAbility: Reping Slash
   baseFirstAbility: "Make a slash . Deal Damages ++ \nCD  ++ "
   perfectFirstAbility: "After casting an ability . The next attack empowers  deal

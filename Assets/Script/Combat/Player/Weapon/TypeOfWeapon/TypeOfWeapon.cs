@@ -4,20 +4,22 @@ using UnityEngine;
 
 public  class TypeOfWeapon : IWeapon
 {
-   protected WeaponManager WeaponManager;
+   protected WeaponManager weaponManager;
    protected WeaponTypeMachine WeaponTypeMachine;
-   public bool isOnPerfectAbilityQ { get; set; }
-   public bool isOnPerfectAbilityE { get; set; }
-   public bool isOnPerfectAbilityR { get; set; }
+   public bool[] isOnPerfectAbilityQ { get; set; }
+   public bool[] isOnPerfectAbilityE { get; set; }
+   public bool[] isOnPerfectAbilityR { get; set; }
 
     public TypeOfWeapon (WeaponManager WEAPON_MANAGER , WeaponTypeMachine WEAPON_TYPE_MACHINE) 
     {
-        this.WeaponManager= WEAPON_MANAGER;
+        this.weaponManager= WEAPON_MANAGER;
         this.WeaponTypeMachine= WEAPON_TYPE_MACHINE;
     }
     public virtual void ChanceNewWeapon()
     {
-     
+       isOnPerfectAbilityQ = new bool[2];
+       isOnPerfectAbilityE = new bool[2];
+       isOnPerfectAbilityR = new bool[2];
     }
     public virtual void DeleteOldWeapon()
     {
