@@ -10,7 +10,6 @@ public class GroundSlash : MonoBehaviour
     [field: SerializeField] public float disapearTime = 5f;
     [field: SerializeField] public LayerMask layerMask { get; set; }
 
-    //public WeaponManager weaponManager { get; set; }
    
     public Rigidbody rgb { get; set; }
    
@@ -19,8 +18,7 @@ public class GroundSlash : MonoBehaviour
     {
         
         rgb = GetComponent<Rigidbody>();
-      //  weaponManager = GetComponentInParent<WeaponManager>();
-       
+ 
         StartCoroutine(SlowDown());
         Destroy(this.gameObject,disapearTime);
     }

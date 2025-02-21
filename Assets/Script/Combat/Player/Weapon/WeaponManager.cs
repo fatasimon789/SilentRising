@@ -22,6 +22,7 @@ public class WeaponManager : MonoBehaviour
     public bool IsCDAbiQ { get; private set; }
     public bool IsCDAbiE { get ; private set; }
     public bool IsCDAbiR { get ; private set; }
+    public float testRadius;
 
     #region Weapon Type Machine
     public WeaponTypeMachine  WeaponMachine { get; set; }
@@ -56,6 +57,7 @@ public class WeaponManager : MonoBehaviour
         weaponHP = SystemSkillWeapon.heal;
         weaponDEF = SystemSkillWeapon.defense;
         weaponCRIT = SystemSkillWeapon.crit;
+      
     }
     private void Update()
     {
@@ -79,6 +81,8 @@ public class WeaponManager : MonoBehaviour
         AbilityUltimate();
         DashingIpnut();
         HealingIpnut();
+        // event
+        WeaponMachine.currentWeapon.FixUpdateEvent();
     }
     #region All Skill
     // H
@@ -171,12 +175,12 @@ public class WeaponManager : MonoBehaviour
     #region Clone Event
     public GameObject CreateInstantitate(GameObject PROJECTILE) 
     {
-       var  projectileObj = Instantiate(PROJECTILE,updatingPosAbi.colliderPosR.position,Quaternion.identity,this.transform);
+        var  projectileObj = Instantiate(PROJECTILE,this.transform.position,Quaternion.identity,this.transform);
         return projectileObj;
     }
     public GameObject CreateInstantitateWithoutParent(GameObject PROJECTILE)
     {
-        var projectileObj = Instantiate(PROJECTILE, updatingPosAbi.colliderPosR.position, Quaternion.identity);
+        var projectileObj = Instantiate(PROJECTILE, this.transform.position, Quaternion.identity);
         return projectileObj;
     }
     public void DestroyInstantiate(GameObject GAMEOBJECT) 
@@ -209,5 +213,12 @@ public class WeaponManager : MonoBehaviour
     {
         StartCoroutine(TIME_DELAY);
     }
+
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, testRadius);
+    }
+
     #endregion
 }

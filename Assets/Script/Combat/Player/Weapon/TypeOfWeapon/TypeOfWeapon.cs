@@ -17,9 +17,9 @@ public  class TypeOfWeapon : IWeapon
     }
     public virtual void ChanceNewWeapon()
     {
-       isOnPerfectAbilityQ = new bool[2];
-       isOnPerfectAbilityE = new bool[2];
-       isOnPerfectAbilityR = new bool[2];
+       isOnPerfectAbilityQ = new bool[3];
+       isOnPerfectAbilityE = new bool[3];
+       isOnPerfectAbilityR = new bool[3];
     }
     public virtual void DeleteOldWeapon()
     {
@@ -72,6 +72,10 @@ public  class TypeOfWeapon : IWeapon
     public virtual void UpdateEvent() 
     {
         
+    }
+    public virtual void FixUpdateEvent() 
+    {
+       
     }
     public  void StartAnimation(string ANIM) 
     {

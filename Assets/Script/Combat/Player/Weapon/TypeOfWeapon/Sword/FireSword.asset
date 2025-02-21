@@ -28,6 +28,9 @@ MonoBehaviour:
   - {fileID: 4076685852760168977, guid: 3305fa7f48b8c264ca3103940e6cba97, type: 3}
   - {fileID: 0}
   - {fileID: 0}
+  projectilePerfect:
+  - {fileID: 3186264668693132238, guid: d8b20f9bdee51534f9ae85bc061c79c6, type: 3}
+  - {fileID: 0}
   perfectAbilityProjectile:
   - {fileID: 7292997302267279079, guid: 32f06a54164415e4b98871bf571545f9, type: 3}
   basicDmgQ: 460000005a0000006e0000008200000096000000aa000000c80000002c010000
@@ -60,12 +63,42 @@ MonoBehaviour:
   percentDmgQ: 70
   percentDmgE: 85
   percentDmgR: 100
-  basePerfectATK: 200
-  multiPerfectATK: 1.5
-  percentPerfectATK:
+  basePerfectValueQ1: 200
+  multiPerfectValueQ1: 1.5
+  percentPerfectValueQ:
   - 200
+  - 250
   - 300
-  - 350
+  basePerfectValueQ2: 450
+  multiPerfectValueQ2: 2.2
+  percentPerfectValueQ2: 40
+  basePerfectValueQ3: 900
+  multiPerfectValueQ3: 3
+  percentPerfectValueQ3: 500
+  basePerfectValueE1: 0
+  multiPerfectValueE1: 0
+  percentPerfectValueE:
+  - 0
+  - 0
+  - 0
+  basePerfectValueE2: 0
+  multiPerfectValueE2: 0
+  percentPerfectValueE2: 0
+  basePerfectValueE3: 0
+  multiPerfectValueE3: 0
+  percentPerfectValueE3: 0
+  basePerfectValueR1: 0
+  multiPerfectValueR1: 0
+  percentPerfectValueR:
+  - 0
+  - 0
+  - 0
+  basePerfectValueR2: 0
+  multiPerfectValueR2: 0
+  percentPerfectValueR2: 0
+  basePerfectValueR3: 0
+  multiPerfectValueR3: 0
+  percentPerfectValueR3: 0
   nameFirstAbility: Reping Slash
   baseFirstAbility: "Make a slash . Deal Damages ++ \nCD  ++ "
   perfectFirstAbility: "After casting an ability . The next attack empowers  deal

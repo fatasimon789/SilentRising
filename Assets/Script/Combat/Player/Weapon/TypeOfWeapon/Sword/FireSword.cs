@@ -10,9 +10,20 @@ public class FireSword : TypeOfWeapon
     {
     }
     private EnemyTargetInfo enemyInfo;
+    //Dot
+    private float timeDotDuration = 2;
+    private float updateEveryDot = 0.18f;
+    private float repeatEveryDot = 0.18f;
+    private bool activeDOT ;
+    // Perfect Q
     private bool isStrengthenAttack;
-   
     private float timeDuration = 3f;
+    private int stealHP = 15;
+
+    public float radiusSwing = 4.5f;
+    // Perfect E
+
+    // Perfect R
     #region  Weapon Chance / Delete
     public override void ChanceNewWeapon()
     {
@@ -81,7 +92,15 @@ public class FireSword : TypeOfWeapon
         base.UpdateEvent();
         perfectAttackQ();
     }
+    public override void FixUpdateEvent()
+    {
+        base.FixUpdateEvent();
+        if (activeDOT) 
+        {
+           DotEvent();
+        }
 
+    }
     // animation event 
     public override void triggerAbilitySkill(PlayerTriggerEventAnim.AbilityTriggerType triggerAbility)
     {
@@ -118,18 +137,20 @@ public class FireSword : TypeOfWeapon
                     // taget animation : duration off straightaway ,- heal enemy , + heal player ...
                     isStrengthenAttack= true;
                     timeDuration = 3;
+
                     var perfectAbilityIndicator = weaponManager.CreateInstantitate(weaponManager.SystemSkillWeapon.perfectAbilityProjectile[0]);
                     perfectAbilityIndicator.SetActive(true);
+                    Player.instance.playerInput.playerActions.SpecialAttack.Enable();
                 }
                 break;
             case PlayerTriggerEventAnim.AbilityTriggerType.secondPerfectAbility:
-                if (isOnPerfectAbilityE[0]) 
+                if (isOnPerfectAbilityE[1]) 
                 {
                 
                 }
                 break;
             case PlayerTriggerEventAnim.AbilityTriggerType.UltimatePerfectAbility:
-                if (isOnPerfectAbilityR[0]) 
+                if (isOnPerfectAbilityR[2]) 
                 {
                 
                 }
@@ -167,7 +188,102 @@ public class FireSword : TypeOfWeapon
         // Attack VFX
         Player.instance.playerMovementStateMachine.attackSwordState.vfxAllOff();
     }
-    #region Resauble Method
+
+
+    #region Perfect Ability Q
+    private void perfectAttackQ(float MINIMUM_TARGET_RANGE = 1f,float MINIMUM_INDIACATOR_RANGE = 0.172f,float INDEX_MODIFY = 6f) 
+    {
+      
+       if (isStrengthenAttack) 
+       {
+          float timeStarting = Time.deltaTime;
+          timeDuration -= timeStarting;
+          var indicatorObject = weaponManager.transform.Find("FireSwordPerfectQ(Clone)").gameObject;
+            if (timeDuration > 0 ) 
+            {
+                var targetRange = MINIMUM_TARGET_RANGE * INDEX_MODIFY;
+                var indicatorRange = MINIMUM_INDIACATOR_RANGE * INDEX_MODIFY ;
+                var indicatorTransform =  indicatorObject.GetComponent<RectTransform>();
+                indicatorTransform.localScale = IndicatorScale(indicatorRange);
+
+                Player.instance.playerInput.playerActions.AttackSword.Disable();
+                GameObject [] allEnemysInfo = GameObject.FindGameObjectsWithTag("Enemy");
+                for (int i = 0; i < allEnemysInfo.Length; i++) 
+                {
+                     if (distancePerfectAttackQ(allEnemysInfo[i]) <= targetRange) 
+                     {
+                        // enable perfect attack 
+                 
+                        Player.instance.playerInput.playerActions.SpecialAttack.performed += ctx => PerAttacking(out timeDuration);
+                        enemyInfo.StoreTargetInfo(allEnemysInfo[i]);
+                        
+                    }
+                }
+            }
+            else if (timeDuration <= 0) 
+            {
+              weaponManager.DestroyInstantiate(indicatorObject);
+              isStrengthenAttack = false;
+              Player.instance.playerInput.playerActions.SpecialAttack.Disable();
+              Player.instance.playerInput.playerActions.AttackSword.Enable();
+              return;
+              // off all 
+            }
+        
+        }
+    }
+    private void PerAttacking(out float TIME_UP) 
+    {
+        // run animation
+        StartAnimation("PerfectAttack");
+        TIME_UP = 0;
+         
+    }
+    public void enemyTarget() 
+    {
+        Player.instance.transform.position = enemyInfo.LoadTargetInfo().transform.position;
+        var enemy =  enemyInfo.LoadTargetInfo().GetComponent<IEnemy>();
+        Player.instance.playerDataEffect.G_AbilityQ.SetActive(true);
+        if (isOnPerfectAbilityQ[1]) 
+        {
+            Player.instance.statsSystem.takeHealing(stealHP);
+            // dame dot
+            activeDOT = true;
+        }
+
+        enemy.enemyHP.takeDamages(UpdatingAbility.instance.PerfectDMGV1("Q"));
+
+        // gay sat thuong + heal + effect
+
+    }
+    public void CreateSlash() 
+    {
+        if (isOnPerfectAbilityQ[2]) 
+        {
+         var projectVfx = weaponManager.CreateInstantitateWithoutParent(weaponManager.SystemSkillWeapon.projectilePerfect[0]);
+         Vector3 editScale = new Vector3(2,2,2);
+         projectVfx.transform.localScale = editScale;
+         AttackColliderAbility(PerfectSwingQ(),UpdatingAbility.instance.PerfectDMGV3("Q"));
+        }
+
+    }
+    private Collider[] PerfectSwingQ() 
+    {
+        Collider[] colliderInfo = Physics.OverlapSphere(weaponManager.updatingPosAbi.colliderPosR.position,
+                                             radiusSwing, weaponManager.layerMask);
+        return colliderInfo;
+    }
+    #endregion
+    #region DOT
+    public void DotEvent() 
+    {
+        CombatTypeManager.DamegesOverTime(UpdatingAbility.instance.PerfectDMGV2("Q"),ref timeDotDuration,ref updateEveryDot,repeatEveryDot);
+        if (timeDotDuration <= 0) 
+        {
+            activeDOT = false;
+        }
+    }
+    #endregion
     private Collider[] ColiderDamagesQ()
     {
         // tao collider damags
@@ -225,72 +341,7 @@ public class FireSword : TypeOfWeapon
         }
         
     }
-    #region Perfect Ability Q
-    private void perfectAttackQ(float MINIMUM_TARGET_RANGE = 1f,float MINIMUM_INDIACATOR_RANGE = 0.172f,float INDEX_MODIFY = 6f) 
-    {
-      
-       if (isStrengthenAttack) 
-       {
-          float timeStarting = Time.deltaTime;
-          timeDuration -= timeStarting;
-          var indicatorObject = weaponManager.transform.Find("FireSwordPerfectQ(Clone)").gameObject;
-            if (timeDuration > 0 ) 
-            {
-                var targetRange = MINIMUM_TARGET_RANGE * INDEX_MODIFY;
-                var indicatorRange = MINIMUM_INDIACATOR_RANGE * INDEX_MODIFY ;
-                var indicatorTransform =  indicatorObject.GetComponent<RectTransform>();
-                indicatorTransform.localScale = IndicatorScale(indicatorRange);
-
-                Player.instance.playerInput.playerActions.AttackSword.Disable();
-                GameObject [] allEnemysInfo = GameObject.FindGameObjectsWithTag("Enemy");
-                for (int i = 0; i < allEnemysInfo.Length; i++) 
-                {
-                     if (distancePerfectAttackQ(allEnemysInfo[i]) <= targetRange) 
-                     {
-                        // enable perfect attack 
-                 
-                        Player.instance.playerInput.playerActions.SpecialAttack.performed += ctx => PerAttacking(out timeDuration);
-                        enemyInfo.StoreTargetInfo(allEnemysInfo[i]);
-                        
-                    }
-                }
-            }
-            else if (timeDuration <= 0) 
-            {
-              weaponManager.DestroyInstantiate(indicatorObject);
-              isStrengthenAttack = false;
-              Player.instance.playerInput.playerActions.SpecialAttack.Disable();
-              Player.instance.playerInput.playerActions.AttackSword.Enable();
-              return;
-              // off all 
-            }
-        
-        }
-    }
-    private void PerAttacking(out float TIME_UP) 
-    {
-        // run animation
-        StartAnimation("PerfectAttack");
-        TIME_UP = 0;
-         
-    }
-    public void enemyTarget() 
-    {
-        Player.instance.transform.position = enemyInfo.LoadTargetInfo().transform.position;
-        var enemy =  enemyInfo.LoadTargetInfo().GetComponent<IEnemy>();
-        Player.instance.playerDataEffect.G_AbilityQ.SetActive(true);
-        if (isOnPerfectAbilityQ[1]) 
-        {
-            Player.instance.statsSystem.takeHealing(30);
-        }
-
-        enemy.enemyHP.takeDamages(UpdatingAbility.instance.PerfectDMG());
-
-        // gay sat thuong + heal + effect
-
-    }
-    #endregion
-    #endregion
+  
     #region Resauble Method
     private Vector3 IndicatorScale(float INTDICATOR_RANGE) 
     {

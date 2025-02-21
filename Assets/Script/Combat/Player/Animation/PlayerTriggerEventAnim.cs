@@ -16,9 +16,21 @@ public class PlayerTriggerEventAnim : MonoBehaviour
     }
     #endregion
     #region Special Perfect Ability Event
-    public void FireSwordPerfectEvent() 
+    public enum FireSwordEvent 
     {
-        WeaponManager.instance.FireSword.enemyTarget();
+           SelectingTarget , BigSlash
+    }
+    public void FireSwordPerfectEvent(FireSwordEvent EVENT) 
+    {
+        switch (EVENT) 
+        {
+            case FireSwordEvent.SelectingTarget:
+                WeaponManager.instance.FireSword.enemyTarget();
+                break;
+            case FireSwordEvent.BigSlash:
+                WeaponManager.instance.FireSword.CreateSlash();
+                break;
+        }
     }
     #endregion
     public enum AnimationTriggerType 

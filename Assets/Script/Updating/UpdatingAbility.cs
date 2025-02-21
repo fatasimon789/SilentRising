@@ -9,7 +9,9 @@ public class UpdatingAbility : MonoBehaviour
     public int abilityLevelQ { get;private set; }
     public int abilityLevelE { get;private set; }
     public int abilityLevelR { get;private set; }
-    public int perfectAbilityLevel { get;private set; }
+    public int perfectAbilityLevelQ { get;private set; }
+    public int perfectAbilityLevelE { get; private set; }
+    public int perfectAbilityLevelR { get; private set; }
     private bool test;
     #region Main monobehaviour
     private void Awake()
@@ -55,7 +57,7 @@ public class UpdatingAbility : MonoBehaviour
         {
             WeaponManager.instance.FireSword.isOnPerfectAbilityQ[0] = true;
         }
-        if (abilityLevelQ >= 6)
+        if (abilityLevelQ >= 0)
         {
             WeaponManager.instance.FireSword.isOnPerfectAbilityQ[1] = true;
         }
@@ -97,9 +99,22 @@ public class UpdatingAbility : MonoBehaviour
         var resultDMG = WeaponManager.instance.SystemSkillWeapon.AbilityRSword(LevelBaseDmgRUpdating(), LevelMultiRUpdating());
         return resultDMG;
     }
-    public int PerfectDMG() 
+    public int PerfectDMGV1(string ABILITY_NAME) 
     {
-        var resultDMG = WeaponManager.instance.SystemSkillWeapon.PerfectDamages(LevelPerfectPercentDamages());
+        var resultDMG = WeaponManager.instance.SystemSkillWeapon.PerfectDamagesV1(LevelPerfectPercentDamagesV1(ABILITY_NAME).Item1,
+        LevelPerfectPercentDamagesV1(ABILITY_NAME).Item2,LevelPerfectPercentDamagesV1(ABILITY_NAME).Item3);
+        return resultDMG;
+    }
+    public int PerfectDMGV2(string ABILITY_NAME) 
+    {
+        var resultDMG = WeaponManager.instance.SystemSkillWeapon.PerfectDamagesV2(LevelPerfectPercentDamagesV2(ABILITY_NAME).Item1,
+        LevelPerfectPercentDamagesV2(ABILITY_NAME).Item2,LevelPerfectPercentDamagesV2(ABILITY_NAME).Item3);
+        return resultDMG;
+    }
+    public int PerfectDMGV3(string ABILITY_NAME)
+    {
+        var resultDMG = WeaponManager.instance.SystemSkillWeapon.PerfectDamagesV3(LevelPerfectPercentDamagesV3(ABILITY_NAME).Item1,
+        LevelPerfectPercentDamagesV3(ABILITY_NAME).Item2, LevelPerfectPercentDamagesV3(ABILITY_NAME).Item3);
         return resultDMG;
     }
     // DMG E
@@ -152,10 +167,30 @@ public class UpdatingAbility : MonoBehaviour
         var totalMultiR = WeaponManager.instance.SystemSkillWeapon.LevelMultiR(abilityLevelR);
         return totalMultiR;
     }
-    private float LevelPerfectPercentDamages() 
+    // --------------------------Perfect ----------------------
+    private Tuple<float,float,float> LevelPerfectPercentDamagesV1(string ABILITY_NAME) 
     {
-        var totalDMG = WeaponManager.instance.SystemSkillWeapon.LevelPerfect(perfectAbilityLevel);
-        return totalDMG;
+        var getMultiValue = WeaponManager.instance.SystemSkillWeapon.LevelPerfectV1(perfectAbilityLevelQ, ABILITY_NAME);
+        var basePerfectValue = getMultiValue[0];
+        var multiPerfectValue = getMultiValue[1];
+        var percentPerfectValue = getMultiValue[2];
+        return new Tuple<float,float,float>(basePerfectValue,multiPerfectValue,percentPerfectValue);
+    }
+    private Tuple<float,float,float> LevelPerfectPercentDamagesV2(string ABILITY_NAME)
+    {
+        var getMultiValue = WeaponManager.instance.SystemSkillWeapon.LevelPerfectV2(ABILITY_NAME);
+        var basePerfectValue = getMultiValue[0];
+        var multiPerfectValue = getMultiValue[1];
+        var percentPerfectValue = getMultiValue[2];
+        return new Tuple<float, float, float>(basePerfectValue, multiPerfectValue, percentPerfectValue);
+    }
+    private Tuple<float,float,float> LevelPerfectPercentDamagesV3(string ABILITY_NAME)
+    {
+        var getMultiValue = WeaponManager.instance.SystemSkillWeapon.LevelPerfectV2(ABILITY_NAME);
+        var basePerfectValue = getMultiValue[0];
+        var multiPerfectValue = getMultiValue[1];
+        var percentPerfectValue = getMultiValue[2];
+        return new Tuple<float, float, float>(basePerfectValue, multiPerfectValue, percentPerfectValue);
     }
     #endregion
     #region Item Upgrade

@@ -10,6 +10,7 @@ public abstract class EnemyAction : IMeleeEnemy
 
     protected TheWolf wolf { get;  set; }
     protected TheRoblin roblin { get; private set; }
+   
     #endregion
     #region Enemy Action Field
     public float distanceEnemy { get; set; } 
@@ -53,8 +54,9 @@ public abstract class EnemyAction : IMeleeEnemy
         {
             EnemyAttackRotate();
             Attack(isAttack);
-           
+         
             return;
+          
         }
         // 0
         if (isAttack && !isDead)
