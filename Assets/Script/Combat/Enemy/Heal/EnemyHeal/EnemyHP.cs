@@ -10,14 +10,17 @@ public class EnemyHP : IEnemyHP
     public float damageReceive { get; set; }
     public bool isTakingDamages { get; set; }
     public float oldHP { get; set; }
+    public Color colorElement { get ; set ; }
 
     public EnemyHP(float HP) 
     {
         hpValue = HP;
         oldHP = HP;
     }
-    public void takeDamages(float TAKE_DAMAGES)
+    public void takeDamages(float TAKE_DAMAGES,CombatTypeManager.TypeElement ELEMENTAL_INFO)
     {
+        var elementalInfo = CombatTypeManager.TypeElementInfo(ELEMENTAL_INFO);
+        
         if (CritRandom()) 
         {
             multiplyCrit= 2;
@@ -29,6 +32,8 @@ public class EnemyHP : IEnemyHP
         damageReceive = TAKE_DAMAGES * multiplyCrit;
         hpValue -= damageReceive;
         isTakingDamages = true;
+        colorElement = elementalInfo.colorWeapon;
+        
     }
     private bool CritRandom() 
     {

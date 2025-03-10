@@ -9,21 +9,20 @@ public class WeaponManager : MonoBehaviour
     public SystemSkillWeapon SystemSkillWeapon;
 
     [field: Header("PosColliderAbi")]
-    [field: SerializeField] public UpdatingPositionAbility updatingPosAbi { get; private set; }
+    [field:SerializeField] public PostionAbilityCollider posAbilityCollider;
     [field: SerializeField] public LayerMask layerMask { get; set; }
-
+    
     public int weaponDamages { get;private  set; }
     public int weaponHP { get;private  set; }
     public int weaponDEF { get;private set; }
     public float weaponCRIT { get;private set; }
-    public CombatTypeManager.DamegesType DamagesType { get;private set; }
+    public CombatTypeManager.TypeElement DamagesType { get;private set; }
     public string nameWeapon { get;  set; }
 
     public bool IsCDAbiQ { get; private set; }
     public bool IsCDAbiE { get ; private set; }
     public bool IsCDAbiR { get ; private set; }
-    public float testRadius;
-
+   
     #region Weapon Type Machine
     public WeaponTypeMachine  WeaponMachine { get; set; }
     public FireSword FireSword { get; set; }
@@ -67,9 +66,9 @@ public class WeaponManager : MonoBehaviour
         // stats value
         StatsWeaponUpdate();
         WeaponMachine.currentWeapon.UpdateEvent();
-      //  VirtualBox.DisplayBox(updatingPosAbi.colliderPosQ.position, updatingPosAbi.localColliderHalfExtendQ, Quaternion.identity);
-        VirtualBox.DisplayBox(updatingPosAbi.colliderPosE.position, updatingPosAbi.localColliderHalfExtendE, Quaternion.identity);
-       // VirtualBox.DisplayBox(updatingPosAbi.colliderPosR.position, updatingPosAbi.localColliderHalfExtendR, Quaternion.identity);
+       
+      //  VirtualBox.DisplayBox(posAbilityCollider.colliderPosQ.transform.position,
+      //  SystemSkillWeapon._abilityPostionQ[0].rangeExtendBoxCollider,this.transform.rotation);
     }
     private void FixedUpdate()
     {
@@ -83,6 +82,7 @@ public class WeaponManager : MonoBehaviour
         HealingIpnut();
         // event
         WeaponMachine.currentWeapon.FixUpdateEvent();
+
     }
     #region All Skill
     // H
@@ -173,9 +173,15 @@ public class WeaponManager : MonoBehaviour
 
     #endregion
     #region Clone Event
-    public GameObject CreateInstantitate(GameObject PROJECTILE) 
+    public GameObject CreateInstantitate(GameObject PROJECTILE,GameObject PARENT_OBJECT) 
     {
-        var  projectileObj = Instantiate(PROJECTILE,this.transform.position,Quaternion.identity,this.transform);
+        var projectilePosx = this.transform.localPosition.x + PROJECTILE.transform.localPosition.x;
+        var projectilePosy = this.transform.localPosition.y + PROJECTILE.transform.localPosition.y;
+        var projectilePosz = this.transform.localPosition.z + PROJECTILE.transform.localPosition.z;
+        var projectTilePostion = new Vector3(projectilePosx,projectilePosy,projectilePosz);
+        Quaternion rotationProjectile = Quaternion.Euler
+        (PROJECTILE.transform.eulerAngles.x,PROJECTILE.transform.eulerAngles.y + this.transform.eulerAngles.y,PROJECTILE.transform.eulerAngles.z);
+        var projectileObj = Instantiate(PROJECTILE,PARENT_OBJECT.transform.position + projectTilePostion,rotationProjectile,PARENT_OBJECT.transform);
         return projectileObj;
     }
     public GameObject CreateInstantitateWithoutParent(GameObject PROJECTILE)
@@ -183,7 +189,11 @@ public class WeaponManager : MonoBehaviour
         var projectileObj = Instantiate(PROJECTILE, this.transform.position, Quaternion.identity);
         return projectileObj;
     }
-    public void DestroyInstantiate(GameObject GAMEOBJECT) 
+    public void DestroyInstantiate(GameObject GAMEOBJECT,float TIME_DESTROY) 
+    {
+        DelayCoroutineEvent(delayVfxDestroy(GAMEOBJECT,TIME_DESTROY));
+    }
+    public void DestroyInstantiate(GameObject GAMEOBJECT)
     {
         Destroy(GAMEOBJECT);
     }
@@ -207,9 +217,14 @@ public class WeaponManager : MonoBehaviour
         yield return new WaitForSeconds(SystemSkillWeapon.AbiCoolDownR);
         IsCDAbiR = false;
     }
+    private IEnumerator delayVfxDestroy(GameObject GET_OBJECT,float TIME_DELAY) 
+    {
+        yield return new WaitForSeconds(TIME_DELAY);
+        Destroy(GET_OBJECT);
+    }
     #endregion
     #region Coroutine Event
-    public void DelayCoroutineEvent(IEnumerator TIME_DELAY) 
+    private void DelayCoroutineEvent(IEnumerator TIME_DELAY) 
     {
         StartCoroutine(TIME_DELAY);
     }
@@ -217,7 +232,7 @@ public class WeaponManager : MonoBehaviour
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, testRadius);
+     //   Gizmos.DrawWireSphere(transform.position, testRadius);
     }
 
     #endregion

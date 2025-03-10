@@ -107,9 +107,10 @@ public class TheWolf : MonoBehaviour,IEnemy
     public void FloatingDamagesUI()
     {
        
-       var  addDamagesText = Instantiate(floatingDamages,this.transform.position,Quaternion.identity);
-        addDamagesText.GetComponent<TextMesh>().text = enemyHP.damageReceive.ToString();
-        
+       var damagesText = Instantiate(floatingDamages,this.transform.position,Quaternion.identity);
+       var meshTextInfo = damagesText.GetComponent<TextMesh>();
+       meshTextInfo.text =  enemyHP.damageReceive.ToString();
+       meshTextInfo.color = enemyHP.colorElement;
         enemyHP.isTakingDamages = false;
     }
     

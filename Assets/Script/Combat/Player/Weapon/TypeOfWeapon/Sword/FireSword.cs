@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
+using UnityEngine.VFX;
 
 public class FireSword : TypeOfWeapon
 {
@@ -11,18 +12,19 @@ public class FireSword : TypeOfWeapon
     }
     private EnemyTargetInfo enemyInfo;
     //Dot
-    private float timeDotDuration = 2;
-    private float updateEveryDot = 0.18f;
-    private float repeatEveryDot = 0.18f;
-    private bool activeDOT ;
+    private float timeDotDuration { get; set; }
+    private float minBeginDot { get; set; }
+    private bool activeDOT1,activeDOT2 ;
     // Perfect Q
-    private bool isStrengthenAttack;
+    private bool isActivePerfectQ;
     private float timeDuration = 3f;
     private int stealHP = 15;
 
     public float radiusSwing = 4.5f;
+    public CombatTypeManager.TypeElement g ;
     // Perfect E
-
+    private VisualEffect visualEffect;
+    private bool isActivePerfectE;
     // Perfect R
     #region  Weapon Chance / Delete
     public override void ChanceNewWeapon()
@@ -91,13 +93,19 @@ public class FireSword : TypeOfWeapon
     {
         base.UpdateEvent();
         perfectAttackQ();
+        PerfectAttackE();
+     
     }
     public override void FixUpdateEvent()
     {
         base.FixUpdateEvent();
-        if (activeDOT) 
+        if (activeDOT1) 
         {
-           DotEvent();
+           BurningTarget();
+        }
+        if (activeDOT2)
+        {
+            BurningSlash();
         }
 
     }
@@ -117,15 +125,19 @@ public class FireSword : TypeOfWeapon
             case PlayerTriggerEventAnim.AbilityTriggerType.UltimateAbi:
                 UltimateAbilityCollider();
                 break;
-            // VFX
             case PlayerTriggerEventAnim.AbilityTriggerType.EndAnimAbility:
-                OffVfx();
                 break;
             case PlayerTriggerEventAnim.AbilityTriggerType.vfxFirstAbiSword:
-                Player.instance.playerDataEffect.G_AbilityQ.SetActive(true);
+                var getParentAbilityQ = findParentAbility("AbilityQ");
+                var abilityInstantiate= weaponManager.CreateInstantitate(Player.instance.playerDataEffect.G_AbilityQ,getParentAbilityQ);
+                DestroyClone(abilityInstantiate,2);
                 break;
             case PlayerTriggerEventAnim.AbilityTriggerType.vfxSecondAbiSword:
-                Player.instance.playerDataEffect.G_AbilityE.SetActive(true);
+                var getParentAbilityE = findParentAbility("AbilityE");
+                var abilityIstantiate1 = weaponManager.CreateInstantitate(Player.instance.playerDataEffect.G_AbilityE,getParentAbilityE);
+                DestroyClone(abilityIstantiate1,2);
+
+           
                 break;
             case PlayerTriggerEventAnim.AbilityTriggerType.vfxUltimateAbiSword:
                 break;
@@ -135,10 +147,9 @@ public class FireSword : TypeOfWeapon
                 {
                     //  code : time duration on :  animation on , target on , disable normal attack , onable perfect attack 
                     // taget animation : duration off straightaway ,- heal enemy , + heal player ...
-                    isStrengthenAttack= true;
+                    isActivePerfectQ= true;
                     timeDuration = 3;
-
-                    var perfectAbilityIndicator = weaponManager.CreateInstantitate(weaponManager.SystemSkillWeapon.perfectAbilityProjectile[0]);
+                    var perfectAbilityIndicator = weaponManager.CreateInstantitate(weaponManager.SystemSkillWeapon.projectilePerfectIndicator[0],weaponManager.gameObject);
                     perfectAbilityIndicator.SetActive(true);
                     Player.instance.playerInput.playerActions.SpecialAttack.Enable();
                 }
@@ -146,7 +157,7 @@ public class FireSword : TypeOfWeapon
             case PlayerTriggerEventAnim.AbilityTriggerType.secondPerfectAbility:
                 if (isOnPerfectAbilityE[1]) 
                 {
-                
+                    isActivePerfectE= true;
                 }
                 break;
             case PlayerTriggerEventAnim.AbilityTriggerType.UltimatePerfectAbility:
@@ -160,12 +171,16 @@ public class FireSword : TypeOfWeapon
 
     public void FirstAbilityCollider()
     {
-        AttackColliderAbility(ColiderDamagesQ(),UpdatingAbility.instance.FirstAbilityDMG());
+        AttackColliderAbility(ColliderBox(weaponManager.posAbilityCollider.colliderPosQ.transform.position,
+                             weaponManager.SystemSkillWeapon._abilityPostionQ[0].rangeExtendBoxCollider
+                            ,weaponManager.transform.rotation, weaponManager.layerMask),UpdatingAbility.instance.FirstAbilityDMG());
        
     }
     public void SecondAbilityCollider()
     {
-        AttackColliderAbility(ColiderDamagesE(),UpdatingAbility.instance.SecondAbilityDMG());
+        AttackColliderAbility(ColliderBox(weaponManager.posAbilityCollider.colliderPosE.transform.position,
+                              weaponManager.SystemSkillWeapon._abilityPostionE[0].rangeExtendBoxCollider
+                             ,weaponManager.transform.rotation, weaponManager.layerMask),UpdatingAbility.instance.SecondAbilityDMG());
        
     }
     public void UltimateAbilityCollider()
@@ -176,25 +191,45 @@ public class FireSword : TypeOfWeapon
 
         projectObjSword.GetComponent<Rigidbody>().velocity = Player.instance.transform.forward * groundSlash.speed;
     }
-    #endregion
-    public void OffVfx()
+
+    public void DestroyClone(GameObject VFX_OBJECT,float TIME_END) 
     {
-        // Q VFX
-        Player.instance.playerDataEffect.G_AbilityQ.SetActive(false);
-        // E VFX
-        Player.instance.playerDataEffect.G_AbilityE.SetActive(false);
-        // R VFX
-
-        // Attack VFX
-        Player.instance.playerMovementStateMachine.attackSwordState.vfxAllOff();
+          weaponManager.DestroyInstantiate(VFX_OBJECT,TIME_END);
     }
+    #endregion
+   
+    #region DOT
+    public void BurningTarget() 
+    {
+        CombatTypeManager.DamegesOverTime(enemyInfo.LoadTargetInfo(),UpdatingAbility.instance.PerfectDMGV2("Q"),
+        timeDotDuration = 4f, minBeginDot = 1f,weaponManager.DamagesType);
+        if (CombatTypeManager._liveTime.LiveTimeOut() >= timeDotDuration) 
+        {
+            activeDOT1 = false;
+            CombatTypeManager._liveTime.ResetTimeOut();
+            CombatTypeManager._liveTime.ResetMinTimeOut();
+        }
+           Debug.Log(CombatTypeManager._liveTime.LiveTimeOut());
+    }
+    public void BurningSlash()
+    {
+        CombatTypeManager.DamegesOverTime(enemyInfo.LoadTargetInfo(), UpdatingAbility.instance.PerfectDMGV2("E"),
+        timeDotDuration = 5,  minBeginDot = 0.5f, weaponManager.DamagesType);
 
-
+        if (CombatTypeManager._liveTime.LiveTimeOut() >= timeDotDuration)
+        {
+            activeDOT2 = false;
+            CombatTypeManager._liveTime.ResetTimeOut();
+            CombatTypeManager._liveTime.ResetMinTimeOut();
+        }
+    }
+ 
+    #endregion
     #region Perfect Ability Q
     private void perfectAttackQ(float MINIMUM_TARGET_RANGE = 1f,float MINIMUM_INDIACATOR_RANGE = 0.172f,float INDEX_MODIFY = 6f) 
     {
       
-       if (isStrengthenAttack) 
+       if (isActivePerfectQ) 
        {
           float timeStarting = Time.deltaTime;
           timeDuration -= timeStarting;
@@ -223,7 +258,7 @@ public class FireSword : TypeOfWeapon
             else if (timeDuration <= 0) 
             {
               weaponManager.DestroyInstantiate(indicatorObject);
-              isStrengthenAttack = false;
+              isActivePerfectQ = false;
               Player.instance.playerInput.playerActions.SpecialAttack.Disable();
               Player.instance.playerInput.playerActions.AttackSword.Enable();
               return;
@@ -248,10 +283,10 @@ public class FireSword : TypeOfWeapon
         {
             Player.instance.statsSystem.takeHealing(stealHP);
             // dame dot
-            activeDOT = true;
+            activeDOT1 = true;
         }
 
-        enemy.enemyHP.takeDamages(UpdatingAbility.instance.PerfectDMGV1("Q"));
+        enemy.enemyHP.takeDamages(UpdatingAbility.instance.PerfectDMGV1("Q"),weaponManager.DamagesType);
 
         // gay sat thuong + heal + effect
 
@@ -264,84 +299,55 @@ public class FireSword : TypeOfWeapon
          Vector3 editScale = new Vector3(2,2,2);
          projectVfx.transform.localScale = editScale;
          AttackColliderAbility(PerfectSwingQ(),UpdatingAbility.instance.PerfectDMGV3("Q"));
+            DestroyClone(projectVfx, 2);
+         
+        
         }
 
     }
     private Collider[] PerfectSwingQ() 
     {
-        Collider[] colliderInfo = Physics.OverlapSphere(weaponManager.updatingPosAbi.colliderPosR.position,
+        Collider[] colliderInfo = Physics.OverlapSphere(weaponManager.transform.position,
                                              radiusSwing, weaponManager.layerMask);
         return colliderInfo;
     }
     #endregion
-    #region DOT
-    public void DotEvent() 
+    #region Perfect Ability E
+    private void PerfectAttackE() 
     {
-        CombatTypeManager.DamegesOverTime(UpdatingAbility.instance.PerfectDMGV2("Q"),ref timeDotDuration,ref updateEveryDot,repeatEveryDot);
-        if (timeDotDuration <= 0) 
+        if (isActivePerfectE) 
         {
-            activeDOT = false;
+            var findParentEffect = findParentAbility("AbilityE");
+            var getTargetEffect = findParentEffect.GetComponentInChildren<VisualEffect>();
+            visualEffect = getTargetEffect;
+           if (visualEffect.aliveParticleCount <= 0.1f )
+           { 
+                // make a double slash on here
+                   CreatingBigSlash(); 
+           }
+        
         }
+    }
+    private void CreatingBigSlash()
+    { 
+        var vfxProject = weaponManager.CreateInstantitateWithoutParent(weaponManager.SystemSkillWeapon.projectilePerfect[1]);
+        vfxProject.transform.localScale = new Vector3(2.5f, 2.5f, 2.5f);
+        isActivePerfectE = false;
+        DestroyClone(vfxProject, 1.5f);
+        AttackColliderAbility(ColliderBox(weaponManager.posAbilityCollider.colliderPosE.transform.position,
+                             weaponManager.SystemSkillWeapon._abilityPostionE[1].rangeExtendBoxCollider
+                            , weaponManager.transform.rotation, weaponManager.layerMask), UpdatingAbility.instance.PerfectDMGV2("E"));
+        if (isOnPerfectAbilityE[1]) 
+        {
+            activeDOT2 = true;
+        }
+  
     }
     #endregion
-    private Collider[] ColiderDamagesQ()
-    {
-        // tao collider damags
-
-        Collider[] colliderInfo = Physics.OverlapBox(weaponManager.updatingPosAbi.colliderPosQ.position,
-                                        weaponManager.updatingPosAbi.localColliderHalfExtendQ, Quaternion.identity,weaponManager.layerMask);
-       
-        return colliderInfo;
-    }
-    private Collider[] ColiderDamagesE()
-    {
-        // tao collider damags
-
-        Collider[] colliderInfo = Physics.OverlapBox(weaponManager.updatingPosAbi.colliderPosE.position,
-                                         weaponManager.updatingPosAbi.localColliderHalfExtendE, Quaternion.identity,weaponManager.layerMask);
-        return colliderInfo;
-    }
-    private Collider[] ColiderDamagesR()
-    {
-        // tao collider damags
-
-        Collider[] colliderInfo = Physics.OverlapBox(weaponManager.updatingPosAbi.colliderPosR.position,
-                                         weaponManager.updatingPosAbi.localColliderHalfExtendR, Quaternion.identity, weaponManager.layerMask);
-        return colliderInfo;
-    }
-    private void AttackColliderAbility(Collider[] ABILITY_COL,float DMG)
-    {
-        foreach (Collider col in ABILITY_COL)
-        {
-           
-            Vector3 closetPoint0 = col.ClosestPoint(Player.instance.transform.position); // diem collider gan nhat
-
-            Vector3 posDifferent = (closetPoint0 - Player.instance.transform.position); //  chi ra huong khi va cham lan dau
-                                                                                        //  va den trung tam collider
-            Vector3 overlapDirection = posDifferent.normalized;
-
-            RaycastHit hit;
-           
-            float raycastDistance = 10.0f; // something greater than your object's largest radius, 
-                                           // so that the ray doesn't start inside of your object
-            Vector3 rayStart = Player.instance.transform.position + overlapDirection * raycastDistance;
-            Vector3 rayDirection = -overlapDirection;
-
-            if (Physics.Raycast(rayStart, rayDirection, out hit, Mathf.Infinity, weaponManager.layerMask))
-            {
-                var targetInfo = hit.collider.GetComponent<IEnemy>();
-                targetInfo.enemyHP.takeDamages(DMG);
-            }
-            else
-            {
-                // The ray missed your object, somehow. 
-                // Most likely it started inside your object 
-                // or there is a mistake in the layerMask
-            }
-        }
-        
-    }
-  
+    #region Collider Damages
+   
+   
+    #endregion
     #region Resauble Method
     private Vector3 IndicatorScale(float INTDICATOR_RANGE) 
     {
@@ -377,4 +383,5 @@ public class FireSword : TypeOfWeapon
             return currentEnemy;
        }
     }
+    
 }

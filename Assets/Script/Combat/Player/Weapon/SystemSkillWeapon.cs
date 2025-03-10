@@ -12,7 +12,7 @@ public class SystemSkillWeapon : ScriptableObject
     public string nameOfWeapon;
     public GameObject weaponPrefap;
     public int attackRange;
-    public CombatTypeManager.DamegesType DamagesType;
+    public CombatTypeManager.TypeElement DamagesType;
     public RuntimeAnimatorController animatorPlayer;
 
     [Header(" Basic Stats")]
@@ -33,7 +33,7 @@ public class SystemSkillWeapon : ScriptableObject
     public GameObject[] projectilePerfect;
 
     [Header("Indicator")]
-    public GameObject[] perfectAbilityProjectile;
+    public GameObject[] projectilePerfectIndicator;
  
 
     [Header("Basic Damages")]
@@ -122,7 +122,22 @@ public class SystemSkillWeapon : ScriptableObject
 
     [Header("Material Upgrade ")]
     public List<ItemSystem> requiredItemUpgrade;
+
+    [SerializeField]
+    [AbilityPostion]
+    public AbilityPostion[] _abilityPostionQ;
+    [SerializeField]
+    [AbilityPostion]
+    public AbilityPostion[] _abilityPostionE;
+    [SerializeField]
+    [AbilityPostion]
+    public AbilityPostion[] _abilityPostionR;
+    [SerializeField]
+    [AbilityPostion]
+    public AbilityPostion[] _abilityPostionAttack;
+
     #endregion
+
 
     #region Total Main  Stats
     // hp    lv 1 
@@ -307,4 +322,5 @@ public class SystemSkillWeapon : ScriptableObject
         return values;
     }
     #endregion
+   
 }

@@ -30,8 +30,8 @@ MonoBehaviour:
   - {fileID: 0}
   projectilePerfect:
   - {fileID: 3186264668693132238, guid: d8b20f9bdee51534f9ae85bc061c79c6, type: 3}
-  - {fileID: 0}
-  perfectAbilityProjectile:
+  - {fileID: 3186264668693132238, guid: d8b20f9bdee51534f9ae85bc061c79c6, type: 3}
+  projectilePerfectIndicator:
   - {fileID: 7292997302267279079, guid: 32f06a54164415e4b98871bf571545f9, type: 3}
   basicDmgQ: 460000005a0000006e0000008200000096000000aa000000c80000002c010000
   basicDmgE: 6400000096000000c8000000fa0000002c01000090010000f4010000bc020000
@@ -51,6 +51,9 @@ MonoBehaviour:
   - 3
   - 3.5
   - 5
+  - 6.5
+  - 9
+  - 12
   multiR:
   - 3.5
   - 4
@@ -71,34 +74,34 @@ MonoBehaviour:
   - 300
   basePerfectValueQ2: 450
   multiPerfectValueQ2: 2.2
-  percentPerfectValueQ2: 40
+  percentPerfectValueQ2: 400
   basePerfectValueQ3: 900
   multiPerfectValueQ3: 3
   percentPerfectValueQ3: 500
-  basePerfectValueE1: 0
-  multiPerfectValueE1: 0
+  basePerfectValueE1: 550
+  multiPerfectValueE1: 7
   percentPerfectValueE:
-  - 0
-  - 0
-  - 0
-  basePerfectValueE2: 0
-  multiPerfectValueE2: 0
-  percentPerfectValueE2: 0
-  basePerfectValueE3: 0
-  multiPerfectValueE3: 0
-  percentPerfectValueE3: 0
-  basePerfectValueR1: 0
-  multiPerfectValueR1: 0
+  - 300
+  - 400
+  - 550
+  basePerfectValueE2: 800
+  multiPerfectValueE2: 8
+  percentPerfectValueE2: 550
+  basePerfectValueE3: 1200
+  multiPerfectValueE3: 10
+  percentPerfectValueE3: 700
+  basePerfectValueR1: 800
+  multiPerfectValueR1: 5
   percentPerfectValueR:
-  - 0
-  - 0
-  - 0
-  basePerfectValueR2: 0
-  multiPerfectValueR2: 0
-  percentPerfectValueR2: 0
-  basePerfectValueR3: 0
-  multiPerfectValueR3: 0
-  percentPerfectValueR3: 0
+  - 200
+  - 350
+  - 800
+  basePerfectValueR2: 1200
+  multiPerfectValueR2: 6.5
+  percentPerfectValueR2: 500
+  basePerfectValueR3: 2000
+  multiPerfectValueR3: 10
+  percentPerfectValueR3: 800
   nameFirstAbility: Reping Slash
   baseFirstAbility: "Make a slash . Deal Damages ++ \nCD  ++ "
   perfectFirstAbility: "After casting an ability . The next attack empowers  deal
@@ -117,3 +120,31 @@ MonoBehaviour:
   requiredItemUpgrade:
   - {fileID: 11400000, guid: a0a8a7affaafe614cb9e64c175fbe453, type: 2}
   - {fileID: 11400000, guid: 6eeb58fe89d591d479618e838e92dde6, type: 2}
+  _abilityPostionQ:
+  - name: Normal Q
+    centerPostion: {fileID: 0}
+    rangeExtendBoxCollider: {x: 2, y: 1, z: 1.25}
+    rangeRadiusCircleCollider: 0
+    isBoxPostion: 1
+    isCirclePostion: 0
+  _abilityPostionE:
+  - name: Normal E
+    centerPostion: {fileID: 0}
+    rangeExtendBoxCollider: {x: 2.25, y: 2.25, z: 2.25}
+    rangeRadiusCircleCollider: 0
+    isBoxPostion: 1
+    isCirclePostion: 0
+  - name: Perfect E
+    centerPostion: {fileID: 0}
+    rangeExtendBoxCollider: {x: 5.65, y: 5.65, z: 5.65}
+    rangeRadiusCircleCollider: 0
+    isBoxPostion: 1
+    isCirclePostion: 0
+  _abilityPostionR: []
+  _abilityPostionAttack:
+  - name: Normal R
+    centerPostion: {fileID: 0}
+    rangeExtendBoxCollider: {x: 0.79, y: 1, z: 1.05}
+    rangeRadiusCircleCollider: 0
+    isBoxPostion: 1
+    isCirclePostion: 0

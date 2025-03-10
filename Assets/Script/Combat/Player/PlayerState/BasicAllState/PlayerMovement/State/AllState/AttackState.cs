@@ -31,7 +31,7 @@ public class AttackState : PlayerActionState
             OnableControls();
             vfxAllOff();
         }
-        
+        isCancel = false;
     }
     public override void HandleInput()
     {
@@ -124,8 +124,8 @@ public class AttackState : PlayerActionState
     {
         // tao collider damags
 
-        Collider[] colliderInfo = Physics.OverlapBox(WeaponManager.instance.updatingPosAbi.colliderPosAttack.position,
-                                         WeaponManager.instance.updatingPosAbi.localColliderHalfExtendAttack
+        Collider[] colliderInfo = Physics.OverlapBox(WeaponManager.instance.posAbilityCollider.colliderPosAttack.transform.position,
+                                         WeaponManager.instance.SystemSkillWeapon._abilityPostionAttack[0].rangeExtendBoxCollider
                                          , Quaternion.identity, WeaponManager.instance.layerMask);
         return colliderInfo;
     }
@@ -150,7 +150,7 @@ public class AttackState : PlayerActionState
             if (Physics.Raycast(rayStart, rayDirection, out hit, Mathf.Infinity, WeaponManager.instance.layerMask))
             {
                 var targetInfo = hit.collider.GetComponent<IEnemy>();
-                targetInfo.enemyHP.takeDamages(WeaponManager.instance.SystemSkillWeapon.NormalAttackSword());
+                targetInfo.enemyHP.takeDamages(WeaponManager.instance.SystemSkillWeapon.NormalAttackSword(),WeaponManager.instance.DamagesType);
             }
             else
             {

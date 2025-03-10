@@ -28,6 +28,7 @@ public class UpdatingAbility : MonoBehaviour
     private void Update()
     {
         PerfectAbilityQ();
+        PerfectAbilityE();
         if (Input.GetKey(KeyCode.U) && !test) 
         {
             abilityLevelQ++;
@@ -61,16 +62,24 @@ public class UpdatingAbility : MonoBehaviour
         {
             WeaponManager.instance.FireSword.isOnPerfectAbilityQ[1] = true;
         }
-        if (abilityLevelQ >= 7)
+        if (abilityLevelQ >= 0)
         {
             WeaponManager.instance.FireSword.isOnPerfectAbilityQ[2] = true;
         }
     }
     public void PerfectAbilityE()
     {
-        if (abilityLevelE == 5)
+        if (abilityLevelE >= 0)
         {
-
+            WeaponManager.instance.FireSword.isOnPerfectAbilityE[0] = true;
+        }
+        if (abilityLevelE >= 0)
+        {
+            WeaponManager.instance.FireSword.isOnPerfectAbilityE[1] = true;
+        }
+        if (abilityLevelE >= 0)
+        {
+            WeaponManager.instance.FireSword.isOnPerfectAbilityE[2] = true;
         }
     }
     public void PerfectAbilityR()
@@ -193,6 +202,7 @@ public class UpdatingAbility : MonoBehaviour
         return new Tuple<float, float, float>(basePerfectValue, multiPerfectValue, percentPerfectValue);
     }
     #endregion
+    
     #region Item Upgrade
     public List<int> GetItemRequiredUpgrade(int LEVEL,int amountMaterial1 = 0 , int amountMaterial2 = 0 ) 
     {

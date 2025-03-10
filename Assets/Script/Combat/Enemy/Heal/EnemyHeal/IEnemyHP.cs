@@ -10,7 +10,9 @@ public interface IEnemyHP
     float multiplyCrit { get; set; }
     bool isTakingDamages { get; set; }
     float damageReceive { get; set; }
+    Color colorElement { get; set; }
+   
     
-    void takeDamages(float TAKE_DAMAGES);
+    void takeDamages(float TAKE_DAMAGES,CombatTypeManager.TypeElement ELEMENTAL_INFO);
 
 }
