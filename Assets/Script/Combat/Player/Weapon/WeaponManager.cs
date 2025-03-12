@@ -11,7 +11,8 @@ public class WeaponManager : MonoBehaviour
     [field: Header("PosColliderAbi")]
     [field:SerializeField] public PostionAbilityCollider posAbilityCollider;
     [field: SerializeField] public LayerMask layerMask { get; set; }
-    
+
+    [field : SerializeField] public Rigidbody rgb { get; set; }
     public int weaponDamages { get;private  set; }
     public int weaponHP { get;private  set; }
     public int weaponDEF { get;private set; }
@@ -22,6 +23,7 @@ public class WeaponManager : MonoBehaviour
     public bool IsCDAbiQ { get; private set; }
     public bool IsCDAbiE { get ; private set; }
     public bool IsCDAbiR { get ; private set; }
+    public bool IsCDDashing { get; private set; }
    
     #region Weapon Type Machine
     public WeaponTypeMachine  WeaponMachine { get; set; }
@@ -101,7 +103,11 @@ public class WeaponManager : MonoBehaviour
     // left CTRL
     public void DashingPlayer()
     {
-        WeaponMachine.Dashing();
+        if (!IsCDDashing) 
+        {
+            WeaponMachine.Dashing();
+            StartCoroutine(CdDashing());
+        }
     }
 
     public void PassivePlayer()
@@ -217,18 +223,24 @@ public class WeaponManager : MonoBehaviour
         yield return new WaitForSeconds(SystemSkillWeapon.AbiCoolDownR);
         IsCDAbiR = false;
     }
+    private IEnumerator CdDashing() 
+    {
+        IsCDDashing = true;
+        yield return new WaitForSeconds(1f);
+        IsCDDashing = false;
+    }
     private IEnumerator delayVfxDestroy(GameObject GET_OBJECT,float TIME_DELAY) 
     {
         yield return new WaitForSeconds(TIME_DELAY);
         Destroy(GET_OBJECT);
     }
     #endregion
-    #region Coroutine Event
+    #region Coroutine Event && Delay Event
     private void DelayCoroutineEvent(IEnumerator TIME_DELAY) 
     {
         StartCoroutine(TIME_DELAY);
     }
-
+   
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;

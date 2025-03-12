@@ -199,7 +199,7 @@ public partial class @PlayerMovementInput: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""9d1f179e-31c9-4e3a-9c78-c13ef0176ce6"",
-                    ""path"": """",
+                    ""path"": ""<Keyboard>/f"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",

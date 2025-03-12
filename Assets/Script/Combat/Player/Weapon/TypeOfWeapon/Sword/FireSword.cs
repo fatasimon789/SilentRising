@@ -209,7 +209,6 @@ public class FireSword : TypeOfWeapon
             CombatTypeManager._liveTime.ResetTimeOut();
             CombatTypeManager._liveTime.ResetMinTimeOut();
         }
-           Debug.Log(CombatTypeManager._liveTime.LiveTimeOut());
     }
     public void BurningSlash()
     {
@@ -233,7 +232,7 @@ public class FireSword : TypeOfWeapon
        {
           float timeStarting = Time.deltaTime;
           timeDuration -= timeStarting;
-          var indicatorObject = weaponManager.transform.Find("FireSwordPerfectQ(Clone)").gameObject;
+          var indicatorObject = weaponManager.transform.Find("Indicator_PerfectQ(Clone)").gameObject;
             if (timeDuration > 0 ) 
             {
                 var targetRange = MINIMUM_TARGET_RANGE * INDEX_MODIFY;
@@ -339,9 +338,14 @@ public class FireSword : TypeOfWeapon
                             , weaponManager.transform.rotation, weaponManager.layerMask), UpdatingAbility.instance.PerfectDMGV2("E"));
         if (isOnPerfectAbilityE[1]) 
         {
-            activeDOT2 = true;
+        //    activeDOT2 = true;
         }
-  
+        CreatingSlash4Direction();
+    }
+    private void CreatingSlash4Direction() 
+    {
+        var vfxProject = weaponManager.CreateInstantitateWithoutParent(weaponManager.SystemSkillWeapon.projectilePerfect[2]);
+        DestroyClone(vfxProject, 2f);
     }
     #endregion
     #region Collider Damages

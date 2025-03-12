@@ -38,6 +38,7 @@ public class SystemChanceWeapon : MonoBehaviour
          // find the name old weapon then get data  before switch
          // set  old data to back weapon 
         isSwitch = true;
+        AbilitiesUI.instance.ResetAbilityUI();
         WeaponManager.instance.SystemSkillWeapon = chanceSystemSkillWeapon[1];
         WeaponManager.instance.WeaponMachine.ChanceWeapon(WeaponManager.instance.IcePunch);
         WeaponManager.instance.StatsWeaponUpdate();

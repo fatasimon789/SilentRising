@@ -30,7 +30,8 @@ MonoBehaviour:
   - {fileID: 0}
   projectilePerfect:
   - {fileID: 3186264668693132238, guid: d8b20f9bdee51534f9ae85bc061c79c6, type: 3}
-  - {fileID: 3186264668693132238, guid: d8b20f9bdee51534f9ae85bc061c79c6, type: 3}
+  - {fileID: 3186264668693132238, guid: 8c9543ed9d4a8ac42ac87d8b0850f10b, type: 3}
+  - {fileID: 507600959391727922, guid: 8a5fa562ea37c3d4babc1affc9677bc4, type: 3}
   projectilePerfectIndicator:
   - {fileID: 7292997302267279079, guid: 32f06a54164415e4b98871bf571545f9, type: 3}
   basicDmgQ: 460000005a0000006e0000008200000096000000aa000000c80000002c010000
@@ -107,16 +108,19 @@ MonoBehaviour:
   perfectFirstAbility: "After casting an ability . The next attack empowers  deal
     ++  and chance to Sundering Slam,\nSundering Slam : Slam down blade and deal
     bonus damages ++ \n"
-  abilityIcon1: []
+  abilityIcon1:
+  - {fileID: 21300000, guid: 09c65bc7e524ec84b87ef31ff6d7a2d1, type: 3}
   nameSecondAbility: Smashing Circle
   baseSecondAbility: Winds up and swing sword in wide circle . Enemies struck by
     the blade take damage
   perfectSecondAbility: 'unknow '
-  abilityIcon2: []
+  abilityIcon2:
+  - {fileID: 21300000, guid: 819e5c0dd0447024c89c76a51a0ea64e, type: 3}
   nameUltimateAbility: 'The Equalizer '
   baseUltimateAbility: 
   perfectUltimateAbility: 
-  abilityIcon3: []
+  abilityIcon3:
+  - {fileID: 21300000, guid: 94bcabfa8e9acd44989246a7681194ca, type: 3}
   requiredItemUpgrade:
   - {fileID: 11400000, guid: a0a8a7affaafe614cb9e64c175fbe453, type: 2}
   - {fileID: 11400000, guid: 6eeb58fe89d591d479618e838e92dde6, type: 2}

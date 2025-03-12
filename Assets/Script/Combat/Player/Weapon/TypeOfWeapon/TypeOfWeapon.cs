@@ -4,14 +4,21 @@ using UnityEngine;
 
 public  class TypeOfWeapon : IWeapon
 {
-   protected WeaponManager weaponManager;
+    #region Generic Manager
+    protected WeaponManager weaponManager;
    protected WeaponTypeMachine WeaponTypeMachine;
    public bool[] isOnPerfectAbilityQ { get; set; }
    public bool[] isOnPerfectAbilityE { get; set; }
    public bool[] isOnPerfectAbilityR { get; set; }
 
-    protected static bool isAnimRunning = true;
-
+   protected static bool isAnimRunning = true;
+    #endregion
+    #region Field of skill
+    // Dashing
+    private Transform orientation;
+    private float dashForce = 100;
+    private float dashDuration = 0.5f;
+    #endregion
     public TypeOfWeapon (WeaponManager WEAPON_MANAGER , WeaponTypeMachine WEAPON_TYPE_MACHINE) 
     {
         this.weaponManager= WEAPON_MANAGER;
@@ -39,14 +46,15 @@ public  class TypeOfWeapon : IWeapon
 
     public virtual void Dashing()
     {
-
+        DashingSkill();
+        Debug.Log("is dash");
     }
 
     public virtual void Passive()
     {
     }
     #endregion
-    #region Genaric Ability
+    #region Generic Ability Virtual
     public virtual void FirstSkill()
     {
         if (isAnimRunning) 
@@ -166,5 +174,15 @@ public  class TypeOfWeapon : IWeapon
     {
      Player.instance.playerMovementStateMachine.attackSwordState.DisableControls();
     }
+    #endregion
+    #region Generic Ability
+    private void DashingSkill() 
+    {
+        orientation = Player.instance.transform;
+        
+        weaponManager.rgb.AddForce(orientation.forward * dashForce,ForceMode.Impulse);
+        Debug.Log("force");
+    }
+  
     #endregion
 }
